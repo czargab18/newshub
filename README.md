@@ -1,0 +1,96 @@
+# 📰 Newshub - Sistema de Renderização Apple Newsroom
+
+Sistema avançado de renderização de Markdown para HTML no estilo Apple Newsroom, com suporte a componentes dinâmicos, processamento de imagens e templates customizáveis.
+
+## 🚀 Características Principais
+
+- **🎨 Templates Apple Newsroom**: Design autêntico e responsivo
+- **🧩 Sistema de Componentes**: Headers, footers, navegação dinâmica
+- **🖼️ Processamento de Imagens**: Cópia e organização automática
+- **📊 Frontmatter Rico**: Metadados YAML completos
+- **⚡ Multi-linguagem**: Scripts Python, PowerShell e Batch
+- **🔄 Output Inteligente**: `artigo.md` → `index.html` automaticamente
+
+## 📁 Estrutura do Projeto
+
+```
+newshub/
+├── build/
+│   ├── article/          # Artigos de exemplo
+│   │   ├── artigo.md     # Markdown com frontmatter
+│   │   └── img1.png      # Imagens
+│   ├── components/       # Componentes HTML
+│   │   ├── article-header.html
+│   │   ├── globalfooter.html
+│   │   ├── globalheader.html
+│   │   └── localnav.html
+│   ├── modelos/          # Templates
+│   │   └── template.html # Template principal Pandoc
+│   └── run/              # Scripts de renderização
+│       ├── render.py     # ✅ Script Python principal
+│       ├── render.ps1    # Script PowerShell
+│       ├── render.cmd    # Script Windows Batch
+│       └── config/       # Configurações
+└── README.md             # Esta documentação
+```
+
+## 🛠️ Como Usar
+
+### 📍 Comando Principal:
+```bash
+# Do diretório raiz do projeto pai
+python newshub/build/run/render.py newshub/build/article/artigo.md
+```
+
+### 📋 Parâmetros Disponíveis:
+- `-o, --output` - Arquivo de saída personalizado
+- `-b, --batch` - Modo lote para processar diretórios
+- `-v, --verbose` - Output detalhado
+- `--open` - Abre no navegador automaticamente
+- `--base-dir` - Diretório base personalizado
+
+### 📖 Exemplos:
+```bash
+# Básico
+python render.py artigo.md
+
+# Com output personalizado
+python render.py artigo.md -o meu_artigo.html
+
+# Verbose + abertura automática
+python render.py artigo.md --verbose --open
+
+# Modo lote
+python render.py pasta/ --batch
+```
+
+## 📊 Dependências
+
+- **Python 3.7+**
+- **pypandoc** - Para conversão Markdown → HTML
+- **Pandoc** - Motor de conversão (instalado via pypandoc)
+
+### 🔧 Instalação:
+```bash
+pip install pypandoc
+```
+
+## 🎯 Características Especiais
+
+- **📁 Output Local**: Detecta pasta `output/` junto ao arquivo fonte
+- **🖼️ Gestão de Imagens**: Copia para pasta `src/` automaticamente
+- **🔄 Nome Inteligente**: `artigo.md` vira `index.html`
+- **🧩 Includes Dinâmicos**: Baseados no frontmatter YAML
+- **📱 Design Responsivo**: Otimizado para todos os dispositivos
+
+## 📝 Licença
+
+Este projeto é parte do repositório `estatistica` e segue a mesma licença.
+
+## 🤝 Contribuição
+
+Para contribuir, faça um fork do repositório principal e submeta um Pull Request.
+
+---
+
+**📰 Newshub** - Transformando Markdown em experiências web de qualidade Apple.
