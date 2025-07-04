@@ -32,7 +32,8 @@ class NewsroomRenderer:
         
         self.template_file = self.base_dir / ".." / "modelos" / "template.html"
         self.components_dir = self.base_dir / ".." / "components"
-        self.output_dir = self.base_dir / "output"
+        # Output padrão agora é na pasta article ao invés de run
+        self.output_dir = self.base_dir / ".." / "article" / "output"
         
         # Criar diretório de saída
         self.output_dir.mkdir(exist_ok=True)

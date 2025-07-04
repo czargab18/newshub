@@ -1,10 +1,10 @@
-# 📰 Newshub - Sistema de Renderização Apple Newsroom
+# 📰 Newshub - Sistema de Renderização estatística/newsroom
 
-Sistema avançado de renderização de Markdown para HTML no estilo Apple Newsroom, com suporte a componentes dinâmicos, processamento de imagens e templates customizáveis.
+Sistema avançado de renderização de Markdown para HTML no estilo estatística/newsroom, com suporte a componentes dinâmicos, processamento de imagens e templates customizáveis.
 
 ## 🚀 Características Principais
 
-- **🎨 Templates Apple Newsroom**: Design autêntico e responsivo
+- **🎨 Templates estatística/newsroom**: Design autêntico e responsivo
 - **🧩 Sistema de Componentes**: Headers, footers, navegação dinâmica
 - **🖼️ Processamento de Imagens**: Cópia e organização automática
 - **📊 Frontmatter Rico**: Metadados YAML completos
@@ -18,7 +18,10 @@ newshub/
 ├── build/
 │   ├── article/          # Artigos de exemplo
 │   │   ├── artigo.md     # Markdown com frontmatter
-│   │   └── img1.png      # Imagens
+│   │   ├── img1.png      # Imagens
+│   │   └── output/       # 📁 Output padrão (gerado automaticamente)
+│   │       ├── index.html    # HTML renderizado
+│   │       └── src/          # Imagens processadas
 │   ├── components/       # Componentes HTML
 │   │   ├── article-header.html
 │   │   ├── globalfooter.html
@@ -77,7 +80,9 @@ pip install pypandoc
 
 ## 🎯 Características Especiais
 
-- **📁 Output Local**: Detecta pasta `output/` junto ao arquivo fonte
+- **📁 Output Inteligente**: 
+  - Padrão: `build/article/output/` (organizados junto com os artigos)
+  - Se existe pasta `output/` local junto ao arquivo fonte, usa a local
 - **🖼️ Gestão de Imagens**: Copia para pasta `src/` automaticamente
 - **🔄 Nome Inteligente**: `artigo.md` vira `index.html`
 - **🧩 Includes Dinâmicos**: Baseados no frontmatter YAML
@@ -93,4 +98,4 @@ Para contribuir, faça um fork do repositório principal e submeta um Pull Reque
 
 ---
 
-**📰 Newshub** - Transformando Markdown em experiências web de qualidade Apple.
+**📰 Newshub** - Transformando Markdown em experiências web de qualidade estatística/n
