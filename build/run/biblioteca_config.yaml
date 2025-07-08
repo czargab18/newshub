@@ -267,6 +267,12 @@ presets:
 # === CONFIGURAÇÕES GLOBAIS ===
 configuracoes:
   
+  # Configurações de arquivos de saída
+  arquivo_saida:
+    nome_padrao: "index"  # Nome padrão quando o arquivo de entrada é artigo.md
+    sufixo: ".html"       # Extensão do arquivo de saída
+    usar_nome_original: false  # Se true, usa o nome do arquivo .md original
+  
   # URLs base para imagens e recursos
   urls_base:
     imagens_og: "https://www.estatistica.pro/newsroom/images"

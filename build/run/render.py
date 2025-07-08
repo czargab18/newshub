@@ -693,8 +693,15 @@ class NewsroomRenderer:
             
             # Determinar arquivo de saída
             if output_file is None:
-                # Verificar se o arquivo de entrada é artigo.md e definir como index.html
-                if input_path.stem == "artigo":
+                # Para arquivos temporários, usar o nome base do arquivo original
+                if '.temp' in input_path.name:
+                    # Remove .temp do nome e usa o arquivo original como base
+                    original_stem = input_path.stem.replace('.temp', '')
+                    if original_stem == "artigo":
+                        filename = "index"
+                    else:
+                        filename = original_stem
+                elif input_path.stem == "artigo":
                     filename = "index"
                 else:
                     filename = input_path.stem
