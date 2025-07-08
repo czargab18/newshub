@@ -86,8 +86,10 @@
     data-anim-scroll-group="body" $endif$>
 
     $if(includes.header_global)$
+    $if(includes.header_global.enabled)$
     <div id="globalheader">
     </div>
+    $endif$
     $else$
     <div id="globalheader"></div>
     $endif$

@@ -29,17 +29,24 @@ class BibliotecaElementos:
                     "description": "Cabeçalho completo com navegação global e local",
                     "includes": {
                         "header_global": {
+                            "enabled": True,
                             "file": "globalheader.html",
                             "position": "after_body_open",
                             "priority": 1
                         },
                         "local_nav": {
+                            "enabled": True,
                             "file": "localnav.html",
                             "position": "after_globalheader",
                             "priority": 2
                         }
                     },
                     "components": {
+                        "globalmessage": {
+                            "enabled": True,
+                            "lang": "pt-BR",
+                            "dir": "ltr"
+                        },
                         "globalnav": {
                             "enabled": True,
                             "analytics_region": "global nav",
@@ -48,12 +55,32 @@ class BibliotecaElementos:
                     }
                 },
                 "header_simples": {
-                    "description": "Cabeçalho simplificado sem navegação local",
+                    "description": "Cabeçalho simplificado - apenas globalheader, sem navegação adicional",
                     "includes": {
                         "header_global": {
+                            "enabled": True,
                             "file": "globalheader.html",
                             "position": "after_body_open",
                             "priority": 1
+                        }
+                    },
+                    "components": {
+                        # Propositalmente sem globalnav e globalmessage para evitar duplicação
+                    }
+                },
+                "header_minimalista": {
+                    "description": "Sem headers - para landing pages específicas",
+                    "includes": {
+                        "header_global": {
+                            "enabled": False
+                        }
+                    },
+                    "components": {
+                        "globalmessage": {
+                            "enabled": False
+                        },
+                        "globalnav": {
+                            "enabled": False
                         }
                     }
                 }

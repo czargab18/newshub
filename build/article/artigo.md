@@ -3,8 +3,10 @@
 # 📝 FRONTMATTER MÍNIMO - APENAS O ESSENCIAL
 # ===================================================
 # 
-# ✅ VOCÊ SÓ PRECISA ESCREVER ISSO:
-# • title, description, date, location
+# ✅ VOCÊ SÓ PRECISA ESCREVER ESSAS META TAGS:
+# • title (meta tag para SEO/navegador)
+# • description (meta tag para SEO/redes sociais)
+# • date, location (metadados do artigo)
 # • O resto é ADICIONADO AUTOMATICAMENTE!
 #
 # 🚀 COMO USAR O SISTEMA AUTOMÁTICO:
@@ -27,14 +29,17 @@
 # • Open Graph (og:title, og:description, og:image, etc.)
 # • Headers e navegação (includes, components)
 # • Stylesheets e scripts
-# • Meta tags (viewport, charset, etc.)
+# • Meta tags técnicas (viewport, charset, etc.)
 # • HTML config (classes, xmlns, etc.)
 # • Configurações de layout
 #
 # ===================================================
 
-title: "Meu Título Exemplo"
-description: "Descrição curta para SEO do meu artigo"
+# 🏷️ META TAGS (para SEO, navegador, redes sociais):
+title: "Meu Título Exemplo"                    # <title> tag + og:title + twitter:title
+description: "Descrição curta para SEO do meu artigo"  # <meta description> + og:description + twitter:description
+
+# 📅 METADADOS DO ARTIGO:
 date: "04 de julho de 2025"
 location: "BRASÍLIA, BRASIL"
 
@@ -66,138 +71,31 @@ location: "BRASÍLIA, BRASIL"
 # ===================================================
 ---
 
-# Lorem Ipsum - Conteúdo de Exemplo
+# 📝 SEU CONTEÚDO VAI AQUI (BODY DO HTML)
 
-## Introdução ao Lorem Ipsum
+Este é o **conteúdo real** do artigo que aparece na página. O título acima (`title: "Meu Título Exemplo"`) é uma **meta tag** para SEO, não o título visual da página.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. **Sed do eiusmod tempor** incididunt ut labore et dolore magna aliqua. *Ut enim ad minim veniam*, quis nostrud exercitation ullamco laboris.
+## Este é o H1 visual que os usuários veem
 
-> "Lorem ipsum é simplesmente um texto fictício da indústria de impressão e composição tipográfica. Lorem ipsum tem sido o texto fictício padrão da indústria desde os anos 1500."
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. **Sed do eiusmod tempor** incididunt ut labore et dolore magna aliqua.
 
-### Subseção com Lista Ordenada
+### Subseção com Lista
 
 1. **Primeiro item** - Lorem ipsum dolor sit amet
 2. **Segundo item** - Consectetur adipiscing elit
 3. **Terceiro item** - Sed do eiusmod tempor incididunt
-   - Sub-item A
-   - Sub-item B
-   - Sub-item C
-
-#### Lista Não Ordenada com Links
-
-- [Lorem ipsum](https://lorem-ipsum.com) - Link para gerador de texto
-- [Markdown Guide](https://markdownguide.org) - Guia completo de Markdown
-- **Texto em negrito** com `código inline`
-- *Texto em itálico* e ~~texto riscado~~
-
-##### Tabela de Exemplo
-
-| Nome         | Idade | Profissão     | Status     |
-| ------------ | ----- | ------------- | ---------- |
-| João Silva   | 32    | Desenvolvedor | ✅ Ativo    |
-| Maria Santos | 28    | Designer      | ⚠️ Pendente |
-| Pedro Costa  | 35    | Gerente       | ❌ Inativo  |
-
-###### Código em Bloco
-
-```python
-def lorem_ipsum():
-    """
-    Função que retorna texto Lorem Ipsum
-    """
-    texto = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    return texto.upper()
-
-# Exemplo de uso
-resultado = lorem_ipsum()
-print(resultado)
-```
-
-```javascript
-// Exemplo em JavaScript
-const loremIpsum = () => {
-    const texto = "Lorem ipsum dolor sit amet";
-    return texto.split(' ').map(word => 
-        word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
-};
-
-console.log(loremIpsum());
-```
-
-## Citações e Blocos Especiais
-
-> ### Citação Importante
-> 
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-> 
-> > **Citação aninhada**: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 ### Imagens e Links
 
-![Imagem de exemplo](image.png "Descrição da imagem de exemplo"){#exemplo-imagem .image-center .component-image data-analytics="exemplo-image"}
+![Imagem de exemplo](image.png "Descrição da imagem")
 
-Para mais informações, visite [nosso site](https://exemplo.com "Site oficial") ou entre em contato através do email: exemplo@email.com
+Para mais informações, visite [nosso site](https://exemplo.com) ou entre em contato através do email: exemplo@email.com
 
-### Lista de Tarefas
+## 💡 Entenda a Diferença:
 
-- [x] Tarefa concluída
-- [x] Outra tarefa finalizada
-- [ ] Tarefa pendente
-- [ ] Tarefa em andamento
-- [ ] Tarefa futura
-
-### Texto com Formatação Especial
-
-Este parágrafo contém **texto em negrito**, *texto em itálico*, ***texto em negrito e itálico***, `código inline`, e ~~texto riscado~~.
-
-Também podemos usar caracteres especiais como:
-- Marca registrada: ®
-- Copyright: ©
-- Trademark: ™
-- Setas: → ← ↑ ↓
-- Símbolos: ★ ☆ ♠ ♣ ♥ ♦
-
-### Linha Horizontal
-
----
-
-### Notas de Rodapé
-
-Este texto tem uma nota de rodapé[^1] e outra aqui[^nota-longa].
-
-[^1]: Esta é uma nota de rodapé simples.
-[^nota-longa]: Esta é uma nota de rodapé mais longa com várias linhas.
-    Ela pode incluir múltiplos parágrafos e formatação.
-
-### Definições
-
-Termo 1
-: Definição do primeiro termo lorem ipsum dolor sit amet.
-
-Termo 2
-: Definição do segundo termo consectetur adipiscing elit.
-: Segunda definição para o mesmo termo.
-
-### Quebra de Linha Manual
-
-Primeira linha com quebra manual  
-Segunda linha após quebra
-Terceira linha normal
-
-### Escape de Caracteres
-
-Para mostrar caracteres especiais literalmente:
-\*asterisco\* \#hashtag\* \[colchetes\] \`backticks\`
+- **`title:`** no frontmatter = Meta tag `<title>` (aparece na aba do navegador, Google, Twitter, etc.)
+- **`# Título`** no markdown = Conteúdo H1 visual (aparece na página para o usuário)
 
 ## Conclusão
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-### Recursos Adicionais
-
-Para aprender mais sobre Markdown:
-
-1. [Sintaxe Básica](https://markdownguide.org/basic-syntax)
-2. [Sintaxe Estendida](https://markdownguide.org/extended-syntax)
-3. [Cheat Sheet](https://markdownguide.org/cheat-sheet)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Este é o conteúdo que os usuários realmente leem na página.
