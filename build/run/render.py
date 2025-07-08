@@ -32,6 +32,29 @@ except ImportError:
 
 
 class Automacao:
+    def gerar_caminho_saida(self, frontmatter):
+        import os
+        from pathlib import Path
+        # Extrai ano e mês do frontmatter
+        data = frontmatter.get('date', '')
+        partes = data.split('de')
+        if len(partes) >= 3:
+            ano = partes[-1].strip()
+            mes = partes[1].strip().zfill(2)
+        else:
+            ano = '0000'
+            mes = '00'
+        base_dir = Path('newsroom') / 'archive' / ano / mes
+        base_dir.mkdir(parents=True, exist_ok=True)
+        # Busca próxima subpasta livre
+        for i in range(10000):
+            codigo = f"{i:04d}"
+            pasta_artigo = base_dir / codigo
+            if not pasta_artigo.exists():
+                pasta_artigo.mkdir(parents=True, exist_ok=True)
+                (pasta_artigo / 'imagens').mkdir(exist_ok=True)
+                return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
+        raise Exception("Limite de 9999 artigos por mês atingido!")
     """
     Classe base para automação de tarefas com configurações padrão para renderização
     """
@@ -413,6 +436,29 @@ class Automacao:
         return resultado
 
 class NewsroomRenderer:
+    def gerar_caminho_saida(self, frontmatter):
+        import os
+        from pathlib import Path
+        # Extrai ano e mês do frontmatter
+        data = frontmatter.get('date', '')
+        partes = data.split('de')
+        if len(partes) >= 3:
+            ano = partes[-1].strip()
+            mes = partes[1].strip().zfill(2)
+        else:
+            ano = '0000'
+            mes = '00'
+        base_dir = Path('newsroom') / 'archive' / ano / mes
+        base_dir.mkdir(parents=True, exist_ok=True)
+        # Busca próxima subpasta livre
+        for i in range(10000):
+            codigo = f"{i:04d}"
+            pasta_artigo = base_dir / codigo
+            if not pasta_artigo.exists():
+                pasta_artigo.mkdir(parents=True, exist_ok=True)
+                (pasta_artigo / 'imagens').mkdir(exist_ok=True)
+                return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
+        raise Exception("Limite de 9999 artigos por mês atingido!")
     def __init__(self, base_dir=None):
         """Inicializa o renderizador"""
         # Inicializa automação
@@ -685,126 +731,155 @@ class NewsroomRenderer:
     
     def render(self, input_file, output_file=None, verbose=False):
         """Renderiza arquivo markdown para HTML"""
-        try:
-            input_path = Path(input_file)
-            
-            if not input_path.exists():
-                raise FileNotFoundError(f"Arquivo não encontrado: {input_file}")
-            
-            # Determinar arquivo de saída
-            if output_file is None:
-                # Para arquivos temporários, usar o nome base do arquivo original
-                if '.temp' in input_path.name:
-                    # Remove .temp do nome e usa o arquivo original como base
-                    original_stem = input_path.stem.replace('.temp', '')
-                    if original_stem == "artigo":
-                        filename = "index"
-                    else:
-                        filename = original_stem
-                elif input_path.stem == "artigo":
-                    filename = "index"
-                else:
-                    filename = input_path.stem
+        input_path = Path(input_file)
+        if not input_path.exists():
+            raise FileNotFoundError(f"Arquivo não encontrado: {input_file}")
 
-                # Verificar se existe pasta output local junto com o arquivo de entrada
-                local_output_dir = input_path.parent / "output"
-                if local_output_dir.exists():
-                    output_file = local_output_dir / (filename + ".html")
-                    self.log(
-                        f"Usando diretório de output local: {local_output_dir}")
-                else:
-                    output_file = self.output_dir / (filename + ".html")
-            else:
-                # Se output_file foi especificado, criar dentro do output_dir
-                output_file = self.output_dir / Path(output_file).name
-            
-            self.log("=" * 60, "INFO")
-            self.log("RENDERIZAÇÃO MARKDOWN - APPLE NEWSROOM (Python)", "INFO")
-            self.log("=" * 60, "INFO")
-            self.log(f"Entrada: {input_path}", "INFO")
-            self.log(f"Saída: {output_file}", "INFO")
-            self.log(f"Template: {self.template_file}", "INFO")
-            self.log("=" * 60, "INFO")
-            
-            # Ler arquivo markdown
-            with open(input_path, 'r', encoding='utf-8') as f:
-                markdown_content = f.read()
-            
-            self.log("Arquivo markdown carregado")
-            
-            # Extrair frontmatter com automações
-            metadata, markdown_body = self.extract_frontmatter(
-                markdown_content, input_path)
-            
-            if metadata:
-                self.log(f"Frontmatter processado: {len(metadata)} campos")
-                if verbose:
-                    # Mostra apenas campos principais para não poluir o log
-                    campos_principais = {k: v for k, v in metadata.items(
-                    ) if k in ['title', 'description', 'date', 'location', 'canonical']}
-                    self.log(
-                        f"Metadados principais: {json.dumps(campos_principais, indent=2, ensure_ascii=False)}")
-            
-            # Preparar variáveis para pypandoc
-            extra_args = [
-                '--standalone',
-                f'--template={self.template_file}',
-                '--from=markdown+yaml_metadata_block',
-                '--to=html5',
-                '--section-divs',
-                '--wrap=none'
-            ]
-            
-            # Adicionar metadados como variáveis
-            for key, value in metadata.items():
-                if key != 'includes':  # Includes são processados separadamente
-                    if isinstance(value, (str, int, float, bool)):
-                        extra_args.extend(['-V', f'{key}:{value}'])
-                    elif isinstance(value, list):
-                        # Converter listas para string
-                        extra_args.extend(['-V', f'{key}:{",".join(map(str, value))}'])
-            
+        # Ler arquivo markdown
+        with open(input_path, 'r', encoding='utf-8') as f:
+            markdown_content = f.read()
+
+        # Extrair frontmatter com automações
+        metadata, markdown_body = self.extract_frontmatter(
+            markdown_content, input_path)
+
+        # Determinar arquivo de saída e pasta de imagens
+        if output_file is None:
+            output_file, imagens_dir = self.gerar_caminho_saida(metadata)
+        else:
+            output_file = Path(output_file)
+            imagens_dir = output_file.parent / 'imagens'
+            imagens_dir.mkdir(parents=True, exist_ok=True)
+
+        self.log("=" * 60, "INFO")
+        self.log("RENDERIZAÇÃO MARKDOWN - APPLE NEWSROOM (Python)", "INFO")
+        self.log("=" * 60, "INFO")
+        self.log(f"Entrada: {input_path}", "INFO")
+        self.log(f"Saída: {output_file}", "INFO")
+        self.log(f"Imagens: {imagens_dir}", "INFO")
+        self.log(f"Template: {self.template_file}", "INFO")
+        self.log("=" * 60, "INFO")
+
+        self.log("Arquivo markdown carregado")
+        if metadata:
+            self.log(f"Frontmatter processado: {len(metadata)} campos")
             if verbose:
-                self.log(f"Argumentos pandoc: {' '.join(extra_args)}")
-            
-            # Executar pypandoc
-            self.log("Executando pypandoc...")
-            
-            # Recriar markdown com frontmatter para pypandoc
-            full_markdown = f"---\n{yaml.dump(metadata, allow_unicode=True)}---\n{markdown_body}" if metadata else markdown_body
-            
-            html_output = pypandoc.convert_text(
-                full_markdown,
-                'html5',
-                format='markdown+yaml_metadata_block',
-                extra_args=extra_args
-            )
-            
-            self.log("HTML básico gerado pelo pypandoc")
-            
-            # Processar includes
-            if metadata:
-                html_output = self.process_includes(html_output, metadata)
-            
-            # Processar imagens
-            html_output = self.process_images(html_output, input_path, output_file)
-            
-            # Salvar arquivo final
+                campos_principais = {k: v for k, v in metadata.items(
+                ) if k in ['title', 'description', 'date', 'location', 'canonical']}
+                self.log(
+                    f"Metadados principais: {json.dumps(campos_principais, indent=2, ensure_ascii=False)}")
+
+        # Preparar variáveis para pypandoc
+        extra_args = [
+            '--standalone',
+            f'--template={self.template_file}',
+            '--from=markdown+yaml_metadata_block',
+            '--to=html5',
+            '--section-divs',
+            '--wrap=none'
+        ]
+
+        # Adicionar metadados como variáveis
+        for key, value in metadata.items():
+            if key != 'includes':  # Includes são processados separadamente
+                if isinstance(value, (str, int, float, bool)):
+                    extra_args.extend(['-V', f'{key}:{value}'])
+                elif isinstance(value, list):
+                    # Converter listas para string
+                    extra_args.extend(
+                        ['-V', f'{key}:{",".join(map(str, value))}'])
+
+        if verbose:
+            self.log(f"Argumentos pandoc: {' '.join(extra_args)}")
+
+        # Executar pypandoc
+        self.log("Executando pypandoc...")
+
+        # Recriar markdown com frontmatter para pypandoc
+        full_markdown = f"---\n{yaml.dump(metadata, allow_unicode=True)}---\n{markdown_body}" if metadata else markdown_body
+
+        html_output = pypandoc.convert_text(
+            full_markdown,
+            'html5',
+            format='markdown+yaml_metadata_block',
+            extra_args=extra_args
+        )
+
+        self.log("HTML básico gerado pelo pypandoc")
+
+        # Processar includes
+        if metadata:
+            html_output = self.process_includes(html_output, metadata)
+
+        # Processar imagens (ajustar para nova pasta)
+        html_output = self.process_images_nova(
+            html_output, input_path, imagens_dir)
+
+        # Salvar arquivo final
+        try:
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html_output)
-            
             # Estatísticas
             input_size = input_path.stat().st_size
             output_size = output_file.stat().st_size
-            
             self.log("=" * 60, "SUCCESS")
             self.log("SUCESSO: Arquivo HTML gerado!", "SUCCESS")
             self.log("=" * 60, "SUCCESS")
             self.log(f"Arquivo: {output_file}", "SUCCESS")
-            self.log(f"Tamanho: Input {input_size} bytes → Output {output_size} bytes", "SUCCESS")
-            
+            self.log(
+                f"Tamanho: Input {input_size} bytes → Output {output_size} bytes", "SUCCESS")
             return True, str(output_file)
-            
+        except Exception as e:
+            self.log(f"Erro durante renderização: {e}", "ERROR")
+            return False, str(e)
+
+    def process_images_nova(self, html_content, input_path, imagens_dir):
+        """Processa imagens no HTML e ajusta caminhos para nova estrutura"""
+        import shutil
+        from pathlib import Path
+        source_dir = input_path.parent
+        imagens_dir = Path(imagens_dir)
+        imagens_dir.mkdir(parents=True, exist_ok=True)
+        import re
+        img_pattern = r'<img[^>]+src="([^"]+)"[^>]*>'
+        img_matches = re.findall(img_pattern, html_content)
+        if not img_matches:
+            self.log("Nenhuma imagem encontrada no HTML")
+            return html_content
+        self.log(f"Processando {len(img_matches)} imagens...")
+        for img_src in img_matches:
+            if img_src.startswith(('http://', 'https://', '//')):
+                continue
+            source_file = source_dir / img_src
+            if source_file.exists():
+                dest_file = imagens_dir / source_file.name
+                try:
+                    shutil.copy2(source_file, dest_file)
+                    self.log(
+                        f"✓ Imagem copiada: {source_file.name} → imagens/{source_file.name}")
+                except Exception as e:
+                    self.log(f"Erro ao copiar imagem: {e}", "ERROR")
+                old_src = f'src="{img_src}"'
+                new_src = f'src="imagens/{source_file.name}"'
+                html_content = html_content.replace(old_src, new_src)
+            else:
+                self.log(f"⚠ Imagem não encontrada: {source_file}", "WARNING")
+        return html_content
+
+        # Salvar arquivo final
+        try:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write(html_output)
+            # Estatísticas
+            input_size = input_path.stat().st_size
+            output_size = output_file.stat().st_size
+            self.log("=" * 60, "SUCCESS")
+            self.log("SUCESSO: Arquivo HTML gerado!", "SUCCESS")
+            self.log("=" * 60, "SUCCESS")
+            self.log(f"Arquivo: {output_file}", "SUCCESS")
+            self.log(
+                f"Tamanho: Input {input_size} bytes → Output {output_size} bytes", "SUCCESS")
+            return True, str(output_file)
         except Exception as e:
             self.log(f"Erro durante renderização: {e}", "ERROR")
             return False, str(e)
