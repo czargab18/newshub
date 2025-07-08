@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Script Python para renderização de Markdown - Apple Newsroom
-Versão: 2.0 com pypandoc e processamento avançado de componentes
+Versão: 2.0 com pypandoc e processament            # Twitter Cards (opcional - só será incluído se existir dados específicos do Twitter)
+            # Não incluído por padrão - será adicionado apenas se especificado no .md ou dados customizadosçado de componentes
 """
 
 import os
@@ -123,25 +124,21 @@ class Automacao:
             # Open Graph (herda automaticamente title/description dos meta_basico)
             "og": {
                 "type": "article",
-                "site_name": "Apple Newsroom",
+                "site_name": "Redação - Estatística",
                 "locale": "pt_BR",
-                "image": "https://www.estatistica.pro/newsroom/images/default/tile/default.jpg.og.jpg"
+                "image": "https://www.estatistica.pro/newsroom/${path/to/images.jpg}"
             },
 
             # Twitter Cards (herda automaticamente title/description dos meta_basico)
             "twitter": {
-                "site": "@Apple",
+                "site": "@Estatica",
                 "card": "summary_large_image",
-                "image": "https://www.estatistica.pro/newsroom/images/default/tile/default.jpg.og.jpg"
+                "image": "https://www.estatistica.pro/newsroom/${path/to/images.jpg}"
             },
 
             # Recursos CSS
             "stylesheets": [
-                "/ac/localnav/4/styles/ac-localnav.built.css",
-                "/ac/globalfooter/8/en_US/styles/ac-globalfooter.built.css",
-                "/www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3",
-                "/newsroom/styles/site.built.css",
-                "/newsroom/styles/articlev2.built.css"
+                "www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3",
             ],
 
             # Scripts head
@@ -204,6 +201,9 @@ class Automacao:
         Returns:
             str: String YAML formatada para frontmatter
         """
+        # Aplica herança automática de metadados
+        config = self._aplicar_heranca_metadados(config)
+
         # Flatten da configuração para YAML
         yaml_data = {}
 
@@ -413,6 +413,7 @@ class Automacao:
         """
         Aplica herança automática de metadados para OG e Twitter
         Os campos title, description e url são herdados automaticamente dos meta_basico
+        Twitter é opcional - só será incluído se existir na configuração
         
         Args:
             config (dict): Configuração do artigo
@@ -422,7 +423,7 @@ class Automacao:
         """
         meta_basico = config.get('meta_basico', {})
         
-        # Aplica herança para Open Graph
+        # Aplica herança para Open Graph (sempre presente)
         if 'og' in config:
             if meta_basico.get('title'):
                 config['og']['title'] = meta_basico['title']
@@ -431,7 +432,7 @@ class Automacao:
             if meta_basico.get('canonical'):
                 config['og']['url'] = meta_basico['canonical']
         
-        # Aplica herança para Twitter Cards
+        # Aplica herança para Twitter Cards (apenas se existir)
         if 'twitter' in config:
             if meta_basico.get('title'):
                 config['twitter']['title'] = meta_basico['title']
@@ -439,6 +440,58 @@ class Automacao:
                 config['twitter']['description'] = meta_basico['description']
         
         return config
+
+    def criar_twitter_config(self, site="@Apple", card="summary_large_image", image=None):
+        """
+        Cria configuração padrão para Twitter Cards
+        
+        Args:
+            site (str): Handle do Twitter (@site)
+            card (str): Tipo de card (summary_large_image, summary, etc.)
+            image (str): URL da imagem para Twitter
+            
+        Returns:
+            dict: Configuração do Twitter Cards
+        """
+        config = {
+            "site": site,
+            "card": card
+        }
+        
+        if image:
+            config["image"] = image
+        else:
+            config["image"] = "https://www.estatistica.pro/newsroom/images/default/tile/default.jpg.og.jpg"
+        
+        return config
+
+    def verificar_se_deve_incluir_twitter(self, metadados_md, dados_customizados=None):
+        """
+        Verifica se deve incluir meta tags do Twitter baseado nos dados disponíveis
+        
+        Args:
+            metadados_md (dict): Metadados extraídos do arquivo .md
+            dados_customizados (dict): Dados customizados fornecidos
+            
+        Returns:
+            bool: True se deve incluir Twitter, False caso contrário
+        """
+        # Verifica se existe configuração explícita do Twitter no frontmatter
+        if metadados_md and isinstance(metadados_md.get('twitter'), dict):
+            return True
+        
+        # Verifica se existe configuração do Twitter nos dados customizados
+        if dados_customizados and isinstance(dados_customizados.get('twitter'), dict):
+            return True
+        
+        # Verifica se existe algum campo específico do Twitter no frontmatter
+        twitter_fields = ['twitter_site', 'twitter_card', 'twitter_image', 'twitter_creator']
+        if metadados_md:
+            for field in twitter_fields:
+                if field in metadados_md and metadados_md[field] is not None:
+                    return True
+        
+        return False
 
 class Render:
     """
@@ -469,16 +522,16 @@ class Render:
         # Primeiro aplica metadados extraídos do .md
         if metadados_md:
             dados_combinados["meta_basico"] = metadados_md
-            # Também atualiza OG e Twitter com os mesmos dados
-            dados_combinados["og"] = {
-                "title": metadados_md.get('title'),
-                "description": metadados_md.get('description'),
-                "url": metadados_md.get('canonical')
-            }
-            dados_combinados["twitter"] = {
-                "title": metadados_md.get('title'),
-                "description": metadados_md.get('description')
-            }
+
+            # Verifica se deve incluir Twitter Cards
+            if self.automacao.verificar_se_deve_incluir_twitter(metadados_md, dados_artigo):
+                # Cria configuração padrão do Twitter se não existir
+                if 'twitter' not in metadados_md and (not dados_artigo or 'twitter' not in dados_artigo):
+                    dados_combinados["twitter"] = self.automacao.criar_twitter_config()
+                elif 'twitter' in metadados_md:
+                    # Usa configuração do Twitter do frontmatter
+                    dados_combinados["twitter"] = metadados_md['twitter']
+
             # Atualiza analytics com título se disponível
             if metadados_md.get('title'):
                 dados_combinados["analytics"] = {
@@ -493,10 +546,7 @@ class Render:
         # Cria configuração personalizada
         config = self.automacao.criar_config_artigo(dados_combinados)
 
-        # Aplica herança automática de metadados para OG e Twitter
-        config = self.automacao._aplicar_heranca_metadados(config)
-
-        # Gera frontmatter
+        # Gera frontmatter (com herança automática aplicada)
         frontmatter = self.automacao.gerar_frontmatter_yaml(config)
 
         # Lê conteúdo do arquivo Markdown
