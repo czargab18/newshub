@@ -26,17 +26,21 @@ class NewsroomRenderer:
     def __init__(self, base_dir=None):
         """Inicializa o renderizador"""
         if base_dir is None:
-            self.base_dir = Path(__file__).parent
+            # Padrão: usar diretório run como base
+            script_dir = Path(__file__).parent
+            self.template_file = script_dir / ".." / "modelos" / "template.html"
+            self.components_dir = script_dir / ".." / "components"
+            self.output_dir = script_dir / ".." / "article" / "output"
         else:
-            self.base_dir = Path(base_dir)
-        
-        self.template_file = self.base_dir / ".." / "modelos" / "template.html"
-        self.components_dir = self.base_dir / ".." / "components"
-        # Output padrão agora é na pasta article ao invés de run
-        self.output_dir = self.base_dir / ".." / "article" / "output"
+            # Quando base_dir é especificado, usar como output_dir diretamente
+            self.output_dir = Path(base_dir)
+            # Manter referências relativas ao script para templates e components
+            script_dir = Path(__file__).parent
+            self.template_file = script_dir / ".." / "modelos" / "template.html"
+            self.components_dir = script_dir / ".." / "components"
         
         # Criar diretório de saída
-        self.output_dir.mkdir(exist_ok=True)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
     
     def log(self, message, level="INFO"):
         """Sistema de log com timestamp"""
@@ -245,7 +249,8 @@ class NewsroomRenderer:
                 else:
                     output_file = self.output_dir / (filename + ".html")
             else:
-                output_file = Path(output_file)
+                # Se output_file foi especificado, criar dentro do output_dir
+                output_file = self.output_dir / Path(output_file).name
             
             self.log("=" * 60, "INFO")
             self.log("RENDERIZAÇÃO MARKDOWN - APPLE NEWSROOM (Python)", "INFO")

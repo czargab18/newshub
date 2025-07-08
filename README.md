@@ -50,7 +50,7 @@ python newshub/build/run/render.py newshub/build/article/artigo.md
 - `-b, --batch` - Modo lote para processar diretórios
 - `-v, --verbose` - Output detalhado
 - `--open` - Abre no navegador automaticamente
-- `--base-dir` - Diretório base personalizado
+- `--base-dir` - Diretório de saída personalizado (substitui o padrão `build/article/output/`)
 
 ### 📖 Exemplos:
 ```bash
@@ -62,6 +62,9 @@ python build/run/render.py build/article/artigo.md -o index.html
 
 # Verbose + abertura automática
 python build/run/render.py build/article/artigo.md --verbose --open
+
+# Com diretório de saída personalizado
+python build/run/render.py build/article/artigo.md --base-dir minha_pasta/
 
 # Modo lote
 python build/run/render.py pasta/ --batch
