@@ -9,14 +9,12 @@
     <meta name="viewport"
       content="$if(meta.viewport)$$meta.viewport$$else$width=device-width, initial-scale=1, viewport-fit=cover$endif$">
 
-    <!-- Primary Meta Tags -->
-    <title>$if(title)$$title$$else$Apple Newsroom$endif$</title>
+    <title>$if(title)$$title$$else$Redação - Estatística$endif$</title>
     $if(description)$
     <meta name="description" content="$description$">$endif$
     $if(canonical)$
     <link rel="canonical" href="$canonical$">$endif$
 
-    <!-- Open Graph / Facebook -->
     $if(og)$
     $if(og.type)$
     <meta property="og:type" content="$og.type$">$endif$
@@ -34,7 +32,6 @@
     <meta property="og:locale" content="$og.locale$">$endif$
     $endif$
 
-    <!-- Twitter -->
     $if(twitter)$
     $if(twitter.card)$
     <meta name="twitter:card" content="$twitter.card$">$endif$
@@ -50,7 +47,6 @@
     <meta name="twitter:site" content="$twitter.site$">$endif$
     $endif$
 
-    <!-- Additional Meta Tags -->
     $if(author)$
     <meta name="author" content="$author$">$endif$
     $if(date)$
@@ -58,7 +54,6 @@
     $if(lang)$
     <meta name="language" content="$lang$">$endif$
 
-    <!-- Analytics -->
     $if(analytics)$
     $if(analytics.s_channel)$
     <meta name="omni_page" data-s-channel="$analytics.s_channel$" $if(analytics.s_bucket_0)$
@@ -68,14 +63,12 @@
     $endif$
     $endif$
 
-    <!-- Stylesheets -->
     $if(stylesheets)$
     $for(stylesheets)$
     <link rel="stylesheet" href="$stylesheets$">
     $endfor$
     $endif$
 
-    <!-- Head Scripts -->
     $if(scripts)$
     $for(scripts)$
     <script src="$scripts$"></script>
@@ -92,16 +85,13 @@
     $for(body_data_attributes)$data-$body_data_attributes.name$="$body_data_attributes.value$" $sep$ $endfor$$else$
     data-anim-scroll-group="body" $endif$>
 
-    <!-- Global Header Include -->
     $if(includes.header_global)$
     <div id="globalheader">
-      <!-- Global Header Component will be inserted here -->
     </div>
     $else$
     <div id="globalheader"></div>
     $endif$
 
-    <!-- Global Message Include -->
     $if(components.globalmessage)$
     $if(components.globalmessage.enabled)$
     <div id="globalmessage" lang="$if(components.globalmessage.lang)$$components.globalmessage.lang$$else$en-US$endif$"
@@ -109,7 +99,6 @@
     $endif$
     $endif$
 
-    <!-- Global Navigation Include -->
     $if(components.globalnav)$
     $if(components.globalnav.enabled)$
     <nav id="globalnav" lang="$if(lang)$$lang$$else$en-US$endif$"
@@ -120,15 +109,12 @@
     $endif$
     $endif$
 
-    <!-- Local Navigation Include -->
     $if(includes.local_nav)$
     <nav class="localnav" id="localnav" lang="$if(lang)$$lang$$else$pt-BR$endif$"
       dir="$if(html_config.dir)$$html_config.dir$$else$ltr$endif$" data-analytics-activitymap-region-id="local nav">
-      <!-- Local Navigation Component will be inserted here -->
     </nav>
     $endif$
 
-    <!-- Main Content Area -->
     <main id="main" class="main" role="main"
       data-anim-scroll-group="$if(main_anim_group)$$main_anim_group$$else$bubble-gum-group$endif$">
       <section>
@@ -136,10 +122,8 @@
           $for(article_data_attributes)$data-$article_data_attributes.name$="$article_data_attributes.value$" $sep$
           $endfor$$endif$>
 
-          <!-- Article Header -->
           <div class="article-header">
 
-            <!-- Category Component -->
             <div class="category component">
               <div class="component-content">
                 <div class="category-eyebrow">
@@ -151,7 +135,6 @@
               </div>
             </div>
 
-            <!-- Page Title Component -->
             <div class="pagetitle component">
               <div class="component-content">
                 <h1 class="hero-headline">
@@ -160,7 +143,6 @@
               </div>
             </div>
 
-            <!-- Article Subhead Component -->
             $if(description)$
             <div class="article-subhead component">
               <div class="component-content">
@@ -169,7 +151,6 @@
             </div>
             $endif$
 
-            <!-- Share Sheet Component -->
             <div class="sharesheet component" data-component-list="ShareSheet" data-clipboard-text="Copied to clipboard"
               data-analytics-activitymap-region-id="sharesheet-footer">
               <div class="component-content">
@@ -215,14 +196,11 @@
             </div>
           </div>
 
-          <!-- Article Header Include -->
           $if(includes.article_header)$
           <div class="article-header-extended">
-            <!-- Article Header Component will be inserted here -->
           </div>
           $endif$
 
-          <!-- Featured Image (if specified) -->
           $if(featured_image)$
           <figure
             class="image component image-big $if(featured_image.fullbleed)$image-fullbleed$endif$ body-copy-wide nr-scroll-animation"
@@ -261,7 +239,6 @@
           </figure>
           $endif$
 
-          <!-- Article Content -->
           <div class="pagebody text component">
             <div class="component-content">
               <div class="pagebody-copy">
@@ -271,13 +248,11 @@
             </div>
           </div>
 
-          <!-- Additional Components (Gallery, etc.) can be added here -->
           $if(gallery)$
           <div class="gallery component gallery-hero body-copy-wide nr-scroll-animation nr-scroll-animation--off"
             role="group" aria-label="gallery" data-component-list="MixinGallery"
             id="$if(gallery.id)$$gallery.id$$else$gallery-section$endif$" style="--nr-animation-transform-y: 20%">
             <div class="component-content">
-              <!-- Gallery content would be processed here -->
             </div>
           </div>
           $endif$
@@ -286,11 +261,9 @@
       </section>
     </main>
 
-    <!-- Global Footer Include -->
     $if(includes.footer_global)$
     <footer id="globalfooter" lang="$if(lang)$$lang$$else$pt-BR$endif$"
       dir="$if(html_config.dir)$$html_config.dir$$else$ltr$endif$">
-      <!-- Global Footer Component will be inserted here -->
     </footer>
     $else$
     <footer id="globalfooter" lang="$if(lang)$$lang$$else$pt-BR$endif$"
@@ -301,7 +274,6 @@
     $include-after$
     $endfor$
 
-    <!-- Body Scripts -->
     $if(body_scripts)$
     $for(body_scripts)$
     <script src="$body_scripts$"></script>

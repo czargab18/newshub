@@ -55,16 +55,16 @@ python newshub/build/run/render.py newshub/build/article/artigo.md
 ### 📖 Exemplos:
 ```bash
 # Básico
-python render.py artigo.md
+python build/run/render.py build/article/artigo.md
 
 # Com output personalizado
-python render.py artigo.md -o meu_artigo.html
+python build/run/render.py build/article/artigo.md -o index.html
 
 # Verbose + abertura automática
-python render.py artigo.md --verbose --open
+python build/run/render.py build/article/artigo.md --verbose --open
 
 # Modo lote
-python render.py pasta/ --batch
+python build/run/render.py pasta/ --batch
 ```
 
 ## 📊 Dependências

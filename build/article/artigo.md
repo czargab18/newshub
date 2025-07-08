@@ -1,7 +1,9 @@
 ---
-title: "Apple Music celebra 10 anos com o lançamento de um novo hub global para artistas"
-description: "Sintonize na Apple Music Radio para uma celebração especial com apresentadores Zane Lowe, Ebro Darden e convidados especiais"
-canonical: "https://www.apple.com/newsroom/2025/06/apple-music-celebrates-10-years/"
+title: "Meu titulo de exemplo"
+description: "descrição curta para seo do meu artigo"
+# canonical: "https://www.estatistica.pro/newsroom/2025/06/apple-music-celebrates-10-years/"
+# canonical: "${domin}/${diretorio}/${ano}/${mes}/${titulo}/"
+canonical: "texto-para-link-canonico"
 lang: "pt-BR"
 locale: "pt-BR"
 author: "Apple Newsroom"
@@ -10,7 +12,7 @@ type: "article"
 date: "04 de julho de 2025"
 category: "COMUNICADO DE IMPRENSA"
 category_class: "category_release"
-location: "CULVER CITY, CALIFÓRNIA"
+location: "BRASILIA, BRASIL"
 
 html_config:
   xmlns: "http://www.w3.org/1999/xhtml"
@@ -56,8 +58,8 @@ components:
     store_api: "/[storefront]/shop/bag/status"
 
 featured_image:
-  src: "https://www.apple.com/newsroom/images/2025/06/apple-music-celebrates-10-years/article/Apple-Music-10th-anniversary-Los-Angeles-studio_big.jpg.large.jpg"
-  srcset: "https://www.apple.com/newsroom/images/2025/06/apple-music-celebrates-10-years/article/Apple-Music-10th-anniversary-Los-Angeles-studio_big.jpg.large_2x.jpg 2x"
+  src: "https://www.estatistica.pro/newsroom/images/2025/06/apple-music-celebrates-10-years/article/Apple-Music-10th-anniversary-Los-Angeles-studio_big.jpg.large.jpg"
+  srcset: "https://www.estatistica.pro/newsroom/images/2025/06/apple-music-celebrates-10-years/article/Apple-Music-10th-anniversary-Los-Angeles-studio_big.jpg.large_2x.jpg 2x"
   alt: "O novo espaço de estúdio em Los Angeles"
   caption: "A Apple apresenta um novo espaço de estúdio de última geração em Los Angeles dedicado ao conteúdo orientado por artistas, inovação em áudio e conexão mais profunda com os fãs."
   fullbleed: true
@@ -77,25 +79,25 @@ analytics:
   track: "Newsroom - Apple Music celebra 10 anos"
 
 og:
-  title: "Apple Music celebra 10 anos com o lançamento de um novo hub global para artistas"
-  description: "Sintonize na Apple Music Radio para uma celebração especial com apresentadores Zane Lowe, Ebro Darden e convidados especiais"
+  title: "mEU TITULO DE EXEMPLO"
+  description: "descrição curta para seo do meu artigo"
   type: "article"
   site_name: "Apple Newsroom"
   locale: "pt_BR"
-  url: "https://www.apple.com/newsroom/2025/06/apple-music-celebrates-10-years/"
-  image: "https://www.apple.com/newsroom/images/2025/06/apple-music-celebrates-10-years/tile/Apple-Music-10th-anniversary.jpg.og.jpg?202507041300"
+  url: "texto-para-link-canonico"
+  image: "https://www.estatistica.pro/newsroom/images/2025/06/apple-music-celebrates-10-years/tile/Apple-Music-10th-anniversary.jpg.og.jpg?202507041300"
 
 twitter:
-  title: "Apple Music celebra 10 anos com o lançamento de um novo hub global para artistas"
-  description: "Sintonize na Apple Music Radio para uma celebração especial com apresentadores Zane Lowe, Ebro Darden e convidados especiais"
+  title: "mEU TITULO DE EXEMPLO"
+  description: "descrição curta para seo do meu artigo"
   site: "@Apple"
   card: "summary_large_image"
-  image: "https://www.apple.com/newsroom/images/2025/06/apple-music-celebrates-10-years/tile/Apple-Music-10th-anniversary.jpg.og.jpg?202507041300"
+  image: "https://www.estatistica.pro/newsroom/images/2025/06/apple-music-celebrates-10-years/tile/Apple-Music-10th-anniversary.jpg.og.jpg?202507041300"
 
 stylesheets:
   - "/ac/localnav/4/styles/ac-localnav.built.css"
   - "/ac/globalfooter/8/en_US/styles/ac-globalfooter.built.css"
-  - "/www.apple.com/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3"
+  - "/www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3"
   - "/newsroom/styles/site.built.css"
   - "/newsroom/styles/articlev2.built.css"
 
@@ -132,7 +134,7 @@ A instalação também apresenta tecnologia de ponta e design acústico personal
 
 ## **Tecnologia de Ponta para Criação Musical**
 
-![Estúdio de Gravação Apple Music](img1.png "Estúdio de gravação com equipamento Spatial Audio"){#studio-recording .image-fullwidth .component-image data-analytics="studio-tech-image"}
+![Estúdio de Gravação Apple Music](image.png "Estúdio de gravação com equipamento Spatial Audio"){#studio-recording .image-fullwidth .component-image data-analytics="studio-tech-image"}
 
 O coração do novo estúdio é sua capacidade de **Spatial Audio**, permitindo que os artistas explorem novas dimensões sonoras. O espaço está equipado com a mais recente tecnologia de gravação da Apple, incluindo interfaces de áudio personalizadas e monitores de referência que permitem aos artistas experimentar com som tridimensional.
 
