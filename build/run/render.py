@@ -22,9 +22,394 @@ except ImportError:
     print("Ou execute: python config.py")
     sys.exit(1)
 
+
+class Automacao:
+    """
+    Classe base para automação de tarefas com configurações padrão para renderização
+    """
+
+    def __init__(self):
+        """Inicializa as configurações padrão"""
+        self.config_padrao = self._criar_config_padrao()
+
+    def _criar_config_padrao(self):
+        """Cria estrutura de configuração padrão para artigos"""
+        return {
+            # Metadados básicos do artigo (serão sobrescritos pelos dados do .md)
+            "meta_basico": {
+                "title": None,  # Será extraído do .md
+                "description": None,  # Será extraído do .md
+                "canonical": None,  # Será extraído do .md
+                "lang": "pt-BR",
+                "locale": "pt-BR",
+                "author": "Apple Newsroom",
+                "site_name": "Apple Newsroom",
+                "type": "article",
+                "date": None,  # Será extraído do .md
+                "category": "COMUNICADO DE IMPRENSA",
+                "category_class": "category_release",
+                "location": None  # Será extraído do .md
+            },
+
+            # Configurações HTML
+            "html_config": {
+                "xmlns": "http://www.w3.org/1999/xhtml",
+                "xml_lang": "pt-BR",
+                "lang": "pt-BR",
+                "dir": "ltr",
+                "prefix": "og: http://ogp.me/ns#",
+                "classes": [
+                    "globalheader-dark",
+                    "js",
+                    "no-touch",
+                    "svg",
+                    "progressive-image",
+                    "windows",
+                    "no-edge",
+                    "no-safari",
+                    "no-mobile-os",
+                    "no-reduced-motion",
+                    "progressive"
+                ]
+            },
+
+            # Includes de componentes
+            "includes": {
+                "header_global": {
+                    "file": "globalheader.html",
+                    "position": "after_body_open",
+                    "priority": 1
+                },
+                "footer_global": {
+                    "file": "globalfooter.html",
+                    "position": "before_body_close",
+                    "priority": 1
+                },
+                "local_nav": {
+                    "file": "localnav.html",
+                    "position": "after_globalheader",
+                    "priority": 2
+                }
+            },
+
+            # Componentes globais
+            "components": {
+                "globalmessage": {
+                    "enabled": True,
+                    "lang": "pt-BR",
+                    "dir": "ltr"
+                },
+                "globalnav": {
+                    "enabled": True,
+                    "analytics_region": "global nav",
+                    "store_api": "/[storefront]/shop/bag/status"
+                }
+            },
+
+            # Meta tags
+            "meta": {
+                "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+                "charset": "utf-8"
+            },
+
+            # Analytics
+            "analytics": {
+                "s_channel": "newsroom",
+                "s_bucket_0": "applestoreww",
+                "s_bucket_1": "applestoreww",
+                "s_bucket_2": "applestoreww",
+                "track": "Redação - Estatística"
+            },
+
+            # Open Graph (herda automaticamente title/description dos meta_basico)
+            "og": {
+                "type": "article",
+                "site_name": "Redação - Estatística",
+                "locale": "pt_BR",
+                "image": "https://www.estatistica.pro/newsroom/images/default/tile/default.jpg.og.jpg"
+            },
+
+            # Recursos CSS
+            "stylesheets": [
+                "www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3",
+            ],
+
+            # Scripts head
+            "scripts": [
+                "/newsroom/scripts/newsroom-head.built.js"
+            ],
+
+            # Scripts body
+            "body_scripts": [
+                "/newsroom/scripts/newsroom-body.built.js"
+            ]
+        }
+
+    def extrair_metadados_do_md(self, arquivo_md):
+        """
+        Extrai metadados do arquivo Markdown (frontmatter ou conteúdo)
+        
+        Args:
+            arquivo_md (str): Caminho para o arquivo Markdown
+            
+        Returns:
+            dict: Metadados extraídos do arquivo
+        """
+        if not os.path.exists(arquivo_md):
+            print(f"⚠️ Arquivo não encontrado: {arquivo_md}")
+            return {}
+
+        with open(arquivo_md, 'r', encoding='utf-8') as f:
+            conteudo = f.read()
+
+        metadados = {}
+
+        # Primeiro tenta extrair do frontmatter YAML
+        frontmatter_data = self._extrair_frontmatter_yaml(conteudo)
+        if frontmatter_data:
+            metadados.update(frontmatter_data)
+
+        # Se não encontrou no frontmatter, extrai do conteúdo
+        if not metadados.get('title'):
+            metadados['title'] = self._extrair_titulo_do_conteudo(conteudo)
+
+        if not metadados.get('date'):
+            metadados['date'] = self._extrair_data_do_conteudo(conteudo)
+
+        if not metadados.get('location'):
+            metadados['location'] = self._extrair_localizacao_do_conteudo(
+                conteudo)
+
+        # Gera canonical se não existir
+        if not metadados.get('canonical') and metadados.get('title'):
+            metadados['canonical'] = self._gerar_canonical_slug(
+                metadados['title'])
+
+        return metadados
+
+    def _extrair_frontmatter_yaml(self, conteudo):
+        """
+        Extrai dados do frontmatter YAML se existir
+        
+        Args:
+            conteudo (str): Conteúdo do arquivo Markdown
+            
+        Returns:
+            dict: Dados do frontmatter ou dict vazio
+        """
+        if conteudo.startswith('---'):
+            partes = conteudo.split('---', 2)
+            if len(partes) >= 3:
+                try:
+                    return yaml.safe_load(partes[1])
+                except yaml.YAMLError as e:
+                    print(f"⚠️ Erro ao parsear frontmatter YAML: {e}")
+        return {}
+
+    def _extrair_titulo_do_conteudo(self, conteudo):
+        """
+        Extrai o título do primeiro cabeçalho H1 do Markdown
+        
+        Args:
+            conteudo (str): Conteúdo do arquivo Markdown
+            
+        Returns:
+            str: Título extraído ou None
+        """
+        # Remove frontmatter para buscar no conteúdo
+        if conteudo.startswith('---'):
+            partes = conteudo.split('---', 2)
+            if len(partes) >= 3:
+                conteudo = partes[2]
+
+        # Procura por cabeçalho H1
+        match = re.search(r'^#\s+(.+)$', conteudo, re.MULTILINE)
+        if match:
+            return match.group(1).strip()
+
+        return None
+
+    def _extrair_data_do_conteudo(self, conteudo):
+        """
+        Extrai data do conteúdo usando padrões comuns
+        
+        Args:
+            conteudo (str): Conteúdo do arquivo Markdown
+            
+        Returns:
+            str: Data extraída ou data atual
+        """
+        # Padrões de data em português
+        padroes_data = [
+            r'(\d{1,2}\s+de\s+\w+\s+de\s+\d{4})',  # "04 de julho de 2025"
+            r'(\d{1,2}/\d{1,2}/\d{4})',             # "04/07/2025"
+            r'(\d{4}-\d{2}-\d{2})',                 # "2025-07-04"
+        ]
+
+        for padrao in padroes_data:
+            match = re.search(padrao, conteudo, re.IGNORECASE)
+            if match:
+                return match.group(1)
+
+        # Se não encontrou, retorna data atual
+        return datetime.now().strftime("%d de %B de %Y")
+
+    def _extrair_localizacao_do_conteudo(self, conteudo):
+        """
+        Extrai localização do conteúdo usando padrões comuns
+        
+        Args:
+            conteudo (str): Conteúdo do arquivo Markdown
+            
+        Returns:
+            str: Localização extraída ou None
+        """
+        # Padrões de localização
+        padroes_local = [
+            r'([A-Z][A-Z\s]+,\s*[A-Z][A-Z\s]+)\s*[-–—]',  # "BRASILIA, BRASIL —"
+            # "BRASILIA, BRASIL" no início
+            r'^([A-Z][A-Z\s]+,\s*[A-Z][A-Z\s]+)',
+        ]
+
+        for padrao in padroes_local:
+            match = re.search(padrao, conteudo, re.MULTILINE)
+            if match:
+                return match.group(1).strip()
+
+        return None
+
+    def _gerar_canonical_slug(self, titulo):
+        """
+        Gera um slug para URL canônica a partir do título
+        
+        Args:
+            titulo (str): Título do artigo
+            
+        Returns:
+            str: Slug gerado
+        """
+        if not titulo:
+            return None
+
+        # Remove caracteres especiais e converte para minúsculo
+        slug = re.sub(r'[^\w\s-]', '', titulo.lower())
+        slug = re.sub(r'[-\s]+', '-', slug)
+        slug = slug.strip('-')
+
+        return slug
+
+    def verificar_se_deve_incluir_twitter(self, metadados_md):
+        """
+        Verifica se deve incluir meta tags do Twitter baseado nos dados disponíveis
+        
+        Args:
+            metadados_md (dict): Metadados extraídos do arquivo .md
+            
+        Returns:
+            bool: True se deve incluir Twitter, False caso contrário
+        """
+        # Verifica se existe configuração explícita do Twitter no frontmatter
+        if metadados_md and isinstance(metadados_md.get('twitter'), dict):
+            return True
+
+        # Verifica se existe algum campo específico do Twitter no frontmatter
+        twitter_fields = ['twitter_site', 'twitter_card',
+                          'twitter_image', 'twitter_creator']
+        if metadados_md:
+            for field in twitter_fields:
+                if field in metadados_md and metadados_md[field] is not None:
+                    return True
+
+        return False
+
+    def criar_config_atualizada(self, metadados_md):
+        """
+        Cria configuração atualizada baseada nos metadados do arquivo .md
+        
+        Args:
+            metadados_md (dict): Metadados extraídos do arquivo .md
+            
+        Returns:
+            dict: Configuração atualizada
+        """
+        config = self.config_padrao.copy()
+
+        # Aplica metadados extraídos
+        if metadados_md:
+            # Atualiza metadados básicos
+            for campo in ['title', 'description', 'canonical', 'date', 'location', 'category', 'author']:
+                if campo in metadados_md and metadados_md[campo] is not None:
+                    config['meta_basico'][campo] = metadados_md[campo]
+
+            # Aplica herança automática para Open Graph
+            if metadados_md.get('title'):
+                config['og']['title'] = metadados_md['title']
+            if metadados_md.get('description'):
+                config['og']['description'] = metadados_md['description']
+            if metadados_md.get('canonical'):
+                config['og']['url'] = metadados_md['canonical']
+
+            # Inclui Twitter se existir
+            if self.verificar_se_deve_incluir_twitter(metadados_md):
+                config['twitter'] = metadados_md.get('twitter', {
+                    "site": "@Apple",
+                    "card": "summary_large_image",
+                    "image": "https://www.estatistica.pro/newsroom/images/default/tile/default.jpg.og.jpg"
+                })
+
+                # Aplica herança para Twitter
+                if metadados_md.get('title'):
+                    config['twitter']['title'] = metadados_md['title']
+                if metadados_md.get('description'):
+                    config['twitter']['description'] = metadados_md['description']
+
+            # Atualiza analytics com título
+            if metadados_md.get('title'):
+                config['analytics']['track'] = f"Newsroom - {metadados_md['title']}"
+
+            # Preserva configurações específicas do frontmatter
+            for campo in ['html_config', 'includes', 'components', 'featured_image', 'meta', 'stylesheets', 'scripts', 'body_scripts']:
+                if campo in metadados_md:
+                    config[campo] = metadados_md[campo]
+
+        return config
+
+    def gerar_frontmatter_atualizado(self, metadados_originais, input_file):
+        """
+        Gera frontmatter atualizado com automações aplicadas
+        
+        Args:
+            metadados_originais (dict): Metadados originais do arquivo
+            input_file (str): Caminho do arquivo de entrada
+            
+        Returns:
+            dict: Metadados atualizados para renderização
+        """
+        # Extrai metadados do arquivo
+        metadados_extraidos = self.extrair_metadados_do_md(input_file)
+
+        # Cria configuração atualizada
+        config_atualizada = self.criar_config_atualizada(metadados_extraidos)
+
+        # Flatten da configuração para o formato esperado pelo render
+        resultado = {}
+
+        # Meta básico no nível raiz
+        resultado.update(config_atualizada.get('meta_basico', {}))
+
+        # Outras seções
+        for key in ['html_config', 'includes', 'components', 'meta', 'analytics', 'og', 'twitter', 'featured_image', 'stylesheets', 'scripts', 'body_scripts']:
+            if key in config_atualizada and config_atualizada[key] is not None:
+                resultado[key] = config_atualizada[key]
+
+        return resultado
+
 class NewsroomRenderer:
     def __init__(self, base_dir=None):
         """Inicializa o renderizador"""
+        # Inicializa automação
+        self.automacao = Automacao()
+
         if base_dir is None:
             # Padrão: usar diretório run como base
             script_dir = Path(__file__).parent
@@ -79,8 +464,8 @@ class NewsroomRenderer:
         
         return True
     
-    def extract_frontmatter(self, content):
-        """Extrai frontmatter YAML do conteúdo markdown"""
+    def extract_frontmatter(self, content, input_file=None):
+        """Extrai frontmatter YAML do conteúdo markdown e aplica automações"""
         try:
             # Regex para frontmatter
             pattern = r'^---\s*\n(.*?)\n---\s*\n(.*)$'
@@ -93,13 +478,69 @@ class NewsroomRenderer:
                 # Parse YAML
                 try:
                     metadata = yaml.safe_load(yaml_content)
-                    return metadata or {}, markdown_body
+                    if metadata is None:
+                        metadata = {}
+
+                    # Aplica automações se input_file foi fornecido
+                    if input_file:
+                        self.log("🤖 Aplicando automações...", "INFO")
+                        metadata_atualizado = self.automacao.gerar_frontmatter_atualizado(
+                            metadata, input_file)
+
+                        # Log das automações aplicadas
+                        metadados_extraidos = self.automacao.extrair_metadados_do_md(
+                            input_file)
+                        if metadados_extraidos.get('title') and not metadata.get('title'):
+                            self.log(
+                                f"✓ Título extraído: {metadados_extraidos['title']}", "SUCCESS")
+                        if metadados_extraidos.get('date') and not metadata.get('date'):
+                            self.log(
+                                f"✓ Data extraída: {metadados_extraidos['date']}", "SUCCESS")
+                        if metadados_extraidos.get('location') and not metadata.get('location'):
+                            self.log(
+                                f"✓ Localização extraída: {metadados_extraidos['location']}", "SUCCESS")
+                        if metadados_extraidos.get('canonical') and not metadata.get('canonical'):
+                            self.log(
+                                f"✓ URL canônica gerada: {metadados_extraidos['canonical']}", "SUCCESS")
+
+                        # Verifica Twitter
+                        tem_twitter = self.automacao.verificar_se_deve_incluir_twitter(
+                            metadados_extraidos)
+                        if tem_twitter:
+                            self.log(
+                                "✓ Twitter Cards incluídas (detectadas no arquivo)", "SUCCESS")
+                        else:
+                            self.log(
+                                "ℹ Twitter Cards omitidas (não detectadas)", "INFO")
+
+                        return metadata_atualizado, markdown_body
+                    else:
+                        return metadata, markdown_body
+
                 except yaml.YAMLError as e:
                     self.log(f"Erro ao processar YAML: {e}", "WARNING")
                     return {}, content
             else:
-                self.log("Nenhum frontmatter YAML encontrado", "WARNING")
-                return {}, content
+                # Sem frontmatter - aplica automações se input_file fornecido
+                if input_file:
+                    self.log(
+                        "⚠ Nenhum frontmatter encontrado - aplicando automações", "WARNING")
+                    metadata_gerado = self.automacao.gerar_frontmatter_atualizado(
+                        {}, input_file)
+
+                    metadados_extraidos = self.automacao.extrair_metadados_do_md(
+                        input_file)
+                    if metadados_extraidos.get('title'):
+                        self.log(
+                            f"✓ Título extraído do conteúdo: {metadados_extraidos['title']}", "SUCCESS")
+                    if metadados_extraidos.get('date'):
+                        self.log(
+                            f"✓ Data extraída: {metadados_extraidos['date']}", "SUCCESS")
+
+                    return metadata_gerado, content
+                else:
+                    self.log("Nenhum frontmatter YAML encontrado", "WARNING")
+                    return {}, content
                 
         except Exception as e:
             self.log(f"Erro ao extrair frontmatter: {e}", "ERROR")
@@ -266,13 +707,18 @@ class NewsroomRenderer:
             
             self.log("Arquivo markdown carregado")
             
-            # Extrair frontmatter
-            metadata, markdown_body = self.extract_frontmatter(markdown_content)
+            # Extrair frontmatter com automações
+            metadata, markdown_body = self.extract_frontmatter(
+                markdown_content, input_path)
             
             if metadata:
-                self.log(f"Frontmatter extraído: {len(metadata)} campos")
+                self.log(f"Frontmatter processado: {len(metadata)} campos")
                 if verbose:
-                    self.log(f"Metadados: {json.dumps(metadata, indent=2, ensure_ascii=False)}")
+                    # Mostra apenas campos principais para não poluir o log
+                    campos_principais = {k: v for k, v in metadata.items(
+                    ) if k in ['title', 'description', 'date', 'location', 'canonical']}
+                    self.log(
+                        f"Metadados principais: {json.dumps(campos_principais, indent=2, ensure_ascii=False)}")
             
             # Preparar variáveis para pypandoc
             extra_args = [

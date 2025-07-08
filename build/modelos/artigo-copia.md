@@ -1,6 +1,6 @@
 ---
-title: "Meu Titulo exemplo"
-description: "descrição curta para seo do meu artigo"
+# title: "Meu Titulo exemplo"
+# description: "descrição curta para seo do meu artigo"
 # canonical: "https://www.estatistica.pro/newsroom/2025/06/apple-music-celebrates-10-years/"
 # canonical: "${domin}/${diretorio}/${ano}/${mes}/${titulo}/"
 canonical: "texto-para-link-canonico"
@@ -104,6 +104,8 @@ scripts:
 body_scripts:
   - "/newsroom/scripts/newsroom-body.built.js"
 ---
+
+# Meu titulo exemplo
 
 # Lorem Ipsum - Conteúdo de Exemplo
 
