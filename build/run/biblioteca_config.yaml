@@ -1,0 +1,344 @@
+# Configuração da Biblioteca de Elementos - Apple Newsroom
+# Arquivo YAML para personalizar e estender elementos disponíveis
+
+# === ELEMENTOS PERSONALIZADOS ===
+elementos_personalizados:
+  
+  # Novos componentes de navegação
+  navegacao:
+    header_evento:
+      description: "Cabeçalho especial para eventos e keynotes"
+      includes:
+        header_global:
+          file: "globalheader.html"
+          position: "after_body_open"
+          priority: 1
+        event_banner:
+          file: "event-banner.html"
+          position: "after_globalheader"
+          priority: 2
+      components:
+        event_countdown:
+          enabled: true
+          style: "live"
+    
+    header_minimal:
+      description: "Cabeçalho minimalista para landing pages"
+      includes:
+        header_minimal:
+          file: "minimal-header.html"
+          position: "after_body_open"
+          priority: 1
+  
+  # Analytics personalizados
+  analytics:
+    keynote_evento:
+      description: "Analytics específicos para keynotes"
+      analytics:
+        s_channel: "newsroom"
+        s_bucket_0: "applestoreww"
+        s_bucket_1: "keynote_event"
+        s_bucket_2: "keynote_event"
+        track: "Redação - Estatística - Keynote"
+        s_events: "event25=o"
+        s_products: "keynote-livestream"
+    
+    release_beta:
+      description: "Analytics para releases beta"
+      analytics:
+        s_channel: "newsroom"
+        s_bucket_0: "applestoreww"
+        s_bucket_1: "beta_release"
+        s_bucket_2: "beta_release"
+        track: "Redação - Estatística - Beta"
+        s_events: "event30=o"
+  
+  # Componentes de mídia social estendidos
+  social:
+    twitter_video:
+      description: "Twitter Cards otimizado para vídeos"
+      twitter:
+        card: "player"
+        site: "@estatisticabr"
+        creator: "@estatisticabr"
+        player: "https://www.estatistica.pro/video/player.html"
+        player:width: "1280"
+        player:height: "720"
+    
+    og_video:
+      description: "Open Graph para conteúdo de vídeo"
+      og:
+        type: "video.other"
+        site_name: "Redação - Estatística"
+        locale: "pt_BR"
+        video: "https://www.estatistica.pro/videos/default.mp4"
+        video:type: "video/mp4"
+        video:width: "1280"
+        video:height: "720"
+    
+    instagram_story:
+      description: "Links para Instagram Stories"
+      meta:
+        instagram:story_url: "https://instagram.com/stories/estatisticabr"
+  
+  # Layouts especializados
+  layout:
+    keynote_live:
+      description: "Layout para transmissões ao vivo de keynotes"
+      components:
+        live_player:
+          enabled: true
+          platform: "youtube"
+          autoplay: false
+        live_chat:
+          enabled: true
+          moderated: true
+        social_feed:
+          enabled: true
+          hashtag: "#AppleEvent"
+      stylesheets:
+        - "www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3"
+        - "/newsroom/styles/keynote-live.css"
+    
+    product_comparison:
+      description: "Layout para comparação de produtos"
+      components:
+        comparison_table:
+          enabled: true
+          style: "interactive"
+        product_gallery:
+          enabled: true
+          layout: "grid"
+      scripts:
+        - "/newsroom/scripts/product-comparison.js"
+  
+  # Templates de conteúdo específicos
+  categorias:
+    keynote:
+      description: "Template completo para keynotes"
+      meta_basico:
+        category: "KEYNOTE"
+        category_class: "category_keynote"
+        type: "event"
+      analytics:
+        s_channel: "newsroom"
+        s_bucket_1: "keynote_event"
+        s_bucket_2: "keynote_event"
+        track: "Redação - Estatística - Keynote"
+      components:
+        keynote_hero:
+          enabled: true
+          style: "video_background"
+        countdown_timer:
+          enabled: true
+          target_date: "auto"
+    
+    tutorial:
+      description: "Template para tutoriais e guias"
+      meta_basico:
+        category: "TUTORIAL"
+        category_class: "category_tutorial"
+        type: "article"
+      analytics:
+        s_channel: "newsroom"
+        s_bucket_1: "tutorial"
+        s_bucket_2: "tutorial"
+        track: "Redação - Estatística - Tutorial"
+      components:
+        tutorial_navigation:
+          enabled: true
+          style: "sticky"
+        code_highlighter:
+          enabled: true
+          theme: "apple"
+    
+    release_notes:
+      description: "Template para notas de versão"
+      meta_basico:
+        category: "NOTAS DE VERSÃO"
+        category_class: "category_release_notes"
+        type: "article"
+      analytics:
+        s_channel: "newsroom"
+        s_bucket_1: "release_notes"
+        s_bucket_2: "release_notes"
+        track: "Redação - Estatística - Release Notes"
+      components:
+        version_info:
+          enabled: true
+          show_changelog: true
+        download_links:
+          enabled: true
+          style: "prominent"
+
+# === PRESETS PRONTOS ===
+presets:
+  
+  artigo_completo:
+    description: "Preset completo para artigos padrão de newsroom"
+    elementos:
+      - "navegacao/header_completo"
+      - "analytics/newsroom_padrao"
+      - "social/twitter_completo"
+      - "social/og_artigo"
+      - "layout/artigo_padrao"
+  
+  lancamento_produto:
+    description: "Preset para lançamentos de produtos"
+    elementos:
+      - "navegacao/header_completo"
+      - "analytics/produto_lancamento"
+      - "social/twitter_completo"
+      - "social/og_produto"
+      - "layout/artigo_padrao"
+      - "categorias/lancamento_produto"
+  
+  keynote_evento:
+    description: "Preset para keynotes e eventos especiais"
+    elementos:
+      - "navegacao/header_evento"
+      - "analytics/keynote_evento"
+      - "social/twitter_video"
+      - "social/og_video"
+      - "layout/keynote_live"
+      - "categorias/keynote"
+  
+  comunicado_simples:
+    description: "Preset simplificado para comunicados básicos"
+    elementos:
+      - "navegacao/header_simples"
+      - "analytics/comunicado_imprensa"
+      - "social/og_artigo"
+      - "categorias/comunicado_imprensa"
+  
+  tutorial_guia:
+    description: "Preset para tutoriais e guias"
+    elementos:
+      - "navegacao/header_completo"
+      - "analytics/newsroom_padrao"
+      - "social/twitter_completo"
+      - "social/og_artigo"
+      - "categorias/tutorial"
+
+# === CONFIGURAÇÕES GLOBAIS ===
+configuracoes:
+  
+  # URLs base para imagens e recursos
+  urls_base:
+    imagens_og: "https://www.estatistica.pro/newsroom/images"
+    imagens_twitter: "https://www.estatistica.pro/newsroom/images/twitter"
+    videos: "https://www.estatistica.pro/videos"
+    livestream: "https://www.estatistica.pro/live"
+  
+  # Configurações padrão para elementos
+  padroes:
+    analytics:
+      s_bucket_0: "applestoreww"
+      track_prefix: "Redação - Estatística"
+    
+    og:
+      site_name: "Redação - Estatística"
+      locale: "pt_BR"
+      image_width: "1200"
+      image_height: "630"
+    
+    twitter:
+      site: "@estatisticabr"
+      domain: "estatistica.pro"
+  
+  # Mapeamento de tipos de conteúdo
+  tipos_conteudo:
+    artigo: "article"
+    produto: "product"
+    evento: "event"
+    video: "video.other"
+    tutorial: "article"
+
+# === SNIPPETS DE CONTEÚDO ===
+snippets:
+  
+  rodape_padrao:
+    description: "Rodapé padrão com informações de contato"
+    content: |
+      ---
+      
+      **Sobre a Redação - Estatística**
+      
+      A Redação - Estatística oferece análises profundas e insights sobre tecnologia, dados e inovação. Nosso compromisso é fornecer informações precisas e valiosas para profissionais e entusiastas.
+      
+      **Contato para Imprensa:**
+      - Email: press@estatistica.pro
+      - Telefone: +55 (11) 1234-5678
+      - Website: [estatistica.pro](https://www.estatistica.pro)
+  
+  cta_newsletter:
+    description: "Call-to-action para inscrição em newsletter"
+    content: |
+      ## 📧 Mantenha-se Atualizado
+      
+      Receba nossas análises e insights mais recentes diretamente em seu email. Inscreva-se em nossa newsletter semanal.
+      
+      [**📬 Inscrever-se na Newsletter →**](https://www.estatistica.pro/newsletter)
+  
+  cta_podcast:
+    description: "Call-to-action para podcast"
+    content: |
+      ## 🎧 Ouça Nosso Podcast
+      
+      Aprofunde-se em discussões sobre tecnologia e dados em nosso podcast semanal "Estatística Cast".
+      
+      [**🎙️ Ouvir no Apple Podcasts →**](https://podcasts.apple.com/br/podcast/estatistica-cast)
+      [**🎵 Ouvir no Spotify →**](https://open.spotify.com/show/estatistica-cast)
+  
+  social_share:
+    description: "Botões de compartilhamento social"
+    content: |
+      ## 📱 Compartilhe
+      
+      Gostou deste artigo? Compartilhe com sua rede:
+      
+      - [📘 Facebook](https://www.facebook.com/sharer/sharer.php?u=)
+      - [🐦 Twitter](https://twitter.com/intent/tweet?url=)
+      - [💼 LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=)
+  
+  disclaimer_beta:
+    description: "Disclaimer para conteúdo beta"
+    content: |
+      > **⚠️ Aviso:** Este artigo discute recursos em versão beta. As funcionalidades podem mudar antes do lançamento final.
+  
+  disclaimer_opiniao:
+    description: "Disclaimer para artigos de opinião"
+    content: |
+      > **💭 Nota:** Este artigo expressa opiniões e análises dos editores da Redação - Estatística e não representa necessariamente posições oficiais da Apple Inc.
+
+# === AUTOMATIZAÇÕES ===
+automatizacoes:
+  
+  # Regras para aplicação automática de elementos
+  regras_auto:
+    - condicao: "title contém 'Keynote' ou 'Evento'"
+      aplicar: ["categorias/keynote", "analytics/keynote_evento"]
+    
+    - condicao: "title contém 'Produto' ou 'Lançamento'"
+      aplicar: ["categorias/lancamento_produto", "analytics/produto_lancamento"]
+    
+    - condicao: "title contém 'Tutorial' ou 'Como fazer'"
+      aplicar: ["categorias/tutorial"]
+    
+    - condicao: "description contém 'beta'"
+      aplicar: ["analytics/release_beta"]
+      adicionar_snippet: "disclaimer_beta"
+  
+  # Validações automáticas
+  validacoes:
+    - campo: "meta_basico.title"
+      obrigatorio: true
+      max_length: 60
+    
+    - campo: "meta_basico.description"
+      obrigatorio: true
+      max_length: 160
+    
+    - campo: "og.image"
+      obrigatorio: true
+      validar_url: true

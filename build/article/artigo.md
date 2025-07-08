@@ -1,13 +1,13 @@
 ---
 title: "Meu Titulo exemplo"
 description: "descrição curta para seo do meu artigo"
-# canonical: "https://www.estatistica.pro/newsroom/2025/06/apple-music-celebrates-10-years/"
+# canonical: "https://www.estatistica.pro/newsroom/2025/06/estatistica-music-celebrates-10-years/"
 # canonical: "${domin}/${diretorio}/${ano}/${mes}/${titulo}/"
 canonical: "texto-para-link-canonico"
 lang: "pt-BR"
 locale: "pt-BR"
-author: "Apple Newsroom"
-site_name: "Apple Newsroom"
+author: "Estatística Newsroom"
+site_name: "Estatística Newsroom"
 type: "article"
 date: "04 de julho de 2025"
 category: "COMUNICADO DE IMPRENSA"
@@ -73,16 +73,16 @@ meta:
 
 analytics:
   s_channel: "newsroom"
-  s_bucket_0: "applestoreww"
-  s_bucket_1: "applestoreww"
-  s_bucket_2: "applestoreww"
+  s_bucket_0: "estatisticastoreww"
+  s_bucket_1: "estatisticastoreww"
+  s_bucket_2: "estatisticastoreww"
   track: "Redação - Estatística"
 
 og:
   title: "Meu Titulo exemplo"
   description: "descrição curta para seo do meu artigo"
   type: "article"
-  site_name: "Apple Newsroom"
+  site_name: "Estatística Newsroom"
   locale: "pt_BR"
   url: "texto-para-link-canonico"
   image: "/imgage.png"
@@ -90,7 +90,7 @@ og:
 twitter:
   title: "Meu Titulo exemplo"
   description: "descrição curta para seo do meu artigo"
-  site: "@Apple"
+  site: "@Estatística"
   card: "summary_large_image"
   image: "/imgage.png"
 

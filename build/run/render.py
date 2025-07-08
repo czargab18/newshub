@@ -12,6 +12,7 @@ import json
 import argparse
 import webbrowser
 from pathlib import Path
+from typing import Optional
 from datetime import datetime
 
 try:
@@ -21,6 +22,13 @@ except ImportError:
     print("Execute: pip install pypandoc")
     print("Ou execute: python config.py")
     sys.exit(1)
+
+# Importa a biblioteca de elementos
+try:
+    from biblioteca_elementos import BibliotecaElementos
+except ImportError:
+    print("⚠️  Biblioteca de elementos não encontrada. Algumas funcionalidades podem estar limitadas.")
+    BibliotecaElementos = None
 
 
 class Automacao:
@@ -409,6 +417,16 @@ class NewsroomRenderer:
         """Inicializa o renderizador"""
         # Inicializa automação
         self.automacao = Automacao()
+
+        # Inicializa biblioteca de elementos se disponível
+        self.biblioteca = None
+        if BibliotecaElementos:
+            try:
+                self.biblioteca = BibliotecaElementos()
+                self.log("✓ Biblioteca de elementos carregada", "SUCCESS")
+            except Exception as e:
+                self.log(
+                    f"⚠️  Erro ao carregar biblioteca de elementos: {e}", "WARNING")
 
         if base_dir is None:
             # Padrão: usar diretório run como base
@@ -819,6 +837,127 @@ class NewsroomRenderer:
             self.log(f"Erro no processamento em lote: {e}", "ERROR")
             return []
 
+    def aplicar_elementos_biblioteca(self, frontmatter: dict, elementos_desejados: list) -> dict:
+        """
+        Aplica elementos da biblioteca ao frontmatter
+        
+        Args:
+            frontmatter: Frontmatter atual
+            elementos_desejados: Lista de elementos no formato ['categoria/nome', ...]
+            
+        Returns:
+            Frontmatter atualizado com elementos aplicados
+        """
+        if not self.biblioteca:
+            self.log("⚠️  Biblioteca de elementos não disponível", "WARNING")
+            return frontmatter
+
+        resultado = frontmatter.copy()
+
+        for elemento_path in elementos_desejados:
+            try:
+                if '/' not in elemento_path:
+                    self.log(
+                        f"⚠️  Formato inválido para elemento: {elemento_path}. Use 'categoria/nome'", "WARNING")
+                    continue
+
+                categoria, nome = elemento_path.split('/', 1)
+
+                self.log(f"📦 Aplicando elemento: {categoria}/{nome}")
+                resultado = self.biblioteca.aplicar_elemento(
+                    resultado, categoria, nome)
+
+            except Exception as e:
+                self.log(
+                    f"❌ Erro ao aplicar elemento {elemento_path}: {e}", "ERROR")
+
+        return resultado
+
+    def listar_elementos_disponiveis(self, categoria: Optional[str] = None) -> None:
+        """
+        Lista elementos disponíveis na biblioteca
+        
+        Args:
+            categoria: Categoria específica (opcional)
+        """
+        if not self.biblioteca:
+            self.log("⚠️  Biblioteca de elementos não disponível", "WARNING")
+            return
+
+        elementos = self.biblioteca.listar_elementos(categoria)
+
+        if categoria:
+            self.log(f"📚 Elementos da categoria '{categoria}':")
+            for nome, dados in elementos.items():
+                descricao = dados.get('description', 'Sem descrição')
+                self.log(f"  • {nome}: {descricao}")
+        else:
+            self.log("📚 Categorias e elementos disponíveis:")
+            for cat, elems in elementos.items():
+                self.log(f"  📁 {cat}:")
+                for nome, dados in elems.items():
+                    descricao = dados.get('description', 'Sem descrição')
+                    self.log(f"    • {nome}: {descricao}")
+
+    def buscar_elementos(self, termo: str) -> None:
+        """
+        Busca elementos na biblioteca por termo
+        
+        Args:
+            termo: Termo de busca
+        """
+        if not self.biblioteca:
+            self.log("⚠️  Biblioteca de elementos não disponível", "WARNING")
+            return
+
+        resultados = self.biblioteca.buscar_elementos(termo)
+
+        if resultados:
+            self.log(f"🔍 Elementos encontrados para '{termo}':")
+            for categoria, elementos in resultados.items():
+                self.log(f"  📁 {categoria}:")
+                for nome, dados in elementos.items():
+                    descricao = dados.get('description', 'Sem descrição')
+                    self.log(f"    • {nome}: {descricao}")
+        else:
+            self.log(f"❌ Nenhum elemento encontrado para '{termo}'")
+
+    def criar_preset_personalizado(self, nome: str, elementos: list, descricao: str = "") -> dict:
+        """
+        Cria um preset personalizado combinando elementos
+        
+        Args:
+            nome: Nome do preset
+            elementos: Lista de elementos no formato ['categoria/nome', ...]
+            descricao: Descrição do preset
+            
+        Returns:
+            Configuração do preset criado
+        """
+        if not self.biblioteca:
+            self.log("⚠️  Biblioteca de elementos não disponível", "WARNING")
+            return {}
+
+        # Converte elementos para o formato esperado
+        elementos_tuplas = []
+        for elemento_path in elementos:
+            if '/' in elemento_path:
+                categoria, nome_elem = elemento_path.split('/', 1)
+                elementos_tuplas.append((categoria, nome_elem))
+            else:
+                self.log(
+                    f"⚠️  Formato inválido: {elemento_path}. Use 'categoria/nome'", "WARNING")
+
+        if elementos_tuplas:
+            preset = self.biblioteca.criar_preset(
+                nome, elementos_tuplas, descricao)
+            self.log(
+                f"✅ Preset '{nome}' criado com {len(elementos_tuplas)} elementos")
+            return preset
+        else:
+            self.log("❌ Nenhum elemento válido fornecido para o preset", "ERROR")
+            return {}
+
 def main():
     """Função principal"""
     parser = argparse.ArgumentParser(
@@ -830,21 +969,48 @@ Exemplos de uso:
   python render.py artigo.md -o meu_artigo.html
   python render.py . --batch
   python render.py artigo.md --open --verbose
+  python render.py --list-elements social
+  python render.py --search twitter
+  python render.py artigo.md --elements social/twitter_completo,analytics/newsroom_padrao
         '''
     )
     
-    parser.add_argument('input', help='Arquivo markdown ou diretório para processar')
+    parser.add_argument('input', nargs='?',
+                        help='Arquivo markdown ou diretório para processar')
     parser.add_argument('-o', '--output', help='Arquivo de saída (opcional)')
     parser.add_argument('-b', '--batch', action='store_true', help='Modo lote para processar diretório')
     parser.add_argument('-v', '--verbose', action='store_true', help='Saída detalhada')
     parser.add_argument('--open', action='store_true', help='Abrir resultado no navegador')
     parser.add_argument('--base-dir', help='Diretório base do projeto')
     
+    # Opções da biblioteca de elementos
+    parser.add_argument('--list-elements', metavar='CATEGORIA', nargs='?', const='',
+                        help='Listar elementos disponíveis (opcionalmente de uma categoria específica)')
+    parser.add_argument('--search', metavar='TERMO',
+                        help='Buscar elementos por termo')
+    parser.add_argument('--elements', metavar='LISTA',
+                        help='Lista de elementos para aplicar (formato: categoria/nome,categoria/nome,...)')
+
     args = parser.parse_args()
     
     # Inicializar renderizador
     renderer = NewsroomRenderer(args.base_dir)
     
+    # Comandos da biblioteca de elementos
+    if args.list_elements is not None:
+        categoria = args.list_elements if args.list_elements else None
+        renderer.listar_elementos_disponiveis(categoria)
+        return
+
+    if args.search:
+        renderer.buscar_elementos(args.search)
+        return
+
+    # Verificar se input é necessário
+    if not args.input:
+        parser.error(
+            "Arquivo/diretório de entrada é obrigatório para renderização")
+
     # Verificar dependências
     if not renderer.check_dependencies():
         sys.exit(1)
@@ -868,8 +1034,52 @@ Exemplos de uso:
             sys.exit(1)
     
     else:
-        # Arquivo único
-        success, output = renderer.render(args.input, args.output, args.verbose)
+        # Aplicar elementos da biblioteca se especificados
+        if args.elements:
+            elementos_lista = [e.strip()
+                               for e in args.elements.split(',') if e.strip()]
+            renderer.log(f"📦 Elementos a aplicar: {elementos_lista}")
+
+            # Lê o arquivo original para aplicar elementos
+            try:
+                with open(args.input, 'r', encoding='utf-8') as f:
+                    conteudo_original = f.read()
+
+                # Extrai frontmatter existente
+                frontmatter_atual, markdown_body = renderer.extract_frontmatter(
+                    conteudo_original)
+
+                # Aplica elementos
+                frontmatter_atualizado = renderer.aplicar_elementos_biblioteca(
+                    frontmatter_atual, elementos_lista)
+
+                # Reconstrói o arquivo
+                yaml_atualizado = yaml.dump(
+                    frontmatter_atualizado, allow_unicode=True, sort_keys=False, indent=2)
+                conteudo_atualizado = f"---\n{yaml_atualizado}---\n\n{markdown_body}"
+
+                # Salva arquivo temporário ou sobrescreve original
+                arquivo_temp = Path(args.input).with_suffix('.temp.md')
+                with open(arquivo_temp, 'w', encoding='utf-8') as f:
+                    f.write(conteudo_atualizado)
+
+                renderer.log(
+                    f"✅ Elementos aplicados. Arquivo atualizado: {arquivo_temp}")
+
+                # Usa arquivo temporário para renderização
+                success, output = renderer.render(
+                    str(arquivo_temp), args.output, args.verbose)
+
+                # Remove arquivo temporário
+                arquivo_temp.unlink()
+
+            except Exception as e:
+                renderer.log(f"❌ Erro ao aplicar elementos: {e}", "ERROR")
+                sys.exit(1)
+        else:
+            # Renderização normal
+            success, output = renderer.render(
+                args.input, args.output, args.verbose)
         
         if success:
             renderer.log("🎉 Renderização concluída com sucesso!", "SUCCESS")
