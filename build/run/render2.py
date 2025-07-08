@@ -129,12 +129,8 @@ class Automacao:
                 "image": "https://www.estatistica.pro/newsroom/${path/to/images.jpg}"
             },
 
-            # Twitter Cards (herda automaticamente title/description dos meta_basico)
-            "twitter": {
-                "site": "@Estatica",
-                "card": "summary_large_image",
-                "image": "https://www.estatistica.pro/newsroom/${path/to/images.jpg}"
-            },
+            # Twitter Cards (opcional - só será incluído se existir dados específicos do Twitter)
+            # Não incluído por padrão - será adicionado apenas se especificado no .md ou dados customizados
 
             # Recursos CSS
             "stylesheets": [
@@ -210,9 +206,9 @@ class Automacao:
         # Meta básico no nível raiz
         yaml_data.update(config.get('meta_basico', {}))
 
-        # Outras seções mantêm sua estrutura
+        # Outras seções mantêm sua estrutura (incluindo Twitter apenas se presente)
         for key in ['html_config', 'includes', 'components', 'meta', 'analytics', 'og', 'twitter', 'stylesheets', 'scripts', 'body_scripts']:
-            if key in config:
+            if key in config and config[key] is not None:
                 yaml_data[key] = config[key]
 
         # Adiciona featured_image se existir
@@ -523,15 +519,6 @@ class Render:
         if metadados_md:
             dados_combinados["meta_basico"] = metadados_md
 
-            # Verifica se deve incluir Twitter Cards
-            if self.automacao.verificar_se_deve_incluir_twitter(metadados_md, dados_artigo):
-                # Cria configuração padrão do Twitter se não existir
-                if 'twitter' not in metadados_md and (not dados_artigo or 'twitter' not in dados_artigo):
-                    dados_combinados["twitter"] = self.automacao.criar_twitter_config()
-                elif 'twitter' in metadados_md:
-                    # Usa configuração do Twitter do frontmatter
-                    dados_combinados["twitter"] = metadados_md['twitter']
-
             # Atualiza analytics com título se disponível
             if metadados_md.get('title'):
                 dados_combinados["analytics"] = {
@@ -542,6 +529,12 @@ class Render:
         if dados_artigo:
             dados_combinados = self.automacao._merge_dicts(
                 dados_combinados, dados_artigo)
+
+        # Verifica se deve incluir Twitter Cards DEPOIS do merge
+        if self.automacao.verificar_se_deve_incluir_twitter(metadados_md, dados_artigo):
+            # Se não há configuração específica, cria uma padrão
+            if 'twitter' not in dados_combinados:
+                dados_combinados["twitter"] = self.automacao.criar_twitter_config()
 
         # Cria configuração personalizada
         config = self.automacao.criar_config_artigo(dados_combinados)
