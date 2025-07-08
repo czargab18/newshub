@@ -1,3 +1,47 @@
+# =====================================================================
+# CONFIGURAÇÃO DA BIBLIOTECA DE ELEMENTOS - APPLE NEWSROOM
+# =====================================================================
+# Sistema integrado para puxar/adicionar elementos prontos em artigos
+#
+# 🚀 COMO USAR:
+#
+# 1. LISTAR ELEMENTOS DISPONÍVEIS:
+#    python render.py --list-elements
+#    python render.py --list-elements social
+#    python render.py --list-presets
+#
+# 2. BUSCAR ELEMENTOS:
+#    python render.py --search twitter
+#    python render.py --search analytics
+#
+# 3. APLICAR ELEMENTOS/PRESETS:
+#    python render.py artigo.md --elements social/twitter_completo,analytics/newsroom_padrao
+#    python render.py artigo.md --elements preset:lancamento_produto
+#    python render.py artigo.md --elements preset:keynote_evento,social/og_artigo
+#
+# 4. AUTOMAÇÕES:
+#    python render.py artigo.md --auto
+#    (aplica elementos automaticamente baseado no conteúdo)
+#
+# 💡 FORMATOS SUPORTADOS:
+#    categoria/nome      - Elemento individual (ex: social/twitter_completo)
+#    preset:nome         - Preset completo (ex: preset:lancamento_produto)
+#    Múltiplos elementos - Separados por vírgula
+#
+# 🎯 PRESETS DISPONÍVEIS:
+#    artigo_completo     - Artigo padrão de newsroom
+#    lancamento_produto  - Lançamento de produtos
+#    keynote_evento      - Keynotes e eventos
+#    comunicado_simples  - Comunicados básicos
+#    tutorial_guia       - Tutoriais e guias
+#
+# ✨ FUNCIONALIDADES:
+#    • Merge inteligente (preserva dados existentes)
+#    • Automações baseadas no conteúdo
+#    • Biblioteca extensível via este arquivo
+#    • Integração total com sistema de renderização
+# =====================================================================
+
 # Configuração da Biblioteca de Elementos - Apple Newsroom
 # Arquivo YAML para personalizar e estender elementos disponíveis
 

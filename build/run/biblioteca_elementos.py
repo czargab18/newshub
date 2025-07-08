@@ -18,6 +18,7 @@ class BibliotecaElementos:
     def __init__(self):
         """Inicializa a biblioteca com elementos pré-definidos"""
         self.elementos = self._carregar_elementos_padrao()
+        self._carregar_elementos_personalizados()
 
     def _carregar_elementos_padrao(self) -> Dict[str, Any]:
         """Carrega elementos pré-definidos da biblioteca"""
@@ -286,6 +287,46 @@ Inscreva-se em nossa newsletter para receber as últimas análises e insights di
             }
         }
 
+    def _carregar_elementos_personalizados(self):
+        """Carrega elementos personalizados do arquivo de configuração"""
+        config_file = Path(__file__).parent / "biblioteca_config.yaml"
+
+        if config_file.exists():
+            try:
+                with open(config_file, 'r', encoding='utf-8') as f:
+                    config = yaml.safe_load(f)
+
+                # Integra elementos personalizados
+                elementos_personalizados = config.get(
+                    'elementos_personalizados', {})
+                for categoria, elementos in elementos_personalizados.items():
+                    if categoria not in self.elementos:
+                        self.elementos[categoria] = {}
+                    self.elementos[categoria].update(elementos)
+
+                # Carrega presets como elementos
+                presets = config.get('presets', {})
+                if presets:
+                    self.elementos['presets'] = {}
+                    for nome, preset in presets.items():
+                        self.elementos['presets'][nome] = preset
+
+                # Carrega snippets
+                snippets = config.get('snippets', {})
+                if snippets:
+                    if 'snippets' not in self.elementos:
+                        self.elementos['snippets'] = {}
+                    self.elementos['snippets'].update(snippets)
+
+                print("✅ Elementos personalizados carregados do biblioteca_config.yaml")
+
+            except Exception as e:
+                print(
+                    f"⚠️  Erro ao carregar configurações personalizadas: {e}")
+        else:
+            print(
+                "ℹ️  Arquivo biblioteca_config.yaml não encontrado - usando apenas elementos padrão")
+
     def listar_elementos(self, categoria: Optional[str] = None) -> Dict[str, Any]:
         """
         Lista elementos disponíveis, opcionalmente filtrados por categoria
@@ -476,10 +517,137 @@ Inscreva-se em nossa newsletter para receber as últimas análises e insights di
         
         return resultado
 
+    def aplicar_preset(self, frontmatter: Dict[str, Any], nome_preset: str, sobrescrever: bool = False) -> Dict[str, Any]:
+        """
+        Aplica um preset completo ao frontmatter
+        
+        Args:
+            frontmatter: Frontmatter atual do artigo
+            nome_preset: Nome do preset a aplicar
+            sobrescrever: Se deve sobrescrever valores existentes
+            
+        Returns:
+            Frontmatter atualizado com preset aplicado
+        """
+        preset = self.obter_elemento("presets", nome_preset)
+        if not preset:
+            print(f"⚠️  Preset '{nome_preset}' não encontrado")
+            return frontmatter
 
+        elementos = preset.get('elementos', [])
+        resultado = frontmatter.copy()
+
+        print(
+            f"🎯 Aplicando preset '{nome_preset}' com {len(elementos)} elementos")
+
+        for elemento_path in elementos:
+            if '/' in elemento_path:
+                categoria, nome = elemento_path.split('/', 1)
+                resultado = self.aplicar_elemento(
+                    resultado, categoria, nome, sobrescrever)
+
+        return resultado
+
+    def aplicar_elementos_por_lista(self, frontmatter: Dict[str, Any], lista_elementos: List[str], sobrescrever: bool = False) -> Dict[str, Any]:
+        """
+        Aplica uma lista de elementos ao frontmatter
+        
+        Args:
+            frontmatter: Frontmatter atual
+            lista_elementos: Lista no formato ['categoria/nome', 'preset:nome_preset', ...]
+            sobrescrever: Se deve sobrescrever valores existentes
+            
+        Returns:
+            Frontmatter atualizado
+        """
+        resultado = frontmatter.copy()
+
+        for item in lista_elementos:
+            if item.startswith('preset:'):
+                # Aplicar preset
+                nome_preset = item[7:]  # Remove 'preset:'
+                resultado = self.aplicar_preset(
+                    resultado, nome_preset, sobrescrever)
+            elif '/' in item:
+                # Aplicar elemento individual
+                categoria, nome = item.split('/', 1)
+                resultado = self.aplicar_elemento(
+                    resultado, categoria, nome, sobrescrever)
+            else:
+                print(
+                    f"⚠️  Formato inválido: {item}. Use 'categoria/nome' ou 'preset:nome'")
+
+        return resultado
+
+    def listar_presets(self) -> Dict[str, Any]:
+        """Lista presets disponíveis"""
+        return self.elementos.get('presets', {})
+
+    def aplicar_automacoes(self, frontmatter: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Aplica regras de automação baseadas no conteúdo
+        
+        Args:
+            frontmatter: Frontmatter atual
+            
+        Returns:
+            Frontmatter com automações aplicadas
+        """
+        # Tenta carregar regras de automação
+        config_file = Path(__file__).parent / "biblioteca_config.yaml"
+
+        if not config_file.exists():
+            return frontmatter
+
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+
+            automatizacoes = config.get('automatizacoes', {})
+            regras = automatizacoes.get('regras_auto', [])
+
+            if not regras:
+                return frontmatter
+
+            title = frontmatter.get('meta_basico', {}).get(
+                'title', '') or frontmatter.get('title', '')
+            description = frontmatter.get('meta_basico', {}).get(
+                'description', '') or frontmatter.get('description', '')
+
+            resultado = frontmatter.copy()
+
+            for regra in regras:
+                condicao = regra.get('condicao', '').lower()
+                aplicar = regra.get('aplicar', [])
+
+                # Verifica condições simples
+                match = False
+                if 'keynote' in condicao or 'evento' in condicao:
+                    if 'keynote' in title.lower() or 'evento' in title.lower():
+                        match = True
+                elif 'produto' in condicao or 'lançamento' in condicao:
+                    if 'produto' in title.lower() or 'lançamento' in title.lower():
+                        match = True
+                elif 'tutorial' in condicao:
+                    if 'tutorial' in title.lower() or 'como fazer' in title.lower():
+                        match = True
+                elif 'beta' in condicao:
+                    if 'beta' in description.lower():
+                        match = True
+
+                if match and aplicar:
+                    print(f"🤖 Automação ativada: {condicao}")
+                    resultado = self.aplicar_elementos_por_lista(
+                        resultado, aplicar)
+
+            return resultado
+
+        except Exception as e:
+            print(f"⚠️  Erro ao aplicar automações: {e}")
+            return frontmatter
 def demo_biblioteca():
     """Demonstração de uso da biblioteca de elementos"""
-    print("=== DEMO: Biblioteca de Elementos ===\n")
+    print("=== DEMO: Biblioteca de Elementos Integrada ===\n")
     
     # Inicializa a biblioteca
     biblioteca = BibliotecaElementos()
@@ -487,39 +655,57 @@ def demo_biblioteca():
     # Lista categorias disponíveis
     print("📚 Categorias disponíveis:")
     for categoria in biblioteca.elementos.keys():
-        print(f"  • {categoria}")
+        count = len(biblioteca.elementos[categoria])
+        print(f"  • {categoria} ({count} elementos)")
     
-    print(f"\n🔍 Elementos na categoria 'social':")
-    elementos_social = biblioteca.listar_elementos("social")
-    for nome, dados in elementos_social.items():
-        descricao = dados.get("description", "Sem descrição")
-        print(f"  • {nome}: {descricao}")
+    # Mostra presets disponíveis
+    presets = biblioteca.listar_presets()
+    if presets:
+        print(f"\n🎯 Presets disponíveis:")
+        for nome, dados in presets.items():
+            descricao = dados.get("description", "Sem descrição")
+            elementos = dados.get("elementos", [])
+            print(f"  • {nome}: {descricao} ({len(elementos)} elementos)")
     
     # Simula frontmatter base
     frontmatter_base = {
         "meta_basico": {
-            "title": "Meu Artigo",
-            "description": "Descrição do artigo"
+            "title": "Novo Keynote da Apple",
+            "description": "Evento especial de lançamento"
         }
     }
     
-    print(f"\n🛠️  Aplicando elemento 'social/twitter_completo':")
-    frontmatter_atualizado = biblioteca.aplicar_elemento(
-        frontmatter_base, 
-        "social", 
-        "twitter_completo"
-    )
+    print(f"\n🛠️  Testando aplicação de preset:")
+    print("Frontmatter original:")
+    print(yaml.dump(frontmatter_base, allow_unicode=True, indent=2))
+
+    # Aplica preset se disponível
+    if 'keynote_evento' in presets:
+        frontmatter_com_preset = biblioteca.aplicar_preset(
+            frontmatter_base.copy(),
+            "keynote_evento"
+        )
+
+        print("Resultado com preset 'keynote_evento':")
+        print(yaml.dump(frontmatter_com_preset,
+              allow_unicode=True, indent=2, sort_keys=False))
+
+    # Testa automações
+    print(f"\n🤖 Testando automações:")
+    frontmatter_com_auto = biblioteca.aplicar_automacoes(
+        frontmatter_base.copy())
     
-    print(f"\n📄 Resultado:")
-    print(yaml.dump(frontmatter_atualizado, allow_unicode=True, indent=2))
+    print("Resultado com automações:")
+    print(yaml.dump(frontmatter_com_auto,
+          allow_unicode=True, indent=2, sort_keys=False))
     
-    # Busca elementos
-    print(f"\n🔍 Buscando elementos com 'twitter':")
-    resultados = biblioteca.buscar_elementos("twitter")
-    for categoria, elementos in resultados.items():
-        print(f"  {categoria}:")
-        for nome in elementos.keys():
-            print(f"    • {nome}")
+    print("\n" + "=" * 80)
+    print("✅ Demonstração concluída!")
+    print("💡 Comandos disponíveis:")
+    print("   python render.py --list-elements")
+    print("   python render.py artigo.md --elements preset:keynote_evento")
+    print("   python render.py artigo.md --elements social/twitter_completo,analytics/newsroom_padrao")
+    print("=" * 80)
 
 
 if __name__ == "__main__":

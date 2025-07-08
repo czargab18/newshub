@@ -1,108 +1,69 @@
 ---
-title: "Meu Titulo exemplo"
-description: "descrição curta para seo do meu artigo"
-# canonical: "https://www.estatistica.pro/newsroom/2025/06/estatistica-music-celebrates-10-years/"
-# canonical: "${domin}/${diretorio}/${ano}/${mes}/${titulo}/"
-canonical: "texto-para-link-canonico"
-lang: "pt-BR"
-locale: "pt-BR"
-author: "Estatística Newsroom"
-site_name: "Estatística Newsroom"
-type: "article"
+# ===================================================
+# 📝 FRONTMATTER MÍNIMO - APENAS O ESSENCIAL
+# ===================================================
+# 
+# ✅ VOCÊ SÓ PRECISA ESCREVER ISSO:
+# • title, description, date, location
+# • O resto é ADICIONADO AUTOMATICAMENTE!
+#
+# 🚀 COMO USAR O SISTEMA AUTOMÁTICO:
+#
+# 1. COMUNICADO DE IMPRENSA (automático):
+#    python render.py artigo.md --elements preset:comunicado_simples
+#
+# 2. LANÇAMENTO DE PRODUTO (automático):
+#    python render.py artigo.md --elements preset:lancamento_produto
+#
+# 3. EVENTO/KEYNOTE (automático):
+#    python render.py artigo.md --elements preset:keynote_evento
+#
+# 4. ARTIGO COMPLETO (automático):
+#    python render.py artigo.md --elements preset:artigo_completo
+#
+# 💡 O QUE É ADICIONADO AUTOMATICAMENTE:
+# • Analytics (tracking, buckets, etc.)
+# • Twitter Cards (title, description, site, card, etc.)
+# • Open Graph (og:title, og:description, og:image, etc.)
+# • Headers e navegação (includes, components)
+# • Stylesheets e scripts
+# • Meta tags (viewport, charset, etc.)
+# • HTML config (classes, xmlns, etc.)
+# • Configurações de layout
+#
+# ===================================================
+
+title: "Meu Título Exemplo"
+description: "Descrição curta para SEO do meu artigo"
 date: "04 de julho de 2025"
-category: "COMUNICADO DE IMPRENSA"
-category_class: "category_release"
-location: "BRASILIA, BRASIL"
+location: "BRASÍLIA, BRASIL"
 
-html_config:
-  xmlns: "http://www.w3.org/1999/xhtml"
-  xml_lang: "pt-BR"
-  lang: "pt-BR"
-  dir: "ltr"
-  prefix: "og: http://ogp.me/ns#"
-  classes: 
-    - "globalheader-dark"
-    - "js"
-    - "no-touch" 
-    - "svg"
-    - "progressive-image"
-    - "windows"
-    - "no-edge"
-    - "no-safari"
-    - "no-mobile-os"
-    - "no-reduced-motion"
-    - "progressive"
+# 🔧 OPCIONAL: Personalizações específicas
+# canonical: "url-personalizada"  # Se não especificar, é gerado automaticamente
+# category: "TIPO PERSONALIZADO"  # Se não especificar, usa padrão do preset
+# featured_image:                  # Se você tem imagem específica
+#   src: "/minha-imagem.png"
+#   alt: "Descrição da imagem"
 
-includes:
-  header_global: 
-    file: "globalheader.html"
-    position: "after_body_open"
-    priority: 1
-  footer_global: 
-    file: "globalfooter.html"
-    position: "before_body_close"
-    priority: 1
-  local_nav:
-    file: "localnav.html" 
-    position: "after_globalheader"
-    priority: 2
-
-components:
-  globalmessage:
-    enabled: true
-    lang: "pt-BR"
-    dir: "ltr"
-  globalnav:
-    enabled: true
-    analytics_region: "global nav"
-    store_api: "/[storefront]/shop/bag/status"
-
-featured_image:
-  src: "/image.png"
-  srcset: "/image.png 2x"
-  alt: "O novo espaço de estúdio em Los Angeles"
-  caption: "descrição da imagem - visivel par ao usuario"
-  fullbleed: true
-  analytics_id: "texto-da-imagem"
-  download_url: ""
-  download_title: "texto-da-imagem"
-
-meta:
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover"
-  charset: "utf-8"
-
-analytics:
-  s_channel: "newsroom"
-  s_bucket_0: "estatisticastoreww"
-  s_bucket_1: "estatisticastoreww"
-  s_bucket_2: "estatisticastoreww"
-  track: "Redação - Estatística"
-
-og:
-  title: "Meu Titulo exemplo"
-  description: "descrição curta para seo do meu artigo"
-  type: "article"
-  site_name: "Estatística Newsroom"
-  locale: "pt_BR"
-  url: "texto-para-link-canonico"
-  image: "/imgage.png"
-
-twitter:
-  title: "Meu Titulo exemplo"
-  description: "descrição curta para seo do meu artigo"
-  site: "@Estatística"
-  card: "summary_large_image"
-  image: "/imgage.png"
-
-stylesheets:
-  - "/www.estatistica.pro/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3"
-  - "/newsroom/styles/articlev2.built.css"
-
-scripts:
-  - "/newsroom/scripts/newsroom-head.built.js"
-
-body_scripts:
-  - "/newsroom/scripts/newsroom-body.built.js"
+# ===================================================
+# 📋 EXEMPLOS DE USO:
+#
+# Para comunicado de imprensa:
+# python render.py artigo.md --elements preset:comunicado_simples
+#
+# Para lançamento de produto:
+# python render.py artigo.md --elements preset:lancamento_produto
+#
+# Para evento/keynote:
+# python render.py artigo.md --elements preset:keynote_evento
+#
+# Para artigo completo:
+# python render.py artigo.md --elements preset:artigo_completo
+#
+# Combinando preset + elementos extras:
+# python render.py artigo.md --elements preset:artigo_completo,social/twitter_video
+#
+# ===================================================
 ---
 
 # Lorem Ipsum - Conteúdo de Exemplo

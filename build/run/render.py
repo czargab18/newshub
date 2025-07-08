@@ -856,16 +856,20 @@ class NewsroomRenderer:
 
         for elemento_path in elementos_desejados:
             try:
-                if '/' not in elemento_path:
+                # Suporte para presets
+                if elemento_path.startswith('preset:'):
+                    nome_preset = elemento_path[7:]  # Remove 'preset:'
+                    self.log(f"🎯 Aplicando preset: {nome_preset}")
+                    resultado = self.biblioteca.aplicar_preset(
+                        resultado, nome_preset)
+                elif '/' in elemento_path:
+                    categoria, nome = elemento_path.split('/', 1)
+                    self.log(f"📦 Aplicando elemento: {categoria}/{nome}")
+                    resultado = self.biblioteca.aplicar_elemento(
+                        resultado, categoria, nome)
+                else:
                     self.log(
-                        f"⚠️  Formato inválido para elemento: {elemento_path}. Use 'categoria/nome'", "WARNING")
-                    continue
-
-                categoria, nome = elemento_path.split('/', 1)
-
-                self.log(f"📦 Aplicando elemento: {categoria}/{nome}")
-                resultado = self.biblioteca.aplicar_elemento(
-                    resultado, categoria, nome)
+                        f"⚠️  Formato inválido: {elemento_path}. Use 'categoria/nome' ou 'preset:nome'", "WARNING")
 
             except Exception as e:
                 self.log(
@@ -970,8 +974,11 @@ Exemplos de uso:
   python render.py . --batch
   python render.py artigo.md --open --verbose
   python render.py --list-elements social
+  python render.py --list-presets
   python render.py --search twitter
   python render.py artigo.md --elements social/twitter_completo,analytics/newsroom_padrao
+  python render.py artigo.md --elements preset:keynote_evento
+  python render.py artigo.md --elements preset:lancamento_produto,social/og_artigo
         '''
     )
     
@@ -984,12 +991,16 @@ Exemplos de uso:
     parser.add_argument('--base-dir', help='Diretório base do projeto')
     
     # Opções da biblioteca de elementos
-    parser.add_argument('--list-elements', metavar='CATEGORIA', nargs='?', const='',
-                        help='Listar elementos disponíveis (opcionalmente de uma categoria específica)')
+    parser.add_argument('--list-elements', metavar='CATEGORIA', nargs='?', const='', 
+                       help='Listar elementos disponíveis (opcionalmente de uma categoria específica)')
+    parser.add_argument('--list-presets', action='store_true',
+                       help='Listar presets disponíveis')
     parser.add_argument('--search', metavar='TERMO',
-                        help='Buscar elementos por termo')
+                       help='Buscar elementos por termo')
     parser.add_argument('--elements', metavar='LISTA',
-                        help='Lista de elementos para aplicar (formato: categoria/nome,categoria/nome,...)')
+                       help='Lista de elementos/presets para aplicar (formato: categoria/nome,preset:nome,...)')
+    parser.add_argument('--auto', action='store_true',
+                       help='Aplicar automações baseadas no conteúdo do artigo')
 
     args = parser.parse_args()
     
@@ -1000,6 +1011,22 @@ Exemplos de uso:
     if args.list_elements is not None:
         categoria = args.list_elements if args.list_elements else None
         renderer.listar_elementos_disponiveis(categoria)
+        return
+    
+    if args.list_presets:
+        if renderer.biblioteca:
+            presets = renderer.biblioteca.listar_presets()
+            if presets:
+                renderer.log("🎯 Presets disponíveis:")
+                for nome, dados in presets.items():
+                    descricao = dados.get('description', 'Sem descrição')
+                    elementos = dados.get('elementos', [])
+                    renderer.log(f"  • {nome}: {descricao}")
+                    renderer.log(f"    Elementos: {', '.join(elementos)}")
+            else:
+                renderer.log("❌ Nenhum preset encontrado")
+        else:
+            renderer.log("⚠️  Biblioteca de elementos não disponível", "WARNING")
         return
 
     if args.search:
