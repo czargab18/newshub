@@ -496,15 +496,17 @@ class NewsroomRenderer:
             # Padrão: usar diretório run como base
             script_dir = Path(__file__).parent
             self.template_file = script_dir / ".." / "modelos" / "template.html"
-            self.components_dir = script_dir / ".." / "components"
+            # Novo padrão: componentes em ac/components/global
+            self.components_dir = Path("ac/components/global")
             self.output_dir = script_dir / ".." / "article" / "output"
         else:
             # Quando base_dir é especificado, usar como output_dir diretamente
             self.output_dir = Path(base_dir)
-            # Manter referências relativas ao script para templates e components
+            # Manter referências relativas ao script para templates
             script_dir = Path(__file__).parent
             self.template_file = script_dir / ".." / "modelos" / "template.html"
-            self.components_dir = script_dir / ".." / "components"
+            # Novo padrão: componentes em ac/components/global
+            self.components_dir = Path("ac/components/global")
         
         # Criar diretório de saída
         self.output_dir.mkdir(parents=True, exist_ok=True)
