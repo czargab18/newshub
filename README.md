@@ -42,8 +42,7 @@ newshub/
 ### 📍 Comando Principal:
 ```bash
 # Do diretório raiz do projeto pai
-cd newshub/build/run/
-python render.py ../article/artigo.md --elements preset:comunicado_simples --base-dir /newsroom
+python newshub/build/run/render.py newshub/build/article/artigo.md --elements preset:comunicado_simples --base-dir newsroom/archive
 ```
 
 ### 📋 Parâmetros Disponíveis:
