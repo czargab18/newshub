@@ -492,12 +492,13 @@ class NewsroomRenderer:
                 self.log(
                     f"⚠️  Erro ao carregar biblioteca de elementos: {e}", "WARNING")
 
+        root_dir = Path(__file__).resolve().parents[2]  # pasta 'estatistica'
         if base_dir is None:
             # Padrão: usar diretório run como base
             script_dir = Path(__file__).parent
             self.template_file = script_dir / ".." / "modelos" / "template.html"
-            # Novo padrão: componentes em ac/components/global
-            self.components_dir = Path("ac/components/global")
+            # Novo padrão: componentes em ac/components/global a partir da raiz do projeto
+            self.components_dir = root_dir / "ac/components/global"
             self.output_dir = script_dir / ".." / "article" / "output"
         else:
             # Quando base_dir é especificado, usar como output_dir diretamente
@@ -505,8 +506,8 @@ class NewsroomRenderer:
             # Manter referências relativas ao script para templates
             script_dir = Path(__file__).parent
             self.template_file = script_dir / ".." / "modelos" / "template.html"
-            # Novo padrão: componentes em ac/components/global
-            self.components_dir = Path("ac/components/global")
+            # Novo padrão: componentes em ac/components/global a partir da raiz do projeto
+            self.components_dir = root_dir / "ac/components/global"
         
         # Criar diretório de saída
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -631,12 +632,19 @@ class NewsroomRenderer:
             return {}, content
     
     def load_component(self, component_name):
-        """Carrega um componente HTML"""
+        """Carrega um componente HTML. Se o componente for globalheader, insere apenas o conteúdo interno da div."""
         try:
             component_path = self.components_dir / f"{component_name}.html"
             if component_path.exists():
                 with open(component_path, 'r', encoding='utf-8') as f:
                     content = f.read()
+                # Se for globalheader, extrai apenas o conteúdo interno da div
+                if component_name == "globalheader":
+                    import re
+                    match = re.search(
+                        r'<div[^>]*id=["\']globalheader["\'][^>]*>([\s\S]*?)</div>', content, re.IGNORECASE)
+                    if match:
+                        content = match.group(1)
                 self.log(f"✓ Componente carregado: {component_name}")
                 return content
             else:
