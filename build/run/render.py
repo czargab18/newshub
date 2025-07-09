@@ -463,14 +463,19 @@ class NewsroomRenderer:
         # Usa self.output_dir como base
         base_dir = self.output_dir / 'archive' / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        # Busca próxima subpasta livre
+        # Busca próxima subpasta livre que NÃO tenha index.html
         for i in range(10000):
             codigo = f"{i:04d}"
             pasta_artigo = base_dir / codigo
+            index_file = pasta_artigo / 'index.html'
             if not pasta_artigo.exists():
                 pasta_artigo.mkdir(parents=True, exist_ok=True)
                 (pasta_artigo / 'imagens').mkdir(exist_ok=True)
-                return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
+                return index_file, pasta_artigo / 'imagens'
+            elif not index_file.exists():
+                # Pasta existe mas ainda não tem index.html, pode usar
+                (pasta_artigo / 'imagens').mkdir(exist_ok=True)
+                return index_file, pasta_artigo / 'imagens'
         raise Exception("Limite de 9999 artigos por mês atingido!")
     def __init__(self, base_dir=None):
         """Inicializa o renderizador"""
