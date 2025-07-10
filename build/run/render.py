@@ -497,8 +497,8 @@ class NewsroomRenderer:
             # Padrão: usar diretório run como base
             script_dir = Path(__file__).parent
             self.template_file = script_dir / ".." / "modelos" / "template.html"
-            # Novo padrão: componentes em ac/components/global a partir da raiz do projeto
-            self.components_dir = root_dir / "ac/components/global"
+            # Novo padrão: componentes em build/modelos (globalheader.html)
+            self.components_dir = script_dir / ".." / "modelos"
             self.output_dir = script_dir / ".." / "article" / "output"
         else:
             # Quando base_dir é especificado, usar como output_dir diretamente
@@ -632,19 +632,20 @@ class NewsroomRenderer:
             return {}, content
     
     def load_component(self, component_name):
-        """Carrega um componente HTML. Se o componente for globalheader, insere apenas o conteúdo interno da div."""
+        """Carrega um componente HTML. Para globalheader, retorna o conteúdo interno da div se existir, senão retorna todo o conteúdo."""
         try:
             component_path = self.components_dir / f"{component_name}.html"
             if component_path.exists():
                 with open(component_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-                # Se for globalheader, extrai apenas o conteúdo interno da div
+                # Se for globalheader, tenta extrair o conteúdo interno da div, senão retorna tudo
                 if component_name == "globalheader":
                     import re
                     match = re.search(
                         r'<div[^>]*id=["\']globalheader["\'][^>]*>([\s\S]*?)</div>', content, re.IGNORECASE)
                     if match:
                         content = match.group(1)
+                    # Se não encontrar a div, retorna todo o conteúdo
                 self.log(f"✓ Componente carregado: {component_name}")
                 return content
             else:
