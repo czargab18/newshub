@@ -111,8 +111,10 @@ class Article:
             shutil.copytree(pasta_img_origem, nova_pasta_img,
                             dirs_exist_ok=True)
 
-    def gerar_caminho_saida(self, frontmatter):
-        data = frontmatter.get('date', '')
+    def gerar_caminho_saida(self, frontmatter, data=None):
+        from datetime import datetime
+        if data is None:
+            data = datetime.now().strftime('%Y-%d').replace('-', '/')
         partes = data.split('de')
         if len(partes) >= 3:
             ano = partes[-1].strip()
