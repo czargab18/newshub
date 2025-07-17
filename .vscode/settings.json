@@ -1,0 +1,15 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    // outra coisa
+    "**/.quarto*/" : true,
+    "**/_quarto.yml/" : false,
+    // "**/*libs*/" : true,
+    "**/_build/article/.gitignore" : true,
+
+  }
+}

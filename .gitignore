@@ -9,7 +9,6 @@ build/run/output/src/*
 *.pyo
 
 # Editor files
-.vscode/
 .idea/
 *.swp
 *.swo
