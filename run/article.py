@@ -75,13 +75,13 @@ class Article:
             return str(main)
         return None
 
-    def modificar(self):
+    def modificarHead(self):
         self.limparHead()
         self.header()
         return str(self.soup)
 
     def salvarArtigo(self, output_path):
-        novo_html = self.modificar()
+        novo_html = self.modificarHead()
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(novo_html)
 
