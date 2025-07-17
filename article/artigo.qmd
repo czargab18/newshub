@@ -3,8 +3,8 @@ lang: "pt-BR"
 title: "Titulo teste alguma coisa"
 subtitle: "subtitulo teste"
 date: "2025/07/17"
+description: "descrição qualquer coisa"
 ---
-# gera alguma 
 
 ## Introdução
 
