@@ -137,6 +137,38 @@ class Article:
                 return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
         raise Exception("Limite de 9999 artigos por mês atingido!")
 
+    @staticmethod
+    def inserir_artigo_no_template(template_path, artigo_html, frontmatter, output_path):
+        from bs4 import BeautifulSoup
+        with open(template_path, 'r', encoding='utf-8') as f:
+            template = f.read()
+        template_soup = BeautifulSoup(template, 'html.parser')
+        # Preenche header do template
+        categoria = frontmatter.get('categoria', '')
+        data = frontmatter.get('data', '')
+        titulo = frontmatter.get('titulo', '')
+        subtitulo = frontmatter.get('subtitulo', '')
+        template_soup.find('span', class_='category-eyebrow-category').string = categoria
+        template_soup.find('span', class_='category-eyebrow-date').string = data
+        template_soup.find('h1', class_='hero-headline').string = titulo
+        template_soup.find('div', class_='article-subhead component-content').string = subtitulo
+        # Conteúdo do artigo
+        artigo_main = Article.capturar_main_sem_header(artigo_html)
+        artigo_main_corrigido = Article.corrigirFigcaption(artigo_main)
+        # Insere conteúdo no <article>
+        article_tag = template_soup.find('article', class_='article')
+        if article_tag:
+            # Remove tudo após o header
+            for el in list(article_tag.children):
+                if getattr(el, 'name', None) != 'div' or 'article-header' not in el.get('class', []):
+                    el.extract()
+            # Adiciona conteúdo do artigo
+            novo_main = BeautifulSoup(artigo_main_corrigido, 'html.parser')
+            for el in novo_main.contents:
+                article_tag.append(el)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(str(template_soup))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -145,14 +177,16 @@ if __name__ == "__main__":
                         help='Caminho do arquivo HTML de entrada')
     parser.add_argument('--outputdir', type=str, required=True,
                         help='Caminho do arquivo HTML de saída')
+    parser.add_argument('--template', type=str, required=True,
+                        help='Caminho do template body.html')
     args = parser.parse_args()
 
-    # Usa a função lerArtigo
-    artigo = Article(Article('').lerArtigo(args.basedir))
-    artigo.salvarArtigo(args.outputdir)
-
-    # Calcula o destino da pasta de imagens automaticamente
-    pasta_img_destino = os.path.join(os.path.dirname(args.outputdir), 'img')
-    # Calcula a pasta de imagens de origem dinamicamente
+    artigo_html = Article('').lerArtigo(args.basedir)
+    frontmatter = Article('').headerArtigo(artigo_html)
+    # Gera caminho padrão de saída
+    output_path, pasta_img_destino = Article('').gerar_caminho_saida(frontmatter)
+    Article.inserir_artigo_no_template(args.template, artigo_html, frontmatter, output_path)
+    # Move imagens
     pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
-    artigo.moverArtigo(args.outputdir, pasta_img_origem, pasta_img_destino)
+    if os.path.exists(pasta_img_origem):
+        shutil.copytree(pasta_img_origem, pasta_img_destino, dirs_exist_ok=True)
