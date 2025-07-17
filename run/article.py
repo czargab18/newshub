@@ -113,21 +113,19 @@ class Article:
 
     def gerar_caminho_saida(self, frontmatter, data=None):
         from datetime import datetime
+        meses = {
+            'janeiro': '01', 'fevereiro': '02', 'março': '03', 'marco': '03', 'abril': '04',
+            'maio': '05', 'junho': '06', 'julho': '07', 'agosto': '08', 'setembro': '09',
+            'outubro': '10', 'novembro': '11', 'dezembro': '12'
+        }
         if data is None:
-            data = datetime.now().strftime('%Y-%m').replace('-', '/')
-        partes = data.split('-')
-        if data:
-            meses = {
-                'janeiro': 1, 'fevereiro': 2, 'março': 3, 'marco': 3, 'abril': 4,
-                'maio': 5, 'junho': 6, 'julho': 7, 'agosto': 8, 'setembro': 9,
-                'outubro': 10, 'novembro': 11, 'dezembro': 12
-            }
-            
-
-
-        if len(partes) == 2:
-            ano = partes[0]
-            mes = partes[1]
+            data = frontmatter.get('data', '')
+        partes = data.split('de')
+        if len(partes) >= 3:
+            dia = partes[0].strip()
+            mes_nome = partes[1].strip().lower()
+            ano = partes[2].strip()
+            mes = meses.get(mes_nome, '00')
         else:
             ano = '0000'
             mes = '00'
