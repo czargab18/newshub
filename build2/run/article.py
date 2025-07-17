@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 
-
-class HtmlModifier:
+class Article:
     def __init__(self, html_content):
         self.soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -23,10 +22,11 @@ class HtmlModifier:
         self.mover_quarto_title_meta()
         return str(self.soup)
 
-# Exemplo de uso:
-# with open('artigo.html', 'r', encoding='utf-8') as f:
-#     html = f.read()
-# modifier = HtmlModifier(html)
-# novo_html = modifier.modificar()
-# with open('artigo_modificado.html', 'w', encoding='utf-8') as f:
-#     f.write(novo_html)
+if __name__ == "__main__":
+    nome_artigo = "build2/article/_output/artigo.html"
+    with open(nome_artigo, 'r', encoding='utf-8') as f:
+        html = f.read()
+    modifier = Article(html)
+    novo_html = modifier.modificar()
+    with open(nome_artigo, 'w', encoding='utf-8') as f:
+        f.write(novo_html)
