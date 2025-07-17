@@ -175,8 +175,6 @@ if __name__ == "__main__":
         description="Processa e move artigo HTML.")
     parser.add_argument('--basedir', type=str, required=True,
                         help='Caminho do arquivo HTML de entrada')
-    parser.add_argument('--outputdir', type=str, required=True,
-                        help='Caminho do arquivo HTML de saída')
     parser.add_argument('--template', type=str, required=True,
                         help='Caminho do template body.html')
     args = parser.parse_args()
