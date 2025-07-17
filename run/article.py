@@ -38,13 +38,12 @@ class Article:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(novo_html)
 
-    def mover_artigo(self, novo_html_path, nova_pasta_img):
+    def mover_artigo(self, novo_html_path, pasta_img_origem, nova_pasta_img):
         # Move o arquivo HTML
         if not os.path.exists(os.path.dirname(novo_html_path)):
             os.makedirs(os.path.dirname(novo_html_path))
         self.salvar_artigo(novo_html_path)
 
-        pasta_img_origem = "build2/article/_output/img"
         if os.path.exists(pasta_img_origem):
             shutil.copytree(pasta_img_origem, nova_pasta_img,
                             dirs_exist_ok=True)
@@ -65,4 +64,6 @@ if __name__ == "__main__":
 
     # Calcula o destino da pasta de imagens automaticamente
     pasta_img_destino = os.path.join(os.path.dirname(args.outputdir), 'img')
-    artigo.mover_artigo(args.outputdir, pasta_img_destino)
+    # Calcula a pasta de imagens de origem dinamicamente
+    pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
+    artigo.mover_artigo(args.outputdir, pasta_img_origem, pasta_img_destino)
