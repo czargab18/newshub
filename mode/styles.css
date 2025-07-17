@@ -1,3 +1,8 @@
+/* 
+  Artigo Apple de referencia
+  - https://www.apple.com/newsroom/2025/07/apple-lands-record-breaking-81-emmy-award-nominations-with-severance-leading/
+*/
+
 * {
   margin: 0 auto;
   padding: 0;
@@ -73,4 +78,84 @@ main h1 {
   margin-inline-start: auto;
   margin-inline-end: auto;
   width: 653px;
+}
+
+.article-subhead {
+  font-size: 24px;
+  line-height: 1.1666666667;
+  font-weight: 500;
+  letter-spacing: 0.009em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+h2[data-anchor-id] {
+    font-size: 24px;
+  line-height: 1.1666666667;
+  font-weight: 500;
+  letter-spacing: 0.009em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.component {
+  margin-top: 44px;
+  margin-bottom: 44px;
+}
+@media only screen and (min-width: 1441px) {
+  .component {
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    width: 980px;
+  }
+}
+.component {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 980px;
+}
+
+.component-content {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 653px;
+}
+
+.pagebody {
+  font-size: 19px;
+  line-height: 1.4211026316;
+  font-weight: 400;
+  letter-spacing: 0.012em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.component {
+  margin-top: 44px;
+  margin-bottom: 44px;
+}
+@media only screen and (min-width: 1441px) {
+  .component {
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    width: 980px;
+  }
+}
+.component {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 980px;
+}
+
+.component-content {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 653px;
+}
+
+.pagebody-copy:first-child {
+  margin-top: 0;
+}
+.pagebody-copy {
+  margin-bottom: 1.4211026316em;
 }
