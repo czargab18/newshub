@@ -1,19 +1,20 @@
 ---
-date: "2025/07/17"
-date-meta: "algumacoisa-metadata"
 lang: "pt-BR"
-title: "TITULO teste alguma coisa"
-subtitle: "subtitulo teste alguma coisa"
+title: "Titulo teste alguma coisa"
+subtitle: "subtitulo teste"
+date: "2025/07/17"
 ---
+# gera alguma 
 
-::: {.minha-div}
 ## Introdução
 
 A inteligência artificial (IA) é uma das tecnologias mais revolucionárias do século XXI. Ela está presente em diversos setores, desde a saúde até a indústria, impactando a forma como vivemos, trabalhamos e nos relacionamos.
-![alguma coisa](img/img1.jpg "Titulo da imagem"){#meu-id .minha-classe fig-alt="Alguma coisa Apple"}
-:::
+
+![texto do figcaption](img/img1.jpg "Titulo da imagem"){fig-alt="Texto alternativo"}
 
 ## O que é Inteligência Artificial?
+
+A IA refere-se à capacidade de máquinas e sistemas computacionais de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecimento de voz, visão computacional, tomada de decisões e aprendizado.
 
 A IA refere-se à capacidade de máquinas e sistemas computacionais de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecimento de voz, visão computacional, tomada de decisões e aprendizado.
 
