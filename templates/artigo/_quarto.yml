@@ -1,0 +1,24 @@
+project:
+  type: default
+  output-dir: "_output_"
+  lib-dir: "libs"
+  preview:
+    host: localhost
+    port: 4000
+    browser: false
+
+default:
+  page-layout: article
+  language: "pt-BR"
+  lang: "pt-BR"
+  body-classes: "page-article body body-article"
+
+  chapters:
+  - artigo.md
+
+format:
+  html:
+    toc: false
+    anchor-sections: false
+    code-link: false
+    number-sections: false
