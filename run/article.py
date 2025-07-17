@@ -1,10 +1,17 @@
 from bs4 import BeautifulSoup
+import argparse
 import shutil
 import os
+
 
 class Article:
     def __init__(self, html_content):
         self.soup = BeautifulSoup(html_content, 'html.parser')
+
+    def lerArtigo(self, basedir):
+        with open(basedir, 'r', encoding='utf-8') as f:
+            html = f.read()
+        return html
 
     def limpar_head(self):
         if self.soup.head:
@@ -13,8 +20,10 @@ class Article:
     def mover_quarto_title_meta(self):
         header = self.soup.find('header', {'id': 'title-block-header'})
         if header:
-            title_meta = header.find('div', {'class': 'quarto-title-meta'}) # type: ignore
-            title = header.find('div', {'class': 'quarto-title'}) # type: ignore
+            title_meta = header.find(
+                'div', {'class': 'quarto-title-meta'})  # type: ignore
+            title = header.find(
+                'div', {'class': 'quarto-title'})  # type: ignore
             if title_meta and title:
                 title_meta.extract()  # type: ignore
                 title.insert_before(title_meta)  # type: ignore
@@ -40,14 +49,19 @@ class Article:
             shutil.copytree(pasta_img_origem, nova_pasta_img,
                             dirs_exist_ok=True)
 
+
 if __name__ == "__main__":
-    basedir = "build2/article/_output/artigo.html"
-    outputdir = "./article/index.html"
-    pasta_img_destino = "./article/img"
-    with open(basedir, 'r', encoding='utf-8') as f:
-        html = f.read()
-    modifier = Article(html)
-    # Salva o artigo modificado
-    modifier.salvar_artigo(outputdir)
-    # Move o artigo e a pasta de imagens para o novo local
-    modifier.mover_artigo(outputdir, pasta_img_destino)
+    parser = argparse.ArgumentParser(
+        description="Processa e move artigo HTML.")
+    parser.add_argument('--basedir', type=str, required=True,
+                        help='Caminho do arquivo HTML de entrada')
+    parser.add_argument('--outputdir', type=str, required=True,
+                        help='Caminho do arquivo HTML de saída')
+    parser.add_argument('--pasta_img_destino', type=str, required=True,
+                        help='Caminho da pasta de imagens de destino')
+    args = parser.parse_args()
+
+    # Usa a função lerArtigo
+    artigo = Article(Article('').lerArtigo(args.basedir))
+    artigo.salvar_artigo(args.outputdir)
+    artigo.mover_artigo(args.outputdir, args.pasta_img_destino)
