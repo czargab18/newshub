@@ -11,11 +11,11 @@ class Article:
     def mover_quarto_title_meta(self):
         header = self.soup.find('header', {'id': 'title-block-header'})
         if header:
-            title_meta = header.find('div', {'class': 'quarto-title-meta'})
-            title = header.find('div', {'class': 'quarto-title'})
+            title_meta = header.find('div', {'class': 'quarto-title-meta'}) # type: ignore
+            title = header.find('div', {'class': 'quarto-title'}) # type: ignore
             if title_meta and title:
-                title_meta.extract()
-                title.insert_before(title_meta)
+                title_meta.extract()  # type: ignore
+                title.insert_before(title_meta)  # type: ignore
 
     def modificar(self):
         self.limpar_head()
@@ -23,10 +23,11 @@ class Article:
         return str(self.soup)
 
 if __name__ == "__main__":
-    nome_artigo = "build2/article/_output/artigo.html"
-    with open(nome_artigo, 'r', encoding='utf-8') as f:
+    basedir = "build2/article/_output/artigo.html"
+    outputdir = "./article/index.html"
+    with open(basedir, 'r', encoding='utf-8') as f:
         html = f.read()
     modifier = Article(html)
     novo_html = modifier.modificar()
-    with open(nome_artigo, 'w', encoding='utf-8') as f:
+    with open(outputdir, 'w', encoding='utf-8') as f:
         f.write(novo_html)
