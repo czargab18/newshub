@@ -9,7 +9,6 @@
     "**/.quarto*/" : true,
     "**/_quarto.yml/" : false,
     // "**/*libs*/" : true,
-    "**/*build*/article/.gitignore" : true,
-
+    "**/article/.gitignore" : true,
   }
 }

@@ -26,3 +26,5 @@ Thumbs.db
 *.log
 
 _site
+
+**/article/.gitignore
