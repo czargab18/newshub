@@ -1,6 +1,6 @@
 project:
   type: default
-  output-dir: "../docs"
+  output-dir: "_output/"
   lib-dir: "libs"
   preview:
     host: localhost
