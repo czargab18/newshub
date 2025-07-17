@@ -1,0 +1,13 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Artigos de Inteligência Artificial"
+
+format:
+  html:
+    toc: false
+    anchor-sections: false
+    code-link: false
+    number-sections: false
