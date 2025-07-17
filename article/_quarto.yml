@@ -9,8 +9,6 @@ project:
 
 default:
   page-layout: article
-  language: "pt-BR"
-  lang: "pt-BR"
   body-classes: "page-article body body-article"
 
   chapters:
@@ -18,6 +16,9 @@ default:
 
 format:
   html:
+    date: today
+    lang: "pt-BR"
+    page-layout: article
     toc: false
     anchor-sections: false
     code-link: false
