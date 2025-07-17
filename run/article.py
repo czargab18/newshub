@@ -34,7 +34,7 @@ class Article:
     #    data = datetime.datetime.now().strftime('%Y/%m')
     #    return data
 
-    def headerArtigo(self,html):
+    def headerArtigo(self, html):
         soup = BeautifulSoup(html, 'html.parser')
 
         titulo = soup.find('h1', class_='title')
@@ -51,6 +51,29 @@ class Article:
             'descricao': descricao_texto,
             'data': data_texto
         }
+
+    def corrigirFigcaption(html):
+        soup = BeautifulSoup(html, 'html.parser')
+        for figure in soup.find_all('figure', class_='figure'):
+            p_img = figure.find('p')
+            figcaption = figure.find('figcaption')
+            if p_img and figcaption:
+                img = p_img.find('img')
+                if img:
+                    img.extract()
+                    p_img.decompose()
+                    figcaption.insert_after(img)
+        return str(soup)
+
+    def capturar_main_sem_header(html):
+        soup = BeautifulSoup(html, 'html.parser')
+        main = soup.find('main')
+        if main:
+            header = main.find('header')
+            if header:
+                header.decompose()  # Remove o header
+            return str(main)
+        return None
 
     def modificar(self):
         self.limparHead()
