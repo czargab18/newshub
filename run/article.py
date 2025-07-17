@@ -203,9 +203,16 @@ if __name__ == "__main__":
         else:
             ano = '0000'
             mes = '00'
-        pasta_destino = Path(args.outputdir) / ano / mes
-        pasta_destino.mkdir(parents=True, exist_ok=True)
-        output_path = pasta_destino / 'index.html'
+        # Busca próxima subpasta livre
+        base_dir = Path(args.outputdir) / ano / mes
+        base_dir.mkdir(parents=True, exist_ok=True)
+        for i in range(10000):
+            codigo = f"{i:04d}"
+            pasta_destino = base_dir / codigo
+            if not pasta_destino.exists():
+                pasta_destino.mkdir(parents=True, exist_ok=True)
+                output_path = pasta_destino / 'index.html'
+                break
     else:
         output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
     Article.inserir_artigo_no_template(args.template, artigo_html, frontmatter, output_path)
