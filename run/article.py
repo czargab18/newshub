@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+import shutil
+import os
 
 class Article:
     def __init__(self, html_content):
@@ -22,12 +24,30 @@ class Article:
         self.mover_quarto_title_meta()
         return str(self.soup)
 
+    def salvar_artigo(self, output_path):
+        novo_html = self.modificar()
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(novo_html)
+
+    def mover_artigo(self, novo_html_path, nova_pasta_img):
+        # Move o arquivo HTML
+        if not os.path.exists(os.path.dirname(novo_html_path)):
+            os.makedirs(os.path.dirname(novo_html_path))
+        self.salvar_artigo(novo_html_path)
+        # Move a pasta de imagens
+        pasta_img_origem = "build2/article/_output/img"
+        if os.path.exists(pasta_img_origem):
+            shutil.copytree(pasta_img_origem, nova_pasta_img,
+                            dirs_exist_ok=True)
+
 if __name__ == "__main__":
     basedir = "build2/article/_output/artigo.html"
     outputdir = "./article/index.html"
+    pasta_img_destino = "./article/img"
     with open(basedir, 'r', encoding='utf-8') as f:
         html = f.read()
     modifier = Article(html)
-    novo_html = modifier.modificar()
-    with open(outputdir, 'w', encoding='utf-8') as f:
-        f.write(novo_html)
+    # Salva o artigo modificado
+    modifier.salvar_artigo(outputdir)
+    # Move o artigo e a pasta de imagens para o novo local
+    modifier.mover_artigo(outputdir, pasta_img_destino)
