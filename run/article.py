@@ -188,7 +188,22 @@ if __name__ == "__main__":
     frontmatter = Article('').headerArtigo(artigo_html)
     # Gera caminho padrão de saída ou usa o destino informado
     if args.outputdir:
-        pasta_destino = Path(args.outputdir)
+        # Extrai ano e mes do frontmatter
+        data = frontmatter.get('data', '')
+        partes = data.split('de')
+        if len(partes) >= 3:
+            mes_nome = partes[1].strip().lower()
+            ano = partes[2].strip()
+            meses = {
+                'janeiro': '01', 'fevereiro': '02', 'março': '03', 'marco': '03', 'abril': '04',
+                'maio': '05', 'junho': '06', 'julho': '07', 'agosto': '08', 'setembro': '09',
+                'outubro': '10', 'novembro': '11', 'dezembro': '12'
+            }
+            mes = meses.get(mes_nome, '00')
+        else:
+            ano = '0000'
+            mes = '00'
+        pasta_destino = Path(args.outputdir) / ano / mes
         pasta_destino.mkdir(parents=True, exist_ok=True)
         output_path = pasta_destino / 'index.html'
     else:
