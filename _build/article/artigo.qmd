@@ -4,6 +4,8 @@
 
 A inteligência artificial (IA) é uma das tecnologias mais revolucionárias do século XXI. Ela está presente em diversos setores, desde a saúde até a indústria, impactando a forma como vivemos, trabalhamos e nos relacionamos.
 
+![alguma coisa](img1.jpg)
+
 ## O que é Inteligência Artificial?
 
 A IA refere-se à capacidade de máquinas e sistemas computacionais de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecimento de voz, visão computacional, tomada de decisões e aprendizado.
