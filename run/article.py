@@ -180,14 +180,19 @@ if __name__ == "__main__":
                         help='Caminho do arquivo HTML de entrada')
     parser.add_argument('--template', type=str, required=True,
                         help='Caminho do template body.html')
-    parser.add_argument('--outputdir', type=str, required=True,
+    parser.add_argument('--outputdir', type=str, required=False,
                         help='Caminho do output body.html')
     args = parser.parse_args()
 
     artigo_html = Article('').lerArtigo(args.basedir)
     frontmatter = Article('').headerArtigo(artigo_html)
-    # Gera caminho padrão de saída
-    output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
+    # Gera caminho padrão de saída ou usa o destino informado
+    if args.outputdir:
+        pasta_destino = Path(args.outputdir)
+        pasta_destino.mkdir(parents=True, exist_ok=True)
+        output_path = pasta_destino / 'index.html'
+    else:
+        output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
     Article.inserir_artigo_no_template(args.template, artigo_html, frontmatter, output_path)
     # Move pastas img/ e src/ se existirem
     pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
