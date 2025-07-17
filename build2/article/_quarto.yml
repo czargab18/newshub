@@ -9,6 +9,9 @@ project:
 
 default:
   page-layout: article
+  language: "pt-BR"
+  lang: "pt-BR"
+
   chapters:
   - artigo.md
 
