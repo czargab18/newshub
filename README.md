@@ -37,7 +37,7 @@ newshub/
 └── README.md             # Esta documentação
 
 ```
-nova
+nova estrutura de diretórios
 ```
 .vscode/
 run/
@@ -63,6 +63,21 @@ newsroom/
                   ├─ img/
                   └─ src/
 ```
+
+novo script dos artigos
+```python
+# Output padrão (organização por ano/mês/código)
+python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html
+
+# Output personalizado (mantém organização por ano/mês/código dentro da pasta escolhida)
+python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html --outputdir ./output/
+```
+
+O arquivo gerado será salvo em:
+- Padrão: `newsroom/archive/ANO/MES/XXXX/index.html`
+- Personalizado: `output/ANO/MES/XXXX/index.html`
+
+As pastas `img/` e `src/` do artigo também são copiadas para o mesmo destino.
 
 ## 🛠️ Como Usar
 
