@@ -1,7 +1,20 @@
+#!/usr/bin/env python3
+"""
+Script Python para renderização de Markdown - Estatística Newsroom
+Versão: 2.0 com quarto e processamento avançado de componentes
+"""
 from bs4 import BeautifulSoup
 import argparse
 import shutil
 import os
+import sys
+import yaml
+import re
+import json
+import webbrowser
+from pathlib import Path
+from typing import Optional
+from datetime import datetime
 
 
 class Article:
@@ -17,7 +30,7 @@ class Article:
         if self.soup.head:
             self.soup.head.clear()
 
-    def mover_quarto_title_meta(self):
+    def header(self):
         header = self.soup.find('header', {'id': 'title-block-header'})
         if header:
             title_meta = header.find(
@@ -30,7 +43,7 @@ class Article:
 
     def modificar(self):
         self.limparHead()
-        self.mover_quarto_title_meta()
+        self.header()
         return str(self.soup)
 
     def salvarArtigo(self, output_path):
@@ -47,6 +60,33 @@ class Article:
         if os.path.exists(pasta_img_origem):
             shutil.copytree(pasta_img_origem, nova_pasta_img,
                             dirs_exist_ok=True)
+
+    def gerar_caminho_saida(self, frontmatter):
+        data = frontmatter.get('date', '')
+        partes = data.split('de')
+        if len(partes) >= 3:
+            ano = partes[-1].strip()
+            mes_nome = partes[1].strip().lower()
+            meses = {
+                'janeiro': 1, 'fevereiro': 2, 'março': 3, 'marco': 3, 'abril': 4,
+                'maio': 5, 'junho': 6, 'julho': 7, 'agosto': 8, 'setembro': 9,
+                'outubro': 10, 'novembro': 11, 'dezembro': 12
+            }
+            mes = str(meses.get(mes_nome, 0))
+        else:
+            ano = '0000'
+            mes = '00'
+        base_dir = Path('newsroom') / 'archive' / ano / mes
+        base_dir.mkdir(parents=True, exist_ok=True)
+        # Busca próxima subpasta livre
+        for i in range(10000):
+            codigo = f"{i:04d}"
+            pasta_artigo = base_dir / codigo
+            if not pasta_artigo.exists():
+                pasta_artigo.mkdir(parents=True, exist_ok=True)
+                (pasta_artigo / 'imagens').mkdir(exist_ok=True)
+                return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
+        raise Exception("Limite de 9999 artigos por mês atingido!")
 
 
 if __name__ == "__main__":
