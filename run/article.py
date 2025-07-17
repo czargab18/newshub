@@ -43,7 +43,7 @@ class Article:
         if not os.path.exists(os.path.dirname(novo_html_path)):
             os.makedirs(os.path.dirname(novo_html_path))
         self.salvar_artigo(novo_html_path)
-        # Move a pasta de imagens
+
         pasta_img_origem = "build2/article/_output/img"
         if os.path.exists(pasta_img_origem):
             shutil.copytree(pasta_img_origem, nova_pasta_img,
@@ -57,11 +57,12 @@ if __name__ == "__main__":
                         help='Caminho do arquivo HTML de entrada')
     parser.add_argument('--outputdir', type=str, required=True,
                         help='Caminho do arquivo HTML de saída')
-    parser.add_argument('--pasta_img_destino', type=str, required=True,
-                        help='Caminho da pasta de imagens de destino')
     args = parser.parse_args()
 
     # Usa a função lerArtigo
     artigo = Article(Article('').lerArtigo(args.basedir))
     artigo.salvar_artigo(args.outputdir)
-    artigo.mover_artigo(args.outputdir, args.pasta_img_destino)
+
+    # Calcula o destino da pasta de imagens automaticamente
+    pasta_img_destino = os.path.join(os.path.dirname(args.outputdir), 'img')
+    artigo.mover_artigo(args.outputdir, pasta_img_destino)
