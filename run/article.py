@@ -180,6 +180,8 @@ if __name__ == "__main__":
                         help='Caminho do arquivo HTML de entrada')
     parser.add_argument('--template', type=str, required=True,
                         help='Caminho do template body.html')
+    parser.add_argument('--outputdir', type=str, required=True,
+                        help='Caminho do output body.html')
     args = parser.parse_args()
 
     artigo_html = Article('').lerArtigo(args.basedir)
