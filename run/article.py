@@ -86,8 +86,9 @@ class Article:
         if main:
             header = main.find('header')
             if header:
-                header.decompose()  # Remove o header
-            return str(main)
+                header.decompose()
+            # Retorna apenas elementos filhos que são tags (ignora espaços e quebras de linha)
+            return ''.join(str(child) for child in main.children if getattr(child, 'name', None))
         return None
 
     def modificarHead(self):
@@ -151,7 +152,11 @@ class Article:
         template_soup.find('span', class_='category-eyebrow-category').string = categoria
         template_soup.find('span', class_='category-eyebrow-date').string = data
         template_soup.find('h1', class_='hero-headline').string = titulo
-        template_soup.find('div', class_='article-subhead component-content').string = subtitulo
+        subhead = template_soup.find('div', class_='article-subhead component')
+        if subhead:
+            subhead_content = subhead.find('div', class_='component-content')
+            if subhead_content:
+                subhead_content.string = subtitulo
         # Conteúdo do artigo
         artigo_main = Article.capturar_main_sem_header(artigo_html)
         artigo_main_corrigido = Article.corrigirFigcaption(artigo_main)
