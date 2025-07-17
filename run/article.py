@@ -7,11 +7,6 @@ from bs4 import BeautifulSoup
 import argparse
 import shutil
 import os
-import sys
-import yaml
-import re
-import json
-import webbrowser
 from pathlib import Path
 from typing import Optional
 from datetime import datetime
@@ -129,7 +124,7 @@ class Article:
         else:
             ano = '0000'
             mes = '00'
-        base_dir = Path('newsroom') / 'archive' / ano / mes
+        base_dir = Path('newsroom/archive') / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
         # Busca próxima subpasta livre
         for i in range(10000):
