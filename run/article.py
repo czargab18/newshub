@@ -137,8 +137,8 @@ class Article:
             pasta_artigo = base_dir / codigo
             if not pasta_artigo.exists():
                 pasta_artigo.mkdir(parents=True, exist_ok=True)
-                (pasta_artigo / 'imagens').mkdir(exist_ok=True)
-                return pasta_artigo / 'index.html', pasta_artigo / 'imagens'
+                # Não cria pasta imagens
+                return pasta_artigo / 'index.html', pasta_artigo
         raise Exception("Limite de 9999 artigos por mês atingido!")
 
     @staticmethod
@@ -190,9 +190,12 @@ if __name__ == "__main__":
     artigo_html = Article('').lerArtigo(args.basedir)
     frontmatter = Article('').headerArtigo(artigo_html)
     # Gera caminho padrão de saída
-    output_path, pasta_img_destino = Article('').gerar_caminho_saida(frontmatter)
+    output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
     Article.inserir_artigo_no_template(args.template, artigo_html, frontmatter, output_path)
-    # Move imagens
+    # Move pastas img/ e src/ se existirem
     pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
+    pasta_src_origem = os.path.join(os.path.dirname(args.basedir), 'src')
     if os.path.exists(pasta_img_origem):
-        shutil.copytree(pasta_img_origem, pasta_img_destino, dirs_exist_ok=True)
+        shutil.copytree(pasta_img_origem, os.path.join(pasta_destino, 'img'), dirs_exist_ok=True)
+    if os.path.exists(pasta_src_origem):
+        shutil.copytree(pasta_src_origem, os.path.join(pasta_destino, 'src'), dirs_exist_ok=True)
