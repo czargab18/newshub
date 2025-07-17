@@ -64,13 +64,14 @@ newsroom/
                   └─ src/
 ```
 
-novo script dos artigos
+## 📰 Novo Script dos Artigos
+
 ```python
 # Output padrão (organização por ano/mês/código)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html
+python run/artigo.py --basedir article/_output_/artigo.html --template templates/artigo/html/body.html
 
 # Output personalizado (mantém organização por ano/mês/código dentro da pasta escolhida)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html --outputdir ./output/
+python run/artigo.py --basedir article/_output_/artigo.html --template templates/artigo/html/body.html --outputdir output/
 ```
 
 O arquivo gerado será salvo em:
@@ -79,68 +80,21 @@ O arquivo gerado será salvo em:
 
 As pastas `img/` e `src/` do artigo também são copiadas para o mesmo destino.
 
+---
+
 ## 🛠️ Como Usar
 
 ### 📍 Comando Principal:
 ```bash
-# Do diretório raiz do projeto pai
-python newshub/build/run/render.py newshub/build/article/artigo.md --elements preset:comunicado_simples --base-dir newsroom/archive
+# Do diretório raiz do projeto
+python run/artigo.py --basedir article/_output_/artigo.html --template templates/artigo/html/body.html
 ```
 
 ### 📋 Parâmetros Disponíveis:
-- `-o, --output` - Arquivo de saída personalizado
-- `-b, --batch` - Modo lote para processar diretórios
-- `-v, --verbose` - Output detalhado
-- `--open` - Abre no navegador automaticamente
-- `--base-dir` - Diretório de saída personalizado (substitui o padrão `build/article/output/`)
-
-### 📖 Exemplos:
-```bash
-# Básico
-python build/run/render.py build/article/artigo.md
-
-# Com output personalizado
-python build/run/render.py build/article/artigo.md -o index.html
-
-# Verbose + abertura automática
-python build/run/render.py build/article/artigo.md --verbose --open
-
-# Com diretório de saída personalizado
-python build/run/render.py build/article/artigo.md --base-dir minha_pasta/
-
-# Modo lote
-python build/run/render.py pasta/ --batch
-```
-
-## 📊 Dependências
-
-- **Python 3.7+**
-- **pypandoc** - Para conversão Markdown → HTML
-- **Pandoc** - Motor de conversão (instalado via pypandoc)
-
-### 🔧 Instalação:
-```bash
-pip install pypandoc
-```
-
-## 🎯 Características Especiais
-
-- **📁 Output Inteligente**: 
-  - Padrão: `build/article/output/` (organizados junto com os artigos)
-  - Se existe pasta `output/` local junto ao arquivo fonte, usa a local
-- **🖼️ Gestão de Imagens**: Copia para pasta `src/` automaticamente
-- **🔄 Nome Inteligente**: `artigo.md` vira `index.html`
-- **🧩 Includes Dinâmicos**: Baseados no frontmatter YAML
-- **📱 Design Responsivo**: Otimizado para todos os dispositivos
-
-## 📝 Licença
-
-Este projeto é parte do repositório `estatistica` e segue a mesma licença.
-
-## 🤝 Contribuição
-
-Para contribuir, faça um fork do repositório principal e submeta um Pull Request.
+- `--basedir` - Caminho do arquivo HTML de entrada
+- `--template` - Caminho do template HTML
+- `--outputdir` - Diretório de saída personalizado (opcional)
 
 ---
 
-**📰 Newshub** - Transformando Markdown em experiências web de qualidade estatística/n
+**📰 Newshub** - Transformando Markdown em experiências web de qualidade estatística/newsroom
