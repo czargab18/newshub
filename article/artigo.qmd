@@ -1,0 +1,30 @@
+---
+title: "Inteligência Artificial: Transformando o Mundo"
+lang: "pt-BR"
+date: "2025/07/17"
+
+subtitle: "Global phenomenon Severance scores 27 nominations for hit second season, including Outstanding Drama Series and nine performance category nominations Breakout comedy The Studio sweeps with 23 nominations, including Outstanding Comedy Series, making history with the most nominations for a freshman comedy and most overall acting nominations this year Apple TV+ leads as the only network to land multiple title nominations across Outstanding Comedy and Drama Series categories, as The Studio, Severance, Slow Horses, and Shrinking land top program nominations, alongside Apple’s first-ever Outstanding Television Movie nod for The Gorge Apple also lands the most acting nominations of any network or studio this year, with 31 performance nods total Apple Originals honored with nominations across 14 titles, including Severance, The Studio, Slow Horses, Shrinking, Presumed Innocent, The Gorge, Bad Sisters, Dope Thief, Disclaimer, Pachinko, Your Friends & Neighbors, Dark Matter, Deaf President Now!, and Bono: Stories of Surrender"
+---
+
+
+## Introdução
+
+A inteligência artificial (IA) é uma das tecnologias mais revolucionárias do século XXI. Ela está presente em diversos setores, desde a saúde até a indústria, impactando a forma como vivemos, trabalhamos e nos relacionamos.
+
+![alguma coisa](img/img1.jpg)
+
+## O que é Inteligência Artificial?
+
+A IA refere-se à capacidade de máquinas e sistemas computacionais de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecimento de voz, visão computacional, tomada de decisões e aprendizado.
+
+## Aplicações da IA
+
+Na saúde, algoritmos de IA auxiliam no diagnóstico precoce de doenças e na personalização de tratamentos. Na indústria, otimizam processos produtivos e reduzem custos. No cotidiano, assistentes virtuais, como Siri e Alexa, facilitam a comunicação e organização pessoal.
+
+## Desafios e Futuro
+
+Apesar dos avanços, a IA ainda enfrenta desafios éticos, como privacidade de dados e impacto no mercado de trabalho. O futuro aponta para sistemas cada vez mais autônomos e inteligentes, exigindo regulamentações e discussões sobre seu uso responsável.
+
+## Conclusão
+
+A inteligência artificial está transformando o mundo, trazendo benefícios e desafios. Cabe à sociedade garantir que seu desenvolvimento seja ético e benéfico para todos.
