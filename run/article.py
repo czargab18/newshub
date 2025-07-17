@@ -35,24 +35,39 @@ class Article:
     #    return data
 
     def headerArtigo(self, html):
+        from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
 
         titulo = soup.find('h1', class_='title')
         titulo_texto = titulo.get_text(strip=True) if titulo else None
 
-        descricao = soup.find('div', class_='description')
-        descricao_texto = descricao.get_text(strip=True) if descricao else None
+        subtitulo = soup.find('p', class_='subtitle lead')
+        subtitulo_texto = subtitulo.get_text(strip=True) if subtitulo else None
+
+        categoria = soup.find('div', class_='description')
+        categoria_texto = categoria.get_text(
+            strip=True).strip().lower() if categoria else None
 
         data = soup.find('p', class_='date')
         data_texto = data.get_text(strip=True) if data else None
 
+        if categoria_texto:
+            if categoria_texto == "quickread":
+                categoria_texto = "QUICK READ"
+            elif categoria_texto == "release":
+                categoria_texto = "RELEASE"
+            elif categoria_texto == "update":
+                categoria_texto = "UPDATE"
+
         return {
             'titulo': titulo_texto,
-            'descricao': descricao_texto,
-            'data': data_texto
+            'data': data_texto,
+            'subtitulo': subtitulo_texto,
+            'categoria': categoria_texto
         }
-
+    
     def corrigirFigcaption(html):
+        from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
         for figure in soup.find_all('figure', class_='figure'):
             p_img = figure.find('p')
@@ -62,7 +77,7 @@ class Article:
                 if img:
                     img.extract()
                     p_img.decompose()
-                    figcaption.insert_after(img)
+                    figcaption.insert_before(img)
         return str(soup)
 
     def capturar_main_sem_header(html):
