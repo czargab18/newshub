@@ -11,6 +11,7 @@ default:
   page-layout: article
   language: "pt-BR"
   lang: "pt-BR"
+  body-classes: "page-article body body-article"
 
   chapters:
   - artigo.md
