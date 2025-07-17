@@ -1,12 +1,14 @@
 project:
   type: default
-  output-dir: "docs"
+  output-dir: "../docs"
   lib-dir: "libs"
   preview:
-    port: 4200
+    host: localhost
+    port: 4000
     browser: false
 
 default:
+  page-layout: article
   chapters:
   - artigo.md
 
