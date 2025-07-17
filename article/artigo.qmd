@@ -1,6 +1,8 @@
 ---
 title: "Titulo teste alguma coisa"
-description: "descrição qualquer coisa"
+subtitle: "descrição qualquer coisa"
+# data-meta: quickread, release, update
+description: "quickread"
 ---
 
 ## Introdução
