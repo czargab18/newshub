@@ -30,16 +30,27 @@ class Article:
         if self.soup.head:
             self.soup.head.clear()
 
-    def header(self):
-        header = self.soup.find('header', {'id': 'title-block-header'})
-        if header:
-            title_meta = header.find(
-                'div', {'class': 'quarto-title-meta'})  # type: ignore
-            title = header.find(
-                'div', {'class': 'quarto-title'})  # type: ignore
-            if title_meta and title:
-                title_meta.extract()  # type: ignore
-                title.insert_before(title_meta)  # type: ignore
+    #def dataArtigo():
+    #    data = datetime.datetime.now().strftime('%Y/%m')
+    #    return data
+
+    def headerArtigo(self,html):
+        soup = BeautifulSoup(html, 'html.parser')
+
+        titulo = soup.find('h1', class_='title')
+        titulo_texto = titulo.get_text(strip=True) if titulo else None
+
+        descricao = soup.find('div', class_='description')
+        descricao_texto = descricao.get_text(strip=True) if descricao else None
+
+        data = soup.find('p', class_='date')
+        data_texto = data.get_text(strip=True) if data else None
+
+        return {
+            'titulo': titulo_texto,
+            'descricao': descricao_texto,
+            'data': data_texto
+        }
 
     def modificar(self):
         self.limparHead()
