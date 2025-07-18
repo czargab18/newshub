@@ -100,29 +100,13 @@ jobs:
           ref: news
           path: newshub
 
-      - name: Configurar vredencias Git
+      - name: Configurar credencias Git
         working-directory: newshub
         run: |
           git config --global user.name "${{ github.repository_owner }}"
           git config --global user.email "${{ secrets.USEREMAIL }}"
 
-      # - name: Verifica se o branch 'news' existe
-      #   working-directory: newshub
-      #   run: |
-      #     if git show-ref --verify --quiet refs/heads/news; then
-      #       echo "Branch 'news' já existe."
-      #     else
-      #       echo "Criando branch 'news'."
-      #       git checkout -b news
-      #     fi
-
-      # - name: Merge 'main' to 'news'
-      #   working-directory: newshub
-      #   run: |
-      #     git checkout -b news
-      #     git merge origin/main --no-edit -X theirs || echo "Merge já foi feito ou não há mudanças."
-
-      - name: Configura Python
+      - name: Baixar e configura o Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.13"
