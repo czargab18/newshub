@@ -153,5 +153,5 @@ jobs:
         with:
           name: |
             newsroom_detectados
-            newsroom_renderizadas
+            newsroom_renderizados
             github-pages
