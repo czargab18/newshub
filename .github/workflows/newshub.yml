@@ -126,7 +126,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: "./newsroom/archive"
+          path: "./artefatos/newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
