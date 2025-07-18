@@ -28,3 +28,9 @@ Thumbs.db
 _site
 
 **/article/.gitignore
+*output*
+*_libs*
+*site*libs*
+*_books*
+*_index*/
+*index_*/
