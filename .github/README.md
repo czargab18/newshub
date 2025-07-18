@@ -2,7 +2,7 @@
 
 Sistema avançado de renderização de Markdown para HTML no estilo estatística/newsroom, com suporte a componentes dinâmicos, processamento de imagens e templates customizáveis.
 
-- Exemplo de uso: [artigo](https://czargab18.github.io/newshub/archive/2025/07/0000/index.html){:target="_blank"}
+- Exemplo de uso: [artigo](https://czargab18.github.io/newshub/archive/2025/07/0000/index.html)
 
 ## 🚀 Características Principais
 
