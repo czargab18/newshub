@@ -176,7 +176,6 @@ jobs:
           fetch-depth: 1
           repository: ${{ env.USERNAME }}/estatistica
           token: ${{ env.TOKEN_REPO_SYNC }}
-          submodules: true
 
       - name: Configurar credenciais Git
         working-directory: estatistica
