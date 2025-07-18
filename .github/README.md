@@ -45,8 +45,18 @@ newsroom/
 
 ---
 
-## 📰 Novo Script dos Artigos
+## 📰 Renderizar Artigos
 
+completo e único
+```bash
+quarto render article/ --output-dir ../artefatos/ ; 
+echo "Artigo renderizado com sucesso!"
+cd ../ ; 
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive  
+echo "Script de automação executado com sucesso!"
+```
+
+só o script de automaçao
 ```python
 # Output padrão (organização por ano/mês/código)
 python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/
