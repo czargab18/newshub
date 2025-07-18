@@ -196,10 +196,20 @@ jobs:
         run: |
           rsync -av --update newshub/newsroom/archive/. newsroom/
 
-      - name: Garante que a branch 'estatistica/newsroom/archive' existe e faz checkout
+      - name: Garante que a branch 'news' existe e faz checkout
         working-directory: estatistica
         run: |
-          git checkout -B news || git checkout -b news
+          if git show-ref --verify --quiet refs/heads/news; then
+            echo "Branch local 'news' já existe."
+            git checkout news
+          elif git ls-remote --exit-code --heads origin news; then
+            echo "Branch remota 'news' existe. Fazendo fetch e checkout."
+            git fetch origin news:news
+            git checkout news
+          else
+            echo "Branch 'news' não existe. Criando nova branch."
+            git checkout -b news
+          fi
           git add newsroom/news
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
