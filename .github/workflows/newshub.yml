@@ -102,40 +102,8 @@ jobs:
           name: newsroom_renderizados
           path: "./_docs"
 
-  automatizar:
-    needs: [renderizar]
-    runs-on: ubuntu-latest
-    environment:
-      name: ENVIRONMENT
-    steps:
-      - name: Clona o Repositório 'newshub'
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
-          path: newshub
-
-          - name: Clona o Repositório 'newshub'
-          uses: actions/checkout@v4
-          with:
-            repository: ${{ github.repository }}
-            token: ${{ secrets.GITHUB_TOKEN }}
-            ref: main
-            path: newshub
-  
-        - name: Sincronizar notícias renderizadas
-          run: |
-            rsync -av --update _newsroom/_docs/ newshub/newsroom/archive/
-
-      - name: Salvar artefatos do jobs 'automatizar'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: newsroom_automatizados
-          path: "./newshub/newsroom/archive"
-
   newshub:
-    needs: [renderizar, automatizar]
+    needs: [renderizar]
     runs-on: ubuntu-latest
     environment:
       name: ENVIRONMENT
