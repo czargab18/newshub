@@ -100,7 +100,19 @@ jobs:
           ref: main
           path: newshub
 
-      - name: Configura Python
+      - name: Atualiza branch news com rebase
+        working-directory: newshub
+        run: |
+          git checkout news || git checkout -b news
+          git pull origin news 
+
+      - name: Configurar credencias Git
+        working-directory: newshub
+        run: |
+          git config --global user.name "${{ github.repository_owner }}"
+          git config --global user.email "${{ secrets.USEREMAIL }}"
+
+      - name: Baixar e configura o Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.13"
@@ -122,44 +134,80 @@ jobs:
         run: |
           python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive
 
-      - name: Verifica se 'newsroom/archive' foi criado
-        working-directory: newshub
-        run: |
-          if [ ! -d "newsroom/archive" ]; then
-            echo "Diretório newsroom/archive não foi criado."
-            ls -R 
-            exit 1
-          else
-            echo "Diretório newsroom/archive foi criado com sucesso."
-          fi
-
-      - name: Configurar vredencias Git
-        working-directory: newshub
-        run: |
-          git config --global user.name "${{ github.repository_owner }}"
-          git config --global user.email "${{ secrets.USEREMAIL }}"
-          git checkout -b news
-
       - name: Commit e Push das mudanças
         working-directory: newshub
         run: |
           git add newsroom/archive
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
-          git push origin news
+          git pull --rebase origin news || echo "Nenhuma atualização remota"
+          git push origin news --force
 
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: "./newshub/newsroom/"
+          path: "./newshub/newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages
 
+  estatistica:
+    needs: [renderizar, newshub]
+    runs-on: ubuntu-latest
+    environment:
+      name: ENVIRONMENT
+    env:
+      USERNAME: ${{ github.repository_owner }}
+      USEREMAIL: ${{ secrets.USEREMAIL }}
+      TOKEN_REPO_SYNC: ${{ secrets.TOKEN_REPO_SYNC }}
+    steps:
+      - name: Clona o Repositório ESTATISTICA
+        uses: actions/checkout@v4
+        with:
+          ref: news
+          path: estatistica
+          repository: ${{ env.USERNAME }}/estatistica
+          token: ${{ env.TOKEN_REPO_SYNC }}
+
+      - name: Set up authentication for git
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.TOKEN_REPO_SYNC }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Baixar submodulo 'newshub'
+        uses: actions/checkout@v4
+        with:
+          token: ${{ env.TOKEN_REPO_SYNC }}
+          repository: ${{ env.USERNAME }}/newshub
+          ref: news
+          path: newshub
+
+      - name: Baixa artefato dos livros renderizados
+        uses: actions/download-artifact@v4
+        with:
+          name: books_renderizados
+          path: "newsroom/archive"
+
+      - name: Corrigir links dos <head>
+        run: |
+          cd newsroom
+          python run/cleanBooks.py --base-dir archive/ --base-ac build/ac/
+
+      - name: Sincroniza arquivos do artefato com a branch archive
+        run: |
+          rsync -av --update newsroom/archive/ estatistica/archive/
+
+      - name: Garante que a branch archive existe e faz checkout
+        working-directory: estatistica
+        run: |
+          if ! git rev-parse --verify archive >/dev/null 2>&1; then
+            git checkout --orphan archive
+            git rm -rf .
+
+
   cleanup:
-    needs: [newshub]
+    needs: [newshub,estatistica]
     runs-on: ubuntu-latest
     steps:
       - name: Deleta artefatos
