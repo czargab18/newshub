@@ -71,7 +71,7 @@ class Article:
                 img = p_img.find('img')
                 if img:
                     img.extract()
-                    p_img.decompose()
+                    p_img.decompose() # type: ignore
                     figcaption.insert_before(img)
         return str(soup)
 
@@ -178,11 +178,14 @@ if __name__ == "__main__":
         description="Processa e move artigo HTML.")
     parser.add_argument('--basedir', type=str, required=True,
                         help='Caminho do arquivo HTML de entrada')
-    parser.add_argument('--template', type=str, required=True,
-                        help='Caminho do template body.html')
+    parser.add_argument('--template', type=str, required=False,
+                        help='Caminho do template body.html (opcional)')
     parser.add_argument('--outputdir', type=str, required=False,
                         help='Caminho do output body.html')
     args = parser.parse_args()
+
+    # Usa o template informado ou o padrão
+    template_path = args.template if args.template else './templates/artigo/html/body.html'
 
     artigo_html = Article('').lerArtigo(args.basedir)
     frontmatter = Article('').headerArtigo(artigo_html)
@@ -215,7 +218,8 @@ if __name__ == "__main__":
                 break
     else:
         output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
-    Article.inserir_artigo_no_template(args.template, artigo_html, frontmatter, output_path)
+    Article.inserir_artigo_no_template(
+        template_path, artigo_html, frontmatter, output_path)
     # Move pastas img/ e src/ se existirem
     pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
     pasta_src_origem = os.path.join(os.path.dirname(args.basedir), 'src')
