@@ -138,7 +138,8 @@ jobs:
         run: |
           git add newsroom/archive
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
-          git push origin news --force
+          git pull --rebase origin news || echo "Nenhuma atualização remota"
+          git push origin news
 
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
