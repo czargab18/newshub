@@ -125,19 +125,19 @@ jobs:
       - name: Verifica se 'newsroom/archive' foi criado
         working-directory: newshub
         run: |
-          if [ ! -d "./newsroom/archive" ]; then
-            echo "Diretório ./newsroom/archive não foi criado."
+          if [ ! -d "newsroom/archive" ]; then
+            echo "Diretório newsroom/archive não foi criado."
             ls -R 
             exit 1
           else
-            echo "Diretório ./newsroom/archive foi criado com sucesso."
+            echo "Diretório newsroom/archive foi criado com sucesso."
           fi
 
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: "./newsroom/archive"
+          path: "./newshub/newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
