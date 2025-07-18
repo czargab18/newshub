@@ -169,18 +169,12 @@ jobs:
         working-directory: newshub
         id: check_archive
         run: |
-          ls newsroom || echo "Pasta newsroom não existe" 
-          if [ ! -d "newsroom" ]; then
-            echo "Criando pasta newsroom"
-            mkdir -p newsroom
-          else
-            echo "Pasta newsroom já existe"
-          fi
+          ls . || echo "Pasta newsroom não existe" 
 
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
-          python run/article.py --basedir artefatos/artigo.html --outputdir newsroom/archive
+          python run/article.py --basedir archive/artigo.html --outputdir newsroom/archive
 
       - name: Commit as mudanças
         working-directory: newshub
