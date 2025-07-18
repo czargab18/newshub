@@ -168,8 +168,7 @@ jobs:
       - name: Push das mudanças
         working-directory: newshub
         run: |
-          git checkout -B news || git checkout -b news
-          git push origin news --force
+          git push origin news:news --force
 
       - name: Configurar Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
