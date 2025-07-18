@@ -129,7 +129,7 @@ jobs:
 
 
   newshub:
-    needs: [renderizar]
+    needs: [renderizar, automatizar]
     runs-on: ubuntu-latest
     environment:
       name: ENVIRONMENT
