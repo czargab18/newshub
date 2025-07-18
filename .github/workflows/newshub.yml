@@ -70,7 +70,7 @@ jobs:
         working-directory: _newsroom
         id: renderizar
         run: |
-          quarto render --no-execute --to html --execute-threads 4
+          quarto render --no-execute --to html
 
       - name: Limpa diretórios '_libs'
         working-directory: _newsroom
