@@ -22,7 +22,6 @@ permissions:
 jobs:
   detectar:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: ENVIRONMENT
     env:
@@ -57,11 +56,6 @@ jobs:
   renderizar:
     needs: [detectar]
     runs-on: ubuntu-latest
-    if: needs.detectar.outputs.FOLDERS_LISTA != ''
-    env:
-      FOLDERS_LISTA: ${{ needs.detectar.outputs.FOLDERS_LISTA }}
-    outputs:
-      NEWSROOM_RENDERIZADAS: ${{ steps.renderizar.outputs.newsroom_renderizadas }}
 
     steps:
       - name: Baixa artefato
@@ -74,8 +68,6 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Renderiza notícias Quarto
-        env:
-          FOLDERS_LISTA: ${{ needs.detectar.outputs.FOLDERS_LISTA }}
         run: |
           set -e
           cd _newsroom
