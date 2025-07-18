@@ -210,6 +210,10 @@ jobs:
             echo "Branch 'news' não existe. Criando nova branch."
             git checkout -b news
           fi
+
+      - name: Commit das mudanças na branch 'news'
+        working-directory: estatistica
+        run: |
           git add newsroom/news
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
