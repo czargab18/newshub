@@ -100,13 +100,12 @@ jobs:
           pip install -r run/requirements.txt
 
       - name: Criar pasta temporaria 'artefatos'
-        working-directory: newshub
         run: |
-          mkdir -p artefatos
+          mkdir -p newshub/artefatos
 
       - name: Syncronizar pastas
         run: |
-          rsync -av --update _docs/ artefatos 
+          rsync -av --update _docs/ newshub/artefatos 
 
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
