@@ -193,13 +193,11 @@ jobs:
       - name: Mover notícias renderizadas para 'estatistica/newsroom/archive'
         working-directory: estatistica
         id: move_news
-        if: steps.check_archive.outputs.exists == 'true'
         run: |
           rsync -av --update newshub/newsroom/archive/. newsroom/
 
       - name: Garante que a branch 'estatistica/newsroom/archive' existe e faz checkout
         working-directory: estatistica
-        if: steps.move_news.outputs.exists == 'true'
         run: |
           git checkout -B news || git checkout -b news
           git add newsroom/news
