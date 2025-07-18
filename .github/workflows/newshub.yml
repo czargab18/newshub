@@ -100,6 +100,11 @@ jobs:
           ref: news
           path: newshub
 
+      - name: Atualiza branch news com rebase
+        working-directory: newshub
+        run: |
+          git pull --rebase origin news || true
+
       - name: Configurar credencias Git
         working-directory: newshub
         run: |
