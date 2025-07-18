@@ -47,10 +47,10 @@ newsroom/
 
 ```python
 # Output padrão (organização por ano/mês/código)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/
 
 # Output personalizado (mantém organização por ano/mês/código dentro da pasta escolhida)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html --outputdir output/
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/ --outputdir output/
 ```
 
 O arquivo gerado será salvo em:
