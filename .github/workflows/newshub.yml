@@ -128,7 +128,6 @@ jobs:
           name: newsroom_automatizados
           path: "./newshub/newsroom/archive"
 
-
   newshub:
     needs: [renderizar, automatizar]
     runs-on: ubuntu-latest
