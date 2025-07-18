@@ -104,7 +104,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: newsroom_renderizados
-          path: "./newshub/temp"
+          path: "newshub/artefatos"
 
       - name: Configura Python
         uses: actions/setup-python@v4
@@ -112,22 +112,21 @@ jobs:
           python-version: "3.13"
 
       - name: Instalar dependencias do Python
+        working-directory: newshub
         run: |
-          cd newshub
           python -m pip install --upgrade pip
           pip install -r run/requirements.txt
 
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
-          mkdir -p temp_artefatos
-          python ./run/article.py --basedir ./temp_artefatos/artigo.html --template ./templates/artigo/html/body.html
+          python ./run/article.py --basedir ./artefatos/artigo.html --template ./templates/artigo/html/body.html --outputdir newsroom/archive
 
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: "./newshub/temp_artefatos"
+          path: "./newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
