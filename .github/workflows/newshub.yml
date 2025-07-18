@@ -122,10 +122,11 @@ jobs:
         run: |
           python run/article.py --basedir artefatos/artigo.html --outputdir newsroom/archive
 
-      - name: Faz deploy para GitHub Pages - newshub
-        uses: actions/deploy-pages@v4
+      - name: Configurar Artefato para GitHub Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          artifact_name: newsroom_renderizados
+          name: newsroom_automatizados
+          path: "./newshub/newsroom/archive"
 
 
   newshub:
@@ -162,7 +163,7 @@ jobs:
       - name: Baixa Artefato para 'GitHub Pages'
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_automatizado
+          name: newsroom_automatizados
           path: "newshub/artefatos"
 
       - name: Corrigir links para GitHub Pages - newshub
