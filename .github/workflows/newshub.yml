@@ -214,7 +214,8 @@ jobs:
       - name: Commit das mudanças na branch 'news'
         working-directory: estatistica
         run: |
-          git add newsroom/news
+          git checkout news
+          git add newsroom/archive
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
       - name: Push das mudanças para a branch 'news'
