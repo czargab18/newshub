@@ -133,7 +133,7 @@ jobs:
         run: |
           git checkout -B news || git checkout -b news
           git add newsroom/archive
-          git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
+          git commit -m "news: atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
       - name: Push das mudanças
         working-directory: newshub
@@ -190,11 +190,17 @@ jobs:
             echo "Pasta newsroom/archive já existe"
           fi
 
+      - name: Baixar Artefato de notícias renderizadas
+        uses: actions/download-artifact@v4
+        with:
+          name: newsroom_renderizados
+          path: estatistica/newsroom/temp_puta
+
       - name: Mover notícias renderizadas para 'estatistica/newsroom/archive'
         working-directory: estatistica
         id: move_news
         run: |
-          rsync -av --update newshub/newsroom/archive/. newsroom/
+          rsync -av --update newsroom/temp_puta/. newsroom/
 
       - name: Garante que a branch 'news' existe e faz checkout
         working-directory: estatistica
@@ -216,7 +222,7 @@ jobs:
         run: |
           git checkout news
           git add newsroom/archive
-          git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
+          git commit -m "news: atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
       - name: Push das mudanças para a branch 'news'
         working-directory: estatistica
