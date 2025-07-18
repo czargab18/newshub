@@ -192,7 +192,7 @@ if __name__ == "__main__":
     # Gera caminho padrão de saída ou usa o destino informado
     if args.outputdir:
         # Extrai ano e mes do frontmatter
-        data = frontmatter.get('data', '')
+        data = frontmatter.get('data') or ''
         partes = data.split('de')
         if len(partes) >= 3:
             mes_nome = partes[1].strip().lower()
