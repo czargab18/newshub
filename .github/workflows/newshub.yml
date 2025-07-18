@@ -133,6 +133,20 @@ jobs:
             echo "Diretório newsroom/archive foi criado com sucesso."
           fi
 
+      - name: Configurar vredencias Git
+        working-directory: newshub
+        run: |
+          git config --global user.name "${{ github.repository_owner }}"
+          git config --global user.email "${{ secrets.USEREMAIL }}"
+          git checkout -b news
+
+      - name: Commit e Push das mudanças
+        working-directory: newshub
+        run: |
+          git add newsroom/archive
+          git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
+          git push origin news
+
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
