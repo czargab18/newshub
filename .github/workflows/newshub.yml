@@ -165,6 +165,18 @@ jobs:
           name: newsroom_automatizados
           path: "newshub/artefatos"
 
+      - name: Verifica se a pasta 'newsroom/archive' existe
+        working-directory: newshub
+        id: check_archive
+        run: |
+          ls newsroom/archive || echo "Pasta newsroom/archive não existe" 
+          if [ ! -d "newsroom/archive" ]; then
+            echo "Criando pasta newsroom/archive"
+            mkdir -p newsroom/archive
+          else
+            echo "Pasta newsroom/archive já existe"
+          fi
+
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
