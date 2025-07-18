@@ -176,8 +176,8 @@ class Article:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Processa e move artigo HTML.")
-    parser.add_argument('--basedir', type=str, required=True,
-                        help='Caminho do arquivo HTML de entrada')
+    parser.add_argument('--basedir', type=str, required=False,
+                        help='Caminho do arquivo HTML de entrada (opcional, padrão: artefatos/artigo.html)')
     parser.add_argument('--template', type=str, required=False,
                         help='Caminho do template body.html (opcional)')
     parser.add_argument('--outputdir', type=str, required=False,
@@ -187,7 +187,17 @@ if __name__ == "__main__":
     # Usa o template informado ou o padrão
     template_path = args.template if args.template else './templates/artigo/html/body.html'
 
-    artigo_html = Article('').lerArtigo(args.basedir)
+    # Define o caminho do artigo de entrada
+    basedir = args.basedir if args.basedir else 'artefatos/artigo.html'
+    if not os.path.exists(basedir):
+        # Cria o arquivo vazio e avisa
+        os.makedirs(os.path.dirname(basedir), exist_ok=True)
+        with open(basedir, 'w', encoding='utf-8') as f:
+            f.write('')
+        print(f"[AVISO] O arquivo '{basedir}' não existia e foi criado vazio. Preencha com o artigo HTML antes de rodar novamente.")
+        exit(1)
+
+    artigo_html = Article('').lerArtigo(basedir)
     frontmatter = Article('').headerArtigo(artigo_html)
     # Gera caminho padrão de saída ou usa o destino informado
     if args.outputdir:
@@ -221,8 +231,8 @@ if __name__ == "__main__":
     Article.inserir_artigo_no_template(
         template_path, artigo_html, frontmatter, output_path)
     # Move pastas img/ e src/ se existirem
-    pasta_img_origem = os.path.join(os.path.dirname(args.basedir), 'img')
-    pasta_src_origem = os.path.join(os.path.dirname(args.basedir), 'src')
+    pasta_img_origem = os.path.join(os.path.dirname(basedir), 'img')
+    pasta_src_origem = os.path.join(os.path.dirname(basedir), 'src')
     if os.path.exists(pasta_img_origem):
         shutil.copytree(pasta_img_origem, os.path.join(pasta_destino, 'img'), dirs_exist_ok=True)
     if os.path.exists(pasta_src_origem):
