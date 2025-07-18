@@ -6,11 +6,11 @@ on:
     branches: [main]
     paths:
       [
-        "newsroom/**/*.qmd",
-        "newsroom/**/*.yml",
-        "newsroom/*.html",
-        "newsroom/*.bib",
-        ".github/workflows/*newsroom*.yml",
+        "article/**/*.qmd",
+        "article/**/*.yml",
+        "article/*.html",
+        "article/*.bib",
+        ".github/workflows/*article*.yml",
       ]
 
 permissions:
@@ -32,19 +32,19 @@ jobs:
     outputs:
       FOLDERS_LISTA: ${{ steps.lista.outputs.folders_lista }}
     steps:
-      - name: Clona o Repositório NEWSROOM
+      - name: Clona o Repositório newshub
         uses: actions/checkout@v4
         with:
-          repository: ${{ env.USERNAME }}/newsroom
+          repository: ${{ env.USERNAME }}/newshub
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: newsroom
+          path: newshub
           ref: main
           fetch-depth: 30
 
       - name: Identifica arquivos alterados
         id: arquivos-alterados
         run: |
-          cd newsroom
+          cd newshub
           echo "Detectando arquivos para evento: ${{ github.event_name }}"
 
           # Push - usa dados do evento diretamente  
@@ -77,33 +77,140 @@ jobs:
       - name: Extrai nomes de subdiretórios dos arquivos alterados
         id: extrair_subdirs
         run: |
-          cd newsroom
+          cd newshub
           FILES_NAMES=$(cat arquivos.txt)
           echo "$FILES_NAMES" | grep -oE '^build/([A-Z]{3}[0-9]{4})/' | cut -d'/' -f2 > subdirs.txt
 
       - name: Monta lista única de subdiretórios e exporta output
         id: lista
         run: |
-          cd newsroom
+          cd newshub
           FOLDERS_NAMES=$(cat subdirs.txt | sort | uniq | xargs)
           echo "folders_lista=$FOLDERS_NAMES" >> $GITHUB_OUTPUT
 
-      - name: Move livros detectados para _newsroom
+      - name: Move notícias detectadas para _newsroom
         if: steps.lista.outputs.folders_lista != ''
         env:
           FOLDERS_LISTA: ${{ steps.lista.outputs.folders_lista }}
         run: |
           mkdir -p _newsroom
-          cd newsroom
+          cd newshub
           for folder in $FOLDERS_LISTA; do
             if [ -d "build/${folder}" ]; then
               mv "build/${folder}" ../_newsroom/
             fi
           done
 
-      - name: Exporta Newsroom como Artefato
+      - name: Exporta newshub como Artefato
         if: steps.lista.outputs.folders_lista != ''
         uses: actions/upload-artifact@v4
         with:
-          name: books_detectados
+          name: newsroom_detectadas
           path: _newsroom
+
+  renderizar:
+    needs: [detectar]
+    runs-on: ubuntu-latest
+    if: needs.detectar.outputs.FOLDERS_LISTA != ''
+    env:
+      FOLDERS_LISTA: ${{ needs.detectar.outputs.FOLDERS_LISTA }}
+    outputs:
+      NEWSROOM_RENDERIZADAS: ${{ steps.renderizar.outputs.newsroom_renderizadas }}
+
+    steps:
+      - name: Baixa artefato
+        uses: actions/download-artifact@v4
+        with:
+          name: newsroom_detectadas
+          path: _newsroom
+
+      - name: Configura Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Renderiza notícias Quarto
+        env:
+          FOLDERS_LISTA: ${{ needs.detectar.outputs.FOLDERS_LISTA }}
+        run: |
+          set -e
+          cd _newsroom
+          echo "$FOLDERS_LISTA" | tr ' ' '\n' | while read folder; do
+            if [ -d "${folder}" ]; then
+              echo "Renderizando notícia: $folder"
+              quarto render "${folder}" --to html --execute --output-dir "../../_docs/${folder}"
+            else
+              echo "Pasta não encontrada: $folder"
+            fi
+          done
+
+      - name: Limpa diretórios '_docs/ac/site_libs' e '_docs/delete'
+        run: |
+          cd _docs
+          remover="site_libs delete outra_pasta"
+          for nome in $remover; do
+            find . -type d -name "$nome" -exec rm -rf {} +
+          done
+
+      - name: Exporta notícias renderizadas
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsroom_renderizadas
+          path: "./_docs"
+
+  newshub:
+    needs: [renderizar]
+    runs-on: ubuntu-latest
+    environment:
+      name: ENVIRONMENT
+    steps:
+      - name: Clona o Repositório 'newshub'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          path: newshub
+
+      - name: Baixa Artefato para 'GitHub Pages'
+        uses: actions/download-artifact@v4
+        with:
+          name: newsroom_renderizadas
+          path: "./newshub/news"
+
+      - name: Configura Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Instalar dependencias do Python
+        run: |
+          cd newshub
+          python -m pip install --upgrade pip
+          pip install -r run/requirements.txt
+
+      - name: Corrigir links para GitHub Pages - newshub
+        run: |
+          cd newshub
+          python run/cleanNewsroom.py --base-dir news/ --base-ac build/ac/newshub
+
+      - name: Salva Artefato para GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages
+          path: "./newshub/news"
+
+      - name: Faz deploy para GitHub Pages - newshub
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
+  cleanup:
+    needs: [newshub]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deleta artefatos
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: |
+            newsroom_detectadas
+            newsroom_renderizadas
+            github-pages
