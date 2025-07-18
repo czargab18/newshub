@@ -70,7 +70,7 @@ jobs:
         working-directory: _newsroom
         id: renderizar
         run: |
-          quarto render --no-execute --to html
+          quarto render --no-execute --output-dir ../_docs --to html
 
       - name: Limpa diretórios '_libs'
         working-directory: _newsroom
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: newsroom_detectados
-          path: "./article/_output_"
+          path: "./_docs"
 
   newshub:
     needs: [renderizar]
