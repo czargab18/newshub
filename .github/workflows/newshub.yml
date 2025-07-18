@@ -193,7 +193,7 @@ jobs:
       - name: Baixar Artefato de notícias renderizadas
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_renderizados
+          name: gitub-pages
           path: estatistica/newsroom/temp_puta
 
       - name: Mover notícias renderizadas para 'estatistica/newsroom/archive'
