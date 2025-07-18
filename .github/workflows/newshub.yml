@@ -125,7 +125,7 @@ jobs:
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: newsroom_automatizado
+          artifact_name: newsroom_renderizados
 
 
   newshub:
@@ -183,7 +183,7 @@ jobs:
           git checkout -B news || git checkout -b news
           git push origin news --force
 
-      - name: Salva Artefato para GitHub Pages
+      - name: Configurar Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           name: newsroom_renderizados
@@ -192,7 +192,7 @@ jobs:
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: github-pages
+          artifact_name: newsroom_renderizados
 
   estatistica:
     needs: [renderizar, newshub]
