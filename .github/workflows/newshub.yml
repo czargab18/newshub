@@ -173,13 +173,13 @@ jobs:
       - name: Configurar Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          name: newsroom_renderizados
+          name: newshub_pages
           path: "./newshub/newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: newsroom_renderizados
+          artifact_name: newshub_pages
 
   estatistica:
     needs: [renderizar, newshub]
