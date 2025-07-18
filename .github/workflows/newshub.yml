@@ -100,12 +100,6 @@ jobs:
           ref: main
           path: newshub
 
-      - name: Baixa Artefato para 'GitHub Pages'
-        uses: actions/download-artifact@v4
-        with:
-          name: newsroom_renderizados
-          path: "newshub/artefatos"
-
       - name: Configura Python
         uses: actions/setup-python@v4
         with:
@@ -117,7 +111,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r run/requirements.txt
 
+      - name: Baixa Artefato para 'GitHub Pages'
+        uses: actions/download-artifact@v4
+        with:
+          name: newsroom_renderizados
+          path: "newshub/artefatos"
 
+      - name: Verificar diretórios
+        working-directory: newshub
+        run: |
+          echo "Diretórios em artefatos:"
+          ls -R  || echo "Diretório não existe"
 
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
