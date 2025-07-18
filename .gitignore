@@ -1,7 +1,6 @@
 # Output files
 build/run/output/*.html
 build/run/output/src/*
-/newsroom/
 # Cache files
 **/*cache*/
 **/__pycache__/
