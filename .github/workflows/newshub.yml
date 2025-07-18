@@ -117,27 +117,16 @@ jobs:
           name: newsroom_renderizados
           path: "newshub/artefatos"
 
-      - name: Verificar diretórios
-        working-directory: newshub
-        run: |
-          echo "Diretórios em artefatos:"
-          ls -R  || echo "Diretório não existe"
-
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
-          python ./run/article.py --basedir ./artefatos/artigo.html --template ./templates/artigo/html/body.html --outputdir newsroom/archive
+          python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive
 
-      - name: Listar conteúdo antes do upload
+      - name: Verifica se 'newsroom/archive' existe
         working-directory: newshub
         run: |
-          ls -R ./artefatos/newsroom || echo "Diretório não existe"
-
-      - name: Verifica se artefatos/newsroom/archive existe
-        working-directory: newshub
-        run: |
-          if [ ! -d "./artefatos/newsroom/archive" ]; then
-            echo "Diretório ./artefatos/newsroom/archive não existe."
+          if [ ! -d "./newsroom/archive" ]; then
+            echo "Diretório ./newsroom/archive não existe."
             exit 1
           fi
 
@@ -145,7 +134,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: "./artefatos/newsroom/archive"
+          path: "./newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
