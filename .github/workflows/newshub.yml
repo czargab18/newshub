@@ -92,19 +92,13 @@ jobs:
     environment:
       name: ENVIRONMENT
     steps:
-      - name: Clona o Repositório 'newshub'
+      - name: Clona o Repositório 'BOOKS'
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
           path: newshub
-
-      - name: Atualiza branch news com rebase
-        working-directory: newshub
-        run: |
-          git checkout news || git checkout -b news
-          git pull origin news 
 
       - name: Configurar credencias Git
         working-directory: newshub
@@ -132,14 +126,19 @@ jobs:
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
-          python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive
+          python run/article.py --basedir artefatos/artigo.html --outputdir newsroom/archive
 
-      - name: Commit e Push das mudanças
+      - name: Commit as mudanças
         working-directory: newshub
         run: |
+          git checkout -B news || git checkout -b news
           git add newsroom/archive
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
-          git pull --rebase origin news || echo "Nenhuma atualização remota"
+
+      - name: Push das mudanças
+        working-directory: newshub
+        run: |
+          git checkout -B news || git checkout -b news
           git push origin news --force
 
       - name: Salva Artefato para GitHub Pages
