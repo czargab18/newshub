@@ -50,7 +50,7 @@ jobs:
       - name: Salva pasta article/ como artefato
         uses: actions/upload-artifact@v4
         with:
-          name: article_detectado
+          name: newsroom_detectados
           path: newshub/article
 
   renderizar:
@@ -60,7 +60,7 @@ jobs:
       - name: Baixa artefato
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_detectadas
+          name: newsroom_detectados
           path: _newsroom
 
       - name: Configura Quarto
@@ -148,6 +148,6 @@ jobs:
         uses: geekyeggo/delete-artifact@v5
         with:
           name: |
-            newsroom_detectadas
+            newsroom_detectados
             newsroom_renderizadas
             github-pages
