@@ -195,7 +195,7 @@ jobs:
         id: move_news
         if: steps.check_archive.outputs.exists == 'true'
         run: |
-          rsync -av --update newshub/newsroom/ estatistica/newsroom/
+          rsync -av --update newshub/newsroom/archive/. newsroom/
 
       - name: Garante que a branch archive existe e faz checkout
         working-directory: estatistica
