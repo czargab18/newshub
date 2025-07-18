@@ -128,17 +128,6 @@ jobs:
         run: |
           python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive
 
-      # - name: Verifica se 'newsroom/archive' foi criado
-      #   working-directory: newshub
-      #   run: |
-      #     if [ ! -d "newsroom/archive" ]; then
-      #       echo "Diretório newsroom/archive não foi criado."
-      #       ls -R 
-      #       exit 1
-      #     else
-      #       echo "Diretório newsroom/archive foi criado com sucesso."
-      #     fi
-
       - name: Commit e Push das mudanças
         working-directory: newshub
         run: |
