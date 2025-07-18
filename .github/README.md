@@ -2,6 +2,8 @@
 
 Sistema avançado de renderização de Markdown para HTML no estilo estatística/newsroom, com suporte a componentes dinâmicos, processamento de imagens e templates customizáveis.
 
+- Exemplo de uso: [artigo](https://czargab18.github.io/newshub/archive/2025/07/0000/index.html)
+
 ## 🚀 Características Principais
 
 - **🎨 Templates estatística/newsroom**: Design autêntico e responsivo
@@ -43,14 +45,24 @@ newsroom/
 
 ---
 
-## 📰 Novo Script dos Artigos
+## 📰 Renderizar Artigos
 
+completo e único
+```bash
+quarto render article/ --output-dir ../artefatos/ ; 
+echo "Artigo renderizado com sucesso!"
+cd ../ ; 
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive  
+echo "Script de automação executado com sucesso!"
+```
+
+só o script de automaçao
 ```python
 # Output padrão (organização por ano/mês/código)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/
 
 # Output personalizado (mantém organização por ano/mês/código dentro da pasta escolhida)
-python ./run/article.py --basedir ./article/_output_/artigo.html --template ./templates/artigo/html/body.html --outputdir output/
+python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/ --outputdir output/
 ```
 
 O arquivo gerado será salvo em:

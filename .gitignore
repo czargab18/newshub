@@ -1,7 +1,6 @@
 # Output files
 build/run/output/*.html
 build/run/output/src/*
-/newsroom/
 # Cache files
 **/*cache*/
 **/__pycache__/
@@ -34,3 +33,4 @@ _site
 *_books*
 *_index*/
 *index_*/
+artefatos/
