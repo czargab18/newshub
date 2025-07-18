@@ -83,7 +83,7 @@ jobs:
       - name: Exporta notícias renderizadas
         uses: actions/upload-artifact@v4
         with:
-          name: newsroom_renderizadas
+          name: newsroom_detectados
           path: "./article/_output_"
 
   newshub:
@@ -103,7 +103,7 @@ jobs:
       - name: Baixa Artefato para 'GitHub Pages'
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_renderizadas
+          name: newsroom_detectados
           path: "./newshub/news"
 
       - name: Configura Python
@@ -142,5 +142,5 @@ jobs:
         with:
           name: |
             newsroom_detectados
-            newsroom_renderizadas
+            newsroom_detectados
             github-pages
