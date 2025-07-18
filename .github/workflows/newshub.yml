@@ -72,18 +72,13 @@ jobs:
         run: |
           quarto render --no-execute --output-dir ../_docs --to html
 
-      - name: Limpa diretórios '_libs'
-        working-directory: _newsroom
+      - name: Limpa diretórios 'libs'
+        working-directory: _docs
         run: |
           remover="libs _libs _site site_libs delete outra_pasta"
           for nome in $remover; do
             find . -type d -name "$nome" -exec rm -rf {} +
           done
-
-      - name: Baixar e configura o Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.13"
 
       - name: Clona o Repositório 'newshub'
         uses: actions/checkout@v4
@@ -92,6 +87,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
           path: newshub
+
+      - name: Baixar a Linguagem Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
 
       - name: Instalar dependencias do Python
         working-directory: newshub
