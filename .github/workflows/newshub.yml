@@ -146,8 +146,26 @@ jobs:
         with:
           artifact_name: github-pages
 
-  cleanup:
+  estatistica:
     needs: [newshub]
+    runs-on: ubuntu-latest
+    environment:
+      name: ENVIRONMENT
+    env:
+      TOKEN_REPO_SYNC: ${{ secrets.TOKEN_REPO_SYNC }}
+      USEREMAIL: ${{ secrets.USEREMAIL }}
+      USERNAME: ${{ github.repository_owner }}
+    steps:
+      - name: Clona o Repositório 'estatistica'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.USERNAME }}/estatistica
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+
+  cleanup:
+    needs: [newshub,estatistica]
     runs-on: ubuntu-latest
     steps:
       - name: Deleta artefatos
