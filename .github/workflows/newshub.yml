@@ -99,6 +99,11 @@ jobs:
           ref: main
           path: newshub
 
+      - name: Criar pasta temporaria 'artefatos'
+        working-directory: newshub
+        run: |
+          mkdir -p artefatos
+
       - name: Syncronizar pastas
         run: |
           rsync -av --update _docs/ artefatos 
@@ -107,12 +112,12 @@ jobs:
         working-directory: newshub
         run: |
           python run/article.py --basedir artefatos/artigo.html --outputdir newsroom/archive
-            
-      - name: Exporta notícias renderizadas
+
+      - name: Exporta artefatos de renderizadas
         uses: actions/upload-artifact@v4
         with:
           name: newsroom_renderizados
-          path: "./_docs"
+          path: "newshub/newsroom"
 
   newshub:
     needs: [renderizar]
@@ -137,7 +142,7 @@ jobs:
       - name: Baixa Artefato para 'GitHub Pages'
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_automatizados
+          name: newsroom_renderizados
           path: "newshub/newsroom/archive"
 
       - name: Commit as mudanças
