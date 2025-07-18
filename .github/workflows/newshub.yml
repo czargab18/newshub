@@ -97,13 +97,14 @@ jobs:
         with:
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: news
+          ref: main
           path: newshub
 
       - name: Atualiza branch news com rebase
         working-directory: newshub
         run: |
-          git pull --rebase origin news || true
+          git checkout news || git checkout -b news
+          git pull origin news 
 
       - name: Configurar credencias Git
         working-directory: newshub
@@ -139,7 +140,7 @@ jobs:
           git add newsroom/archive
           git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
           git pull --rebase origin news || echo "Nenhuma atualização remota"
-          git push origin news
+          git push origin news --force
 
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
