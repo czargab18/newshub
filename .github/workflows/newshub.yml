@@ -144,6 +144,12 @@ jobs:
       - name: Salva Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
+          name: newsroom_renderizados
+          path: "./newshub/newsroom/archive"
+
+      - name: Salva Artefato para GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
           name: github-pages
           path: "./newshub/newsroom/archive"
 
@@ -193,7 +199,7 @@ jobs:
       - name: Baixar Artefato de notícias renderizadas
         uses: actions/download-artifact@v4
         with:
-          name: gitub-pages
+          name: newsroom_renderizados
           path: estatistica/newsroom/temp_puta
 
       - name: Mover notícias renderizadas para 'estatistica/newsroom/archive'
