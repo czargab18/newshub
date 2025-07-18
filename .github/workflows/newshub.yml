@@ -197,11 +197,18 @@ jobs:
         run: |
           rsync -av --update newshub/newsroom/archive/. newsroom/
 
-      - name: Garante que a branch archive existe e faz checkout
+      - name: Garante que a branch 'estatistica/newsroom/archive' existe e faz checkout
         working-directory: estatistica
         if: steps.move_news.outputs.exists == 'true'
         run: |
-          echo "..."
+          git checkout -B news || git checkout -b news
+          git add newsroom/news
+          git commit -m "Atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
+
+      - name: Push das mudanças para a branch 'news'
+        working-directory: estatistica
+        run: |
+          git push origin news --force || echo "Nenhuma mudança para enviar"
 
   cleanup:
     needs: [newshub,estatistica]
