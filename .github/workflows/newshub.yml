@@ -138,17 +138,31 @@ jobs:
           git config --global user.name "${{ github.repository_owner }}"
           git config --global user.email "${{ secrets.USEREMAIL }}"
 
+      - name: Verificar branch 'news'
+        working-directory: newshub
+        run: |
+          if git show-ref --verify --quiet refs/heads/news; then
+            echo "Branch local 'news' já existe."
+            git checkout news
+          elif git ls-remote --exit-code --heads origin news; then
+            echo "Branch remota 'news' existe. Fazendo fetch e checkout."
+            git fetch origin news:news
+            git checkout news
+          else
+            echo "Branch 'news' não existe. Criando nova branch."
+            git checkout -b news
+          fi
+
       - name: Baixa Artefato para 'GitHub Pages'
         uses: actions/download-artifact@v4
         with:
           name: newsroom_renderizados
-          path: "newshub/newsroom/archive"
+          path: "newshub/newsroom/"
 
       - name: Commit as mudanças
         working-directory: newshub
         run: |
-          git checkout -B news || git checkout -b news
-          git add newsroom/archive
+          git add newsroom
           git commit -m "news: atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
       - name: Push das mudanças
