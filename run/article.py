@@ -132,15 +132,15 @@ class Article:
             mes = '00'
         base_dir = Path('newsroom/archive') / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        # Busca próxima subpasta livre
-        for i in range(10000):
-            codigo = f"{i:04d}"
-            pasta_artigo = base_dir / codigo
-            if not pasta_artigo.exists():
-                pasta_artigo.mkdir(parents=True, exist_ok=True)
-                # Não cria pasta imagens
-                return pasta_artigo / 'index.html', pasta_artigo
-        raise Exception("Limite de 9999 artigos por mês atingido!")
+        # Busca o maior código já existente
+        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()]
+        proximo_codigo = max(existentes, default=-1) + 1
+        if proximo_codigo > 9999:
+            raise Exception("Limite de 9999 artigos por mês atingido!")
+        codigo = f"{proximo_codigo:04d}"
+        pasta_artigo = base_dir / codigo
+        pasta_artigo.mkdir(parents=True, exist_ok=True)
+        return pasta_artigo / 'index.html', pasta_artigo
 
     @staticmethod
     def inserir_artigo_no_template(template_path, artigo_html, frontmatter, output_path):
@@ -222,16 +222,17 @@ if __name__ == "__main__":
         else:
             ano = '0000'
             mes = '00'
-        # Busca próxima subpasta livre
+        # Busca o maior código já existente
         base_dir = Path(args.outputdir) / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        for i in range(10000):
-            codigo = f"{i:04d}"
-            pasta_destino = base_dir / codigo
-            if not pasta_destino.exists():
-                pasta_destino.mkdir(parents=True, exist_ok=True)
-                output_path = pasta_destino / 'index.html'
-                break
+        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()]
+        proximo_codigo = max(existentes, default=-1) + 1
+        if proximo_codigo > 9999:
+            raise Exception("Limite de 9999 artigos por mês atingido!")
+        codigo = f"{proximo_codigo:04d}"
+        pasta_destino = base_dir / codigo
+        pasta_destino.mkdir(parents=True, exist_ok=True)
+        output_path = pasta_destino / 'index.html'
     else:
         output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
     Article.inserir_artigo_no_template(
