@@ -226,7 +226,10 @@ if __name__ == "__main__":
         base_dir = Path(args.outputdir) / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
         existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()]
-        proximo_codigo = max(existentes, default=-1) + 1
+        if existentes:
+            proximo_codigo = max(existentes) + 1
+        else:
+            proximo_codigo = 0
         if proximo_codigo > 9999:
             raise Exception("Limite de 9999 artigos por mês atingido!")
         codigo = f"{proximo_codigo:04d}"
