@@ -61,9 +61,15 @@ class Article:
             'categoria': categoria_texto
         }
     
-    def corrigirFigcaption(html):
+    def corrigirFigure(html):
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
+        # Remove divs com class 'quarto-figure' mantendo apenas o <figure>
+        for div in soup.find_all('div', class_='quarto-figure'):
+            figure = div.find('figure', class_='figure')
+            if figure:
+                div.replace_with(figure)
+        # Ajuste extra: mantém o restante do tratamento de <figure> se necessário
         for figure in soup.find_all('figure', class_='figure'):
             p_img = figure.find('p')
             figcaption = figure.find('figcaption')
@@ -157,7 +163,7 @@ class Article:
                 subhead_content.string = subtitulo
         # Conteúdo do artigo
         artigo_main = Article.capturar_main_sem_header(artigo_html)
-        artigo_main_corrigido = Article.corrigirFigcaption(artigo_main)
+        artigo_main_corrigido = Article.corrigirFigure(artigo_main)
         # Insere conteúdo no <article>
         article_tag = template_soup.find('article', class_='article')
         if article_tag:
