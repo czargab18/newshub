@@ -18,3 +18,17 @@ Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget to
 Donec rutrum congue leo eget malesuada. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Nulla porttitor accumsan tincidunt.
 
 Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus.
+
+## Apenas mais um Lorem ipsum repetido
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec facilisis enim urna euismod nisi. Mauris non erat nec nulla cursus dictum. Etiam euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec facilisis enim urna euismod nisi.
+
+![texto do figcaption](img/img1.jpg "Titulo da imagem"){fig-alt="Texto alternativo"}
+
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec facilisis enim urna euismod nisi. Mauris non erat nec nulla cursus dictum. Etiam euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec facilisis enim urna euismod nisi.
+
+Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget tortor risus. Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Vivamus suscipit tortor eget felis porttitor volutpat.
+
+Donec rutrum congue leo eget malesuada. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Nulla porttitor accumsan tincidunt.
+
+Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus.

@@ -9,7 +9,8 @@ project:
 
 default:
   page-layout: article
-  body-classes: "page-article body body-article"
+#  body-classes: "page-article body body-article"
+#  # removido porque o python já adiciona as classes pelo template
 
   chapters:
   - artigo.md
