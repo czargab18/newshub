@@ -1,6 +1,11 @@
-body[class=""] {
+body[class*="body-article"],
+main[class$="main-article"],
+article[class="article"] {
   margin: 0;
   padding: 0;
+}
+
+body[class*="body-article"] {
   min-width: 320px;
   font-size: 17px;
   line-height: 1.4705882353;
@@ -12,15 +17,101 @@ body[class=""] {
   font-style: normal;
 }
 
-:root {
-    --sk-body-text-color: rgb(29, 29, 31);
-    --sk-headline-text-color: rgb(29, 29, 31);
-    --sk-body-background-color: rgb(255, 255, 255);
-    --sk-body-font-stack: text;
-    --sk-default-stacked-margin: 0.4em;
-    --sk-paragraph-plus-element-margin: 0.8em;
-    --sk-headline-plus-first-element-margin: 0.8em;
-    --sk-headline-plus-headline-margin: 0.4em;
-    --sk-paragraph-plus-headline-margin: 1.6em
+body[class*="body-article"] figure,
+body[class*="body-article"] figcaption {
+  margin: 0;
+  padding: 0;
 }
 
+:root {
+  --sk-body-text-color: rgb(29, 29, 31);
+  --sk-headline-text-color: rgb(29, 29, 31);
+  --sk-body-background-color: rgb(255, 255, 255);
+  --sk-body-font-stack: text;
+  --sk-default-stacked-margin: 0.4em;
+  --sk-paragraph-plus-element-margin: 0.8em;
+  --sk-headline-plus-first-element-margin: 0.8em;
+  --sk-headline-plus-headline-margin: 0.4em;
+  --sk-paragraph-plus-headline-margin: 1.6em;
+}
+
+main[class$="main-article"] {
+  margin: 0 auto;
+  max-width: 2560px;
+  width: max-content;
+}
+
+main[class$="main-article"] article[class="article"] {
+  display: block;
+  margin: 0 auto;
+  width: 980px;
+  margin-top: 52px;
+}
+
+article[class="article"] div[class$="component"] {
+  margin-top: 44px;
+  margin-bottom: 44px;
+}
+
+article[class="article"] div[class="category component"] {
+  margin-bottom: 20px;
+  margin-top: 52px;
+}
+
+@media only screen and (min-width: 1441px) {
+  article[class="article"] div[class$="component"] {
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    width: 980px;
+  }
+}
+
+article[class="article"] div[class$="component"] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 980px;
+}
+
+article[class="article"] div[class$="component"] div[class="component-content"] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  width: 653px;
+}
+
+article[class="article"] div[class$="component"] div[class="component-content"] div[class="category-eyebrow"] {
+  font-size: 12px;
+  line-height: 1.3333733333;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+article[class="article"] div[class$="component"] div[class="category-eyebrow"] span[class="category-eyebrow-category"] {
+  text-transform: uppercase;
+  color: #6e6e73;
+  border-color: #6e6e73;
+}
+
+article[class="article"] div[class$="component"] div[class="category-eyebrow"] span[class="category-eyebrow-category"],
+article[class="article"] div[class$="component"] div[class="category-eyebrow"] span[class="category-eyebrow-date"] {
+  display: block;
+}
+
+.page-article .category-eyebrow-date {
+  margin-top: 4px;
+}
+
+.category-eyebrow-date {
+  color: #6e6e73;
+}
+.category-eyebrow-date {
+  font-size: 14px;
+  line-height: 1.2857742857;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+.category-eyebrow-category,
+.category-eyebrow-date {
+  display: block;
+}
