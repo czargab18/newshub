@@ -1,8 +1,16 @@
+html,
+body[class*="body-article"] {
+  width: 100%;
+}
+
 body[class*="body-article"],
 main[class$="main-article"],
 article[class="article"] {
   margin: 0;
   padding: 0;
+  width: max-content;
+  max-width: 2560px;
+  margin: 0 auto;
 }
 
 body[class*="body-article"] {
@@ -150,6 +158,7 @@ article[class="article"] section :is(p, span, div, figure, figcaption) {
 article[class="article"] section figure {
   position: relative;
   width: 980px;
+  max-width: 100%;
   height: max-content;
   margin: 0 auto;
   margin-top: 44px;
@@ -158,9 +167,15 @@ article[class="article"] section figure {
 
 article[class="article"] figure img {
   width: 100%;
-  max-width: 980px;
-  top: 0;
-  left: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1000px) {
+  article[class="article"] section figure {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 article[class="article"] figure figcaption {
@@ -192,9 +207,9 @@ article[class="article"] section .pagebody-header {
 }
 
 article[class="article"] section p {
-    font-size: 19px;
-    line-height: 1.4211026316;
-    font-weight: 400;
-    letter-spacing: .012em;
-    font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 19px;
+  line-height: 1.4211026316;
+  font-weight: 400;
+  letter-spacing: 0.012em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
