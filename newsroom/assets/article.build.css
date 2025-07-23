@@ -1,0 +1,26 @@
+body[class=""] {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  font-size: 17px;
+  line-height: 1.4705882353;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background-color: var(--sk-body-background-color, rgb(255, 255, 255));
+  color: var(--sk-body-text-color, rgb(29, 29, 31));
+  font-style: normal;
+}
+
+:root {
+    --sk-body-text-color: rgb(29, 29, 31);
+    --sk-headline-text-color: rgb(29, 29, 31);
+    --sk-body-background-color: rgb(255, 255, 255);
+    --sk-body-font-stack: text;
+    --sk-default-stacked-margin: 0.4em;
+    --sk-paragraph-plus-element-margin: 0.8em;
+    --sk-headline-plus-first-element-margin: 0.8em;
+    --sk-headline-plus-headline-margin: 0.4em;
+    --sk-paragraph-plus-headline-margin: 1.6em
+}
+
