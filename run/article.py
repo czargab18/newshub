@@ -225,7 +225,7 @@ if __name__ == "__main__":
         # Busca o maior código já existente
         base_dir = Path(args.outputdir) / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()]
+        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()] 
         if existentes:
             proximo_codigo = max(existentes) + 1
         else:
