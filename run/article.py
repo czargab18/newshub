@@ -153,7 +153,13 @@ class Article:
         data = frontmatter.get('data', '')
         titulo = frontmatter.get('titulo', '')
         subtitulo = frontmatter.get('subtitulo', '')
-        template_soup.find('span', class_='category-eyebrow-category').string = categoria
+        # Define classe dinâmica para a categoria
+        categoria_class = 'category_' + categoria.lower().replace(' ', '') if categoria else ''
+        span_categoria = template_soup.find('span', class_='category-eyebrow-category')
+        if span_categoria:
+            # Mantém a primeira classe, substitui a segunda
+            span_categoria['class'] = ['category-eyebrow-category', categoria_class]
+            span_categoria.string = categoria
         template_soup.find('span', class_='category-eyebrow-date').string = data
         template_soup.find('h1', class_='hero-headline').string = titulo
         subhead = template_soup.find('div', class_='article-subhead component')
