@@ -33,6 +33,9 @@ body[class*="body-article"] figcaption {
   --sk-headline-plus-first-element-margin: 0.8em;
   --sk-headline-plus-headline-margin: 0.4em;
   --sk-paragraph-plus-headline-margin: 1.6em;
+
+  /* conteudo */
+  --r-width-article-page: 980px;
 }
 
 main[class$="main-article"] {
@@ -44,7 +47,7 @@ main[class$="main-article"] {
 main[class$="main-article"] article[class="article"] {
   display: block;
   margin: 0 auto;
-  width: 980px;
+  width: var(--r-width-article-page);
   margin-top: 52px;
 }
 
@@ -62,14 +65,14 @@ article[class="article"] div[class="category component"] {
   article[class="article"] div[class$="component"] {
     margin-inline-start: auto;
     margin-inline-end: auto;
-    width: 980px;
+    width: var(--r-width-article-page);
   }
 }
 
 article[class="article"] div[class$="component"] {
   margin-inline-start: auto;
   margin-inline-end: auto;
-  width: 980px;
+  width: var(--r-width-article-page);
 }
 
 article[class="article"] div[class$="component"] div[class="component-content"] {
@@ -97,10 +100,6 @@ article[class="article"] div[class$="component"] div[class="category-eyebrow"] s
   display: block;
 }
 
-.page-article .category-eyebrow-date {
-  margin-top: 4px;
-}
-
 .category-eyebrow-date {
   color: #6e6e73;
 }
@@ -114,4 +113,47 @@ article[class="article"] div[class$="component"] div[class="category-eyebrow"] s
 .category-eyebrow-category,
 .category-eyebrow-date {
   display: block;
+}
+
+article[class="article"] div[class^="pagetitle"] {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+article[class="article"] div[class^="pagetitle"] h1[class="hero-headline"] {
+  font-size: 48px;
+  line-height: 1.0834933333;
+  font-weight: 700;
+  letter-spacing: -0.003em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+article[class="article"] div[class="article-header"],
+article[class="article"] div[class="article-header"] div[class^="article-subhead"] {
+  font-size: 24px;
+  line-height: 1.1666666667;
+  font-weight: 500;
+  letter-spacing: 0.009em;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+article[class="article"] section :is(h1, h2, h3, h4, h5, h6),
+article[class="article"] section :is(p, span, div, figure, figcaption) {
+  width: 653px;
+  margin: 0 auto;
+}
+
+article[class="article"] figure {
+  height  : calc(max-content + 10px);
+}
+
+article[class="article"] figure img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
