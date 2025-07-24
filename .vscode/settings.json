@@ -10,5 +10,6 @@
     "**/_quarto.yml/" : false,
     // "**/*libs*/" : true,
     "**/article/.gitignore" : true,
+    "**/libs/": true,
   }
 }

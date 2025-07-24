@@ -61,9 +61,15 @@ class Article:
             'categoria': categoria_texto
         }
     
-    def corrigirFigcaption(html):
+    def corrigirFigure(html):
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, 'html.parser')
+        # Remove divs com class 'quarto-figure' mantendo apenas o <figure>
+        for div in soup.find_all('div', class_='quarto-figure'):
+            figure = div.find('figure', class_='figure')
+            if figure:
+                div.replace_with(figure)
+        # Ajuste extra: mantém o restante do tratamento de <figure> se necessário
         for figure in soup.find_all('figure', class_='figure'):
             p_img = figure.find('p')
             figcaption = figure.find('figcaption')
@@ -126,15 +132,15 @@ class Article:
             mes = '00'
         base_dir = Path('newsroom/archive') / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        # Busca próxima subpasta livre
-        for i in range(10000):
-            codigo = f"{i:04d}"
-            pasta_artigo = base_dir / codigo
-            if not pasta_artigo.exists():
-                pasta_artigo.mkdir(parents=True, exist_ok=True)
-                # Não cria pasta imagens
-                return pasta_artigo / 'index.html', pasta_artigo
-        raise Exception("Limite de 9999 artigos por mês atingido!")
+        # Busca o maior código já existente
+        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()]
+        proximo_codigo = max(existentes, default=-1) + 1
+        if proximo_codigo > 9999:
+            raise Exception("Limite de 9999 artigos por mês atingido!")
+        codigo = f"{proximo_codigo:04d}"
+        pasta_artigo = base_dir / codigo
+        pasta_artigo.mkdir(parents=True, exist_ok=True)
+        return pasta_artigo / 'index.html', pasta_artigo
 
     @staticmethod
     def inserir_artigo_no_template(template_path, artigo_html, frontmatter, output_path):
@@ -147,7 +153,13 @@ class Article:
         data = frontmatter.get('data', '')
         titulo = frontmatter.get('titulo', '')
         subtitulo = frontmatter.get('subtitulo', '')
-        template_soup.find('span', class_='category-eyebrow-category').string = categoria
+        # Define classe dinâmica para a categoria
+        categoria_class = 'category_' + categoria.lower().replace(' ', '') if categoria else ''
+        span_categoria = template_soup.find('span', class_='category-eyebrow-category')
+        if span_categoria:
+            # Mantém a primeira classe, substitui a segunda
+            span_categoria['class'] = ['category-eyebrow-category', categoria_class]
+            span_categoria.string = categoria
         template_soup.find('span', class_='category-eyebrow-date').string = data
         template_soup.find('h1', class_='hero-headline').string = titulo
         subhead = template_soup.find('div', class_='article-subhead component')
@@ -157,7 +169,7 @@ class Article:
                 subhead_content.string = subtitulo
         # Conteúdo do artigo
         artigo_main = Article.capturar_main_sem_header(artigo_html)
-        artigo_main_corrigido = Article.corrigirFigcaption(artigo_main)
+        artigo_main_corrigido = Article.corrigirFigure(artigo_main)
         # Insere conteúdo no <article>
         article_tag = template_soup.find('article', class_='article')
         if article_tag:
@@ -216,16 +228,20 @@ if __name__ == "__main__":
         else:
             ano = '0000'
             mes = '00'
-        # Busca próxima subpasta livre
+        # Busca o maior código já existente
         base_dir = Path(args.outputdir) / ano / mes
         base_dir.mkdir(parents=True, exist_ok=True)
-        for i in range(10000):
-            codigo = f"{i:04d}"
-            pasta_destino = base_dir / codigo
-            if not pasta_destino.exists():
-                pasta_destino.mkdir(parents=True, exist_ok=True)
-                output_path = pasta_destino / 'index.html'
-                break
+        existentes = [int(p.name) for p in base_dir.iterdir() if p.is_dir() and p.name.isdigit()] 
+        if existentes:
+            proximo_codigo = max(existentes) + 1
+        else:
+            proximo_codigo = 0
+        if proximo_codigo > 9999:
+            raise Exception("Limite de 9999 artigos por mês atingido!")
+        codigo = f"{proximo_codigo:04d}"
+        pasta_destino = base_dir / codigo
+        pasta_destino.mkdir(parents=True, exist_ok=True)
+        output_path = pasta_destino / 'index.html'
     else:
         output_path, pasta_destino = Article('').gerar_caminho_saida(frontmatter)
     Article.inserir_artigo_no_template(

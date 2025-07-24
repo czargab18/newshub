@@ -72,26 +72,14 @@ jobs:
         run: |
           quarto render --no-execute --output-dir ../_docs --to html
 
-      - name: Limpa diretórios '_libs'
-        working-directory: _newsroom
+      - name: Limpa diretórios 'libs'
+        working-directory: _docs
         run: |
           remover="libs _libs _site site_libs delete outra_pasta"
           for nome in $remover; do
             find . -type d -name "$nome" -exec rm -rf {} +
           done
 
-      - name: Exporta notícias renderizadas
-        uses: actions/upload-artifact@v4
-        with:
-          name: newsroom_renderizados
-          path: "./_docs"
-
-  automatizar:
-    needs: [renderizar]
-    runs-on: ubuntu-latest
-    environment:
-      name: ENVIRONMENT
-    steps:
       - name: Clona o Repositório 'newshub'
         uses: actions/checkout@v4
         with:
@@ -100,7 +88,7 @@ jobs:
           ref: main
           path: newshub
 
-      - name: Baixar e configura o Python
+      - name: Baixar a Linguagem Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.13"
@@ -111,25 +99,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r run/requirements.txt
 
-      - name: Baixa Artefato para 'GitHub Pages'
-        uses: actions/download-artifact@v4
-        with:
-          name: newsroom_renderizados
-          path: "newshub/artefatos"
+      - name: Criar pasta temporaria 'artefatos'
+        run: |
+          mkdir -p newshub/artefatos
+
+      - name: Syncronizar pastas
+        run: |
+          rsync -av --update _docs/ newshub/artefatos 
 
       - name: Corrigir links para GitHub Pages - newshub
         working-directory: newshub
         run: |
           python run/article.py --basedir artefatos/artigo.html --outputdir newsroom/archive
 
-      - name: Salvar artefatos do jobs 'automatizar'
-        uses: actions/upload-pages-artifact@v3
+      - name: Exporta artefatos de renderizadas
+        uses: actions/upload-artifact@v4
         with:
-          name: newsroom_automatizados
-          path: "./newshub/newsroom/archive"
+          name: newsroom_renderizados
+          path: "newshub/newsroom"
 
   newshub:
-    needs: [renderizar, automatizar]
+    needs: [renderizar]
     runs-on: ubuntu-latest
     environment:
       name: ENVIRONMENT
@@ -148,35 +138,48 @@ jobs:
           git config --global user.name "${{ github.repository_owner }}"
           git config --global user.email "${{ secrets.USEREMAIL }}"
 
+      - name: Verificar branch 'news'
+        working-directory: newshub
+        run: |
+          if git show-ref --verify --quiet refs/heads/news; then
+            echo "Branch local 'news' já existe."
+            git checkout news
+          elif git ls-remote --exit-code --heads origin news; then
+            echo "Branch remota 'news' existe. Fazendo fetch e checkout."
+            git fetch origin news:news
+            git checkout news
+          else
+            echo "Branch 'news' não existe. Criando nova branch."
+            git checkout -b news
+          fi
+
       - name: Baixa Artefato para 'GitHub Pages'
         uses: actions/download-artifact@v4
         with:
-          name: newsroom_automatizados
-          path: "newshub/newsroom/archive"
+          name: newsroom_renderizados
+          path: "newshub/newsroom/"
 
       - name: Commit as mudanças
         working-directory: newshub
         run: |
-          git checkout -B news || git checkout -b news
-          git add newsroom/archive
+          git add newsroom
           git commit -m "news: atualiza notícias renderizadas" || echo "Nenhuma mudança para commitar"
 
       - name: Push das mudanças
         working-directory: newshub
         run: |
-          git checkout -B news || git checkout -b news
-          git push origin news --force
+          git push origin news:news --force
 
       - name: Configurar Artefato para GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          name: newsroom_renderizados
+          name: newshub_pages
           path: "./newshub/newsroom/archive"
 
       - name: Faz deploy para GitHub Pages - newshub
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: newsroom_renderizados
+          artifact_name: newshub_pages
 
   estatistica:
     needs: [renderizar, newshub]

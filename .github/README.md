@@ -49,11 +49,15 @@ newsroom/
 
 completo e único
 ```bash
+echo "Navegando para o diretório do artigo..."
+cd newshub/article/ ;
+
+echo "Renderizando artigo com Quarto..."
 quarto render article/ --output-dir ../artefatos/ ; 
-echo "Artigo renderizado com sucesso!"
+
+echo "Automatizando a geração do HTML do artigo"
 cd ../ ; 
 python ./run/article.py --basedir ./artefatos/artigo.html --outputdir newsroom/archive  
-echo "Script de automação executado com sucesso!"
 ```
 
 só o script de automaçao
