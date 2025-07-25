@@ -4,7 +4,14 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["**/artigo.qmd"]
+    paths:
+      [
+        "article/**/*.qmd",
+        "article/**/*.yml",
+        "article/*.html",
+        "article/*.bib",
+        ".github/workflows/*newshub*.yml",
+      ]
 
 permissions:
   contents: write
