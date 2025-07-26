@@ -38,6 +38,10 @@ jobs:
           git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^article/' > arquivos.txt || touch arquivos.txt
           echo "Arquivos alterados em article/:"
           cat arquivos.txt || echo "Nenhum arquivo encontrado"
+          if [ ! -s arquivos.txt ]; then
+            echo "Nenhuma mudança detectada em article/. Encerrando o workflow."
+            exit 0
+          fi
 
       - name: Configura Quarto
         uses: quarto-dev/quarto-actions/setup@v2
