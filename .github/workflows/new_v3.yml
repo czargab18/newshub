@@ -45,19 +45,20 @@ jobs:
 
       - name: Configura Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-  
+
       - name: Renderiza notícias Quarto
-        working-directory: _newsroom
+        working-directory: newshub
         id: renderizar
         run: |
-          quarto render --no-execute --output-dir ../_docs --to html
+          quarto render article/ --no-execute --output-dir ../artefatos --to html
 
       - name: Limpa diretórios 'libs'
-        working-directory: _docs
+        working-directory: newshub
         run: |
-          remover="libs _libs _site site_libs delete outra_pasta"
-          for nome in $remover; do
+          REMOVER="libs _libs _site site_libs index_files _book delete .quarto _quarto"
+          for nome in $REMOVER; do
             find . -type d -name "$nome" -exec rm -rf {} +
+            echo "Diretório '$nome' removido."
           done
 
       - name: Instalar dependencias do Python
