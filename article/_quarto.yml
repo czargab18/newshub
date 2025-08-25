@@ -1,6 +1,6 @@
 project:
   type: default
-#  output-dir: "_output_"
+  output-dir: "../artefatos"
   lib-dir: "libs"
   preview:
     host: localhost
@@ -8,18 +8,14 @@ project:
     browser: false
 
 default:
-  page-layout: article
-#  body-classes: "page-article body body-article"
-#  # removido porque o python já adiciona as classes pelo template
-
   chapters:
-  - artigo.md
+    - artigo.md
 
 format:
   html:
+    page-layout: article
     date: today
     lang: "pt-BR"
-    page-layout: article
     toc: false
     anchor-sections: false
     code-link: false

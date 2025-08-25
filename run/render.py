@@ -15,21 +15,6 @@ from pathlib import Path
 from typing import Optional
 from datetime import datetime
 
-try:
-    import pypandoc
-except ImportError:
-    print("❌ ERRO: pypandoc não está instalado")
-    print("Execute: pip install pypandoc")
-    print("Ou execute: python config.py")
-    sys.exit(1)
-
-# Importa a biblioteca de elementos
-try:
-    from biblioteca_elementos import BibliotecaElementos
-except ImportError:
-    print("⚠️  Biblioteca de elementos não encontrada. Algumas funcionalidades podem estar limitadas.")
-    BibliotecaElementos = None
-
 
 class Automacao:
     def gerar_caminho_saida(self, frontmatter):
