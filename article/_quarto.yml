@@ -1,6 +1,6 @@
 project:
   type: default
-#  output-dir: "_output_"
+  output-dir: "_output_"
   lib-dir: "libs"
   preview:
     host: localhost
@@ -9,17 +9,20 @@ project:
 
 default:
   page-layout: article
-#  body-classes: "page-article body body-article"
-#  # removido porque o python já adiciona as classes pelo template
+  body-classes: ["page-article", "body", "body-article"]
+  #  # removido porque o python já adiciona as classes pelo template
 
   chapters:
-  - artigo.md
+    - artigo.md
 
 format:
   html:
+    page-layout: article
     date: today
     lang: "pt-BR"
-    page-layout: article
+    title: "Estatística"
+    body-classes: "body page-landing page-article body-article"
+    description: "A fonte oficial de notícias sobre a Estatistica, da própria Estatistica. Leia comunicados de imprensa, receba atualizações, assista a vídeos e baixe imagens."
     toc: false
     anchor-sections: false
     code-link: false
