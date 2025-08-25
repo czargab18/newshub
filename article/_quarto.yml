@@ -16,9 +16,6 @@ format:
     page-layout: article
     date: today
     lang: "pt-BR"
-    # body-classes: "body page-landing page-article body-article"
-    description: ""
-
     toc: false
     anchor-sections: false
     code-link: false
