@@ -1,6 +1,6 @@
 # O resto do seu ficheiro:
 backend:
-  name: git-gateway
+  name: github
   repo: "czargab18/estatistica"
   branch: news                  # <-- O branch onde salvar
 
