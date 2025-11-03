@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: "czargab18/estatistica"
   branch: news
 media_folder: "newshub/artigos/img"
