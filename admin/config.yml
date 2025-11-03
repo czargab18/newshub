@@ -1,28 +1,22 @@
-# Backend: Como o CMS se conecta
-local_backend: true
+# O resto do seu ficheiro:
 backend:
-  name: git-gateway
-  repo: "czargab18/newshub"  # <-- SUBSTITUA PELO SEU REPOSITÓRIO
-  branch: main                    # <-- O branch principal onde o CMS vai escrever
+  name: github
+  repo: "czargab18/estatistica"
+  branch: news                  # <-- O branch onde salvar
 
-  # Opcional: Ativa o fluxo de revisão (cria Pull Requests)
-  # publish_mode: editorial_workflow
+# Mídia: Onde salvar imagens
+media_folder: "newshub/artigos/img"
+public_folder: "img" 
 
-# Mídia: Onde salvar imagens que o jornalista subir
-media_folder: "newshub/artigos/img" # Caminho completo de onde salvar imagens
-public_folder: "img"                # Caminho relativo que o .qmd usará
-
-# Coleções: Define os "tipos de conteúdo" (ex: Notícias, Eventos)
+# Coleções: Os formulários
 collections:
-  - name: "noticias"                # ID interno da coleção
-    label: "Notícias"              # Nome que aparece no painel
-    folder: "newshub/artigos"       # Onde salvar os arquivos .qmd
-    create: true                    # Permite criar novos arquivos
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato do nome do arquivo
-    extension: "qmd"                # Salvar como .qmd
-    format: "frontmatter"           # Usar formato YAML frontmatter
-
-    # Campos: Os formulários que o jornalista vai preencher
+  - name: "noticias"
+    label: "Notícias"
+    folder: "newshub/artigos"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
     fields:
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Data", name: "date", widget: "datetime" }
