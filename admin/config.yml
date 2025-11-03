@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: "czargab18/estatistica"
+  repo: "czargab18/newshub"
   branch: news
 media_folder: "newshub/artigos/img"
 public_folder: "img" 
