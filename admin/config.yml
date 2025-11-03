@@ -1,0 +1,24 @@
+# O resto do seu ficheiro:
+backend:
+  name: github
+  repo: "czargab18/estatistica"
+  branch: news                  # <-- O branch onde salvar
+
+# Mídia: Onde salvar imagens
+media_folder: "newshub/artigos/img"
+public_folder: "img" 
+
+# Coleções: Os formulários
+collections:
+  - name: "noticias"
+    label: "Notícias"
+    folder: "newshub/artigos"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Autor", name: "author", widget: "string", optional: true }
+      - { label: "Corpo da Notícia", name: "body", widget: "markdown" }
