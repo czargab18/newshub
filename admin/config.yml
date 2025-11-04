@@ -1,25 +1,12 @@
-# Backend: Configurado para o GitLab
 backend:
   name: gitlab
-  # O repositório PRIVADO no GitLab onde os dados são salvos
   repo: "czargab18/newshub" 
   branch: news
-  
-  # A "magia" que permite o login direto sem Netlify
-  auth_type: "implicit" 
-  
-  # A "chave" pública que você copiou do GitLab
-  app_id: "COLE_O_SEU_APPLICATION_ID_DO_GITLAB_AQUI" 
-
-# Ativa o "Fluxo de Trabalho Editorial" (botão de Rascunho/Publicar)
-#
+  auth_type: "implicit"
+  app_id: "5c58f50a66cf84390665ba97282cdbcfeb98c03f99eb4988269123118c3b95fb" 
 publish_mode: editorial_workflow
-
-# Mídia: Onde as imagens/ficheiros carregados serão salvos (no GitLab)
 media_folder: "artigos/uploads"
 public_folder: "uploads"
-
-# Coleção Única
 collections:
   - name: "conteudo"
     label: "Conteúdo"
@@ -29,7 +16,6 @@ collections:
     slug: "{{slug}}" # O nome do ficheiro será o 'slug' (do Título)
     extension: "json"
     format: "json"
-    
     fields:
       # --- 1. Identificação e Datas (Campos Ocultos) ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
@@ -37,17 +23,11 @@ collections:
       - { label: "Mês (MM)", name: "month", widget: "hidden", default: "" }
       - { label: "Data de Atualização", name: "date_updated", widget: "hidden", default: "" }
       - { label: "Slug (URL)", name: "slug", widget: "hidden", default: "" }
-
-      # --- Campo de Data Visível ---
       - { label: "Data de Publicação", name: "date_format", widget: "datetime", default: "" }
-
-      # --- 3. Conteúdo Principal (Visível) ---
       - { label: "Título", name: "title", widget: "string", default: "" }
       - { label: "Subtítulo", name: "subtitle", widget: "string", default: "", optional: true }
       - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true, hint: "120-160 caracteres." }
       - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true, hint: "200-300 caracteres." }
-
-      # --- 4. Autoria (Visível e Opcional) ---
       - { label: "Autor", name: "author", widget: "string", default: "" } 
       - { label: "Bio do Autor", name: "author_bio", widget: "text", default: "", optional: true }
       - { label: "Avatar do Autor", name: "author_avatar", widget: "image", default: "", optional: true }
@@ -61,16 +41,12 @@ collections:
           - { label: "Nome", name: "name", widget: "string", default: "" }
           - { label: "Função", name: "role", widget: "select", default: "Co-autor", options: ["Editor", "Revisor Técnico", "Co-autor", "Pesquisador", "Designer Gráfico", "Fotógrafo", "Tradutor", "Consultor"] }
           - { label: "Email", name: "email", widget: "string", default: "", optional: true }
-
-      # --- 5. Categorização (Visível) ---
       - { label: "Tipo", name: "type", widget: "select", default: "news", options: ["news", "article", "event", "press", "analysis", "report"] }
       - { label: "Categoria", name: "category", widget: "select", multiple: true, default: [], options: ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"] }
       - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true }
       - { label: "Tags (Busca Interna)", name: "tags", widget: "list", default: [], optional: true }
       - { label: "Palavras-chave (SEO)", name: "keywords", widget: "list", default: [], optional: true }
       - { label: "Idioma", name: "language", widget: "select", default: "pt-BR", options: ["pt-BR", "en-US", "es-ES"] }
-
-      # --- 6. Imagens (Opcional) ---
       - label: "Miniatura (Thumbnail)"
         name: "thumbnail"
         widget: "object"
@@ -82,7 +58,6 @@ collections:
           - { label: "Largura", name: "width", widget: "number", default: 600 }
           - { label: "Altura", name: "height", widget: "number", default: 400 }
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
-      
       - label: "Imagem de Capa (Cover)"
         name: "cover_image"
         widget: "object"
@@ -108,8 +83,6 @@ collections:
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
           - { label: "Largura", name: "width", widget: "number", default: 1000 }
           - { label: "Altura", name: "height", widget: "number", default: 600 }
-
-      # --- 7. Mídia Adicional (Opcional) ---
       - label: "Vídeos"
         name: "videos"
         widget: "list"
@@ -121,7 +94,6 @@ collections:
           - { label: "Tipo", name: "type", widget: "select", default: "youtube", options: ["youtube", "vimeo", "mp4"] }
           - { label: "Título", name: "title", widget: "string", default: "" }
           - { label: "Thumbnail", name: "thumbnail", widget: "image", default: "", optional: true }
-
       - label: "Anexos (Downloads)"
         name: "attachments"
         widget: "list"
@@ -133,11 +105,7 @@ collections:
           - { label: "Ficheiro", name: "url", widget: "file", default: "" }
           - { label: "Tipo", name: "type", widget: "select", default: "application/pdf", options: ["application/pdf", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/csv", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/zip"] }
           - { label: "Tamanho", name: "size", widget: "string", default: "", optional: true, hint: "Ex: 1.8MB" }
-
-      # --- 8. Corpo do Artigo (Visível) ---
       - { label: "Corpo do Artigo", name: "body", widget: "wysiwyg", default: "" }
-
-      # --- 9. Referências e Citações (Opcional) ---
       - label: "Referências (Bibliografia)"
         name: "references"
         widget: "list"
@@ -150,7 +118,6 @@ collections:
           - { label: "Ano", name: "year", widget: "string", default: "" }
           - { label: "URL", name: "url", widget: "string", default: "" }
           - { label: "DOI", name: "doi", widget: "string", default: "", optional: true }
-
       - label: "Citações (destacadas)"
         name: "citations"
         widget: "list"
@@ -161,8 +128,6 @@ collections:
           - { label: "Texto", name: "text", widget: "text", default: "" }
           - { label: "Autor", name: "author", widget: "string", default: "" }
           - { label: "Fonte", name: "source", widget: "string", default: "" }
-
-      # --- 10. Relacionamentos (Opcional) ---
       - { label: "Artigos Relacionados (IDs)", name: "related_articles", widget: "list", default: [], optional: true, hint: "Insira os IDs de outros artigos. Ex: 0023" }
       - label: "Série"
         name: "series"
@@ -173,8 +138,6 @@ collections:
           - { label: "Título da Série", name: "title_series", widget: "string", default: "" }
           - { label: "Parte Nº", name: "part", widget: "number", default: 0 }
           - { label: "Total de Partes", name: "total_parts", widget: "number", default: 0 }
-
-      # --- 11. Campos Personalizados (Opcional) ---
       - label: "Campos Personalizados (Institucional)"
         name: "custom_fields"
         widget: "object"
