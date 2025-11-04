@@ -2,7 +2,7 @@ backend:
   name: gitlab
   repo: "czargab18/newshub" 
   branch: news
-  auth_type: "implicit"
+  auth_type: "implicit" 
   app_id: "5c58f50a66cf84390665ba97282cdbcfeb98c03f99eb4988269123118c3b95fb" 
 publish_mode: editorial_workflow
 media_folder: "artigos/uploads"
@@ -17,7 +17,6 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      # --- 1. Identificação e Datas (Campos Ocultos) ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
       - { label: "Ano (YYYY)", name: "ano", widget: "hidden", default: "" }
       - { label: "Mês (MM)", name: "month", widget: "hidden", default: "" }
