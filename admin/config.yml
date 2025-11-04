@@ -1,49 +1,49 @@
-# Backend: Configuração do Netlify Git Gateway
-# Isto assume que o seu site Netlify (newshubcms) está ligado
-# ao repositório 'czargab18/newshub'
 backend:
   name: git-gateway
   repo: "czargab18/newshub"
-  branch: news # O branch onde o CMS salvará os dados
+  branch: news
 
-# Mídia: Onde as imagens/ficheiros carregados serão salvos
 media_folder: "artigos/uploads"
 public_folder: "uploads"
 
-# --- COLEÇÃO ÚNICA BASEADA NO SEU SCHEMA ---
-# Isto substitui as suas 3 coleções antigas (Notícias, Eventos, Classes)
 collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
-    folder: "artigos" # Salva todos os JSONs aqui
+    folder: "artigos"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato do nome do ficheiro
+    # O nome do ficheiro JSON será gerado a partir do título (ex: 2025-11-04-novo-artigo.json)
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" 
     extension: "json"
     format: "json"
     
-    # --- CAMPOS TRADUZIDOS DA SUA DOCUMENTAÇÃO ---
     fields:
-      # --- 1. Identificação e Datas ---
-      - { label: "ID", name: "id", widget: "string", default: "", hint: "Identificador único. Ex: 0001, 0156, 1234" }
-      - { label: "Ano (YYYY)", name: "ano", widget: "string", default: "" }
-      - { label: "Mês (MM)", name: "month", widget: "string", default: "" }
-      - { label: "Data Formatada", name: "date_format", widget: "string", default: "", hint: "Ex: 4 de Novembro de 2025" }
-      - { label: "Data de Atualização", name: "date_updated", widget: "datetime", default: "" }
+      # --- 1. Identificação e Datas (Campos Ocultos) ---
+      # Estes campos são preenchidos automaticamente ou ficam
+      # vazios por padrão, mas não aparecem para o jornalista.
+      
+      - { label: "ID", name: "id", widget: "uuid", hidden: true, default: "" }
+      - { label: "Ano (YYYY)", name: "ano", widget: "hidden", default: "" }
+      - { label: "Mês (MM)", name: "month", widget: "hidden", default: "" }
+      - { label: "Data de Atualização", name: "date_updated", widget: "hidden", default: "" }
+      - { label: "Slug (URL)", name: "slug", widget: "hidden", default: "" }
 
-      # --- 2. Status de Publicação ---
+      # --- CAMPO DE DATA VISÍVEL ---
+      - { label: "Data de Publicação", name: "date_format", widget: "string", default: "", hint: "Ex: 4 de Novembro de 2025. Este é o texto que será exibido." }
+
+      # --- 2. Status de Publicação (Visível) ---
+      # Estes são os controlos principais do jornalista
       - { label: "Publicado", name: "published", widget: "boolean", default: false }
       - { label: "Em Destaque", name: "featured", widget: "boolean", default: false }
-      - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
+      - { label: "Rascunho", name: "draft", widget: "boolean", default: true, hint: "Marque como 'Falso' quando o artigo estiver pronto." }
 
-      # --- 3. Conteúdo Principal ---
+      # --- 3. Conteúdo Principal (Visível) ---
       - { label: "Título", name: "title", widget: "string", default: "" }
       - { label: "Subtítulo", name: "subtitle", widget: "string", default: "", optional: true }
-      - { label: "Slug (URL)", name: "slug", widget: "string", default: "", optional: true, hint: "URL amigável. Ex: censo-2025-populacao" }
-      - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true, hint: "120-160 caracteres. Usado em listagens e meta description." }
-      - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true, hint: "200-300 caracteres." }
+      - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true }
+      - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true }
 
-      # --- 4. Autoria ---
+      # --- 4. Autoria (Visível) ---
       - { label: "Autor", name: "author", widget: "string", default: "" }
       - { label: "Bio do Autor", name: "author_bio", widget: "text", default: "", optional: true }
       - { label: "Avatar do Autor", name: "author_avatar", widget: "image", default: "", optional: true }
@@ -57,15 +57,15 @@ collections:
           - { label: "Função", name: "role", widget: "select", default: "Co-autor", options: ["Editor", "Revisor Técnico", "Co-autor", "Pesquisador", "Designer Gráfico", "Fotógrafo", "Tradutor", "Consultor"] }
           - { label: "Email", name: "email", widget: "string", default: "", optional: true }
 
-      # --- 5. Categorização ---
+      # --- 5. Categorização (Visível) ---
       - { label: "Tipo", name: "type", widget: "select", default: "news", options: ["news", "article", "event", "press", "analysis", "report"] }
       - { label: "Categoria", name: "category", widget: "select", multiple: true, default: [], options: ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"] }
-      - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true, hint: "Ex: Demografia, Economia" }
+      - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true }
       - { label: "Tags (Busca Interna)", name: "tags", widget: "list", default: [], optional: true }
       - { label: "Palavras-chave (SEO)", name: "keywords", widget: "list", default: [], optional: true }
       - { label: "Idioma", name: "language", widget: "select", default: "pt-BR", options: ["pt-BR", "en-US", "es-ES"] }
 
-      # --- 6. Imagens ---
+      # --- 6. Imagens (Visível) ---
       - label: "Miniatura (Thumbnail)"
         name: "thumbnail"
         widget: "object"
@@ -104,7 +104,7 @@ collections:
           - { label: "Largura", name: "width", widget: "number", default: 1000 }
           - { label: "Altura", name: "height", widget: "number", default: 600 }
 
-      # --- 7. Mídia Adicional ---
+      # --- 7. Mídia Adicional (Visível) ---
       - label: "Vídeos"
         name: "videos"
         widget: "list"
@@ -129,10 +129,10 @@ collections:
           - { label: "Tipo", name: "type", widget: "select", default: "application/pdf", options: ["application/pdf", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/csv", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/zip"] }
           - { label: "Tamanho", name: "size", widget: "string", default: "", optional: true, hint: "Ex: 1.8MB" }
 
-      # --- 8. Corpo do Artigo ---
+      # --- 8. Corpo do Artigo (Visível) ---
       - { label: "Corpo do Artigo", name: "body", widget: "html", default: "" }
 
-      # --- 9. Referências e Citações ---
+      # --- 9. Referências e Citações (Visível) ---
       - label: "Referências (Bibliografia)"
         name: "references"
         widget: "list"
@@ -157,7 +157,7 @@ collections:
           - { label: "Autor", name: "author", widget: "string", default: "" }
           - { label: "Fonte", name: "source", widget: "string", default: "" }
 
-      # --- 10. Relacionamentos ---
+      # --- 10. Relacionamentos (Visível) ---
       - { label: "Artigos Relacionados (IDs)", name: "related_articles", widget: "list", default: [], optional: true, hint: "Insira os IDs de outros artigos. Ex: 0023" }
       - label: "Série"
         name: "series"
@@ -169,7 +169,7 @@ collections:
           - { label: "Parte Nº", name: "part", widget: "number", default: 0 }
           - { label: "Total de Partes", name: "total_parts", widget: "number", default: 0 }
 
-      # --- 11. Campos Personalizados ---
+      # --- 11. Campos Personalizados (Visível) ---
       - label: "Campos Personalizados (Institucional)"
         name: "custom_fields"
         widget: "object"
