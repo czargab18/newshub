@@ -31,12 +31,12 @@ collections:
       - { label: "Data de Atualização", name: "date_updated", widget: "hidden", default: "" }
       - { label: "Slug (URL)", name: "slug", widget: "hidden", default: "" }
 
-      # --- CAMPO DE DATA VISÍVEL (MODIFICADO) ---
+      # --- Campo de Data Visível ---
       - { label: "Data de Publicação", name: "date_format", widget: "datetime", default: "" }
 
-      # --- 2. Status de Publicação (Visível) ---
-      - { label: "Publicado", name: "published", widget: "boolean", default: false }
-      - { label: "Em Destaque", name: "featured", widget: "boolean", default: false }
+      # --- 2. Status de Publicação (REMOVIDOS) ---
+      # Os campos "published" e "featured" foram removidos
+      # conforme solicitado. O status é gerido pelo botão "Set status".
 
       # --- 3. Conteúdo Principal (Visível) ---
       - { label: "Título", name: "title", widget: "string", default: "" }
@@ -45,7 +45,7 @@ collections:
       - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true, hint: "200-300 caracteres." }
 
       # --- 4. Autoria (Visível e Opcional) ---
-      - { label: "Autor", name: "author", widget: "string", default: "" } # O campo de nome é obrigatório pelo seu schema
+      - { label: "Autor", name: "author", widget: "string", default: "" } 
       - { label: "Bio do Autor", name: "author_bio", widget: "text", default: "", optional: true }
       - { label: "Avatar do Autor", name: "author_avatar", widget: "image", default: "", optional: true }
       - label: "Contribuidores"
