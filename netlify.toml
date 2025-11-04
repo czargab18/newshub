@@ -1,0 +1,13 @@
+# Configurações de Build (Construção)
+[build]
+  # Define o diretório que o Netlify deve publicar.
+  # Isto substitui a configuração manual "Publish directory: admin".
+  publish = "admin"
+  
+  # O comando de build (não precisamos de um para o admin)
+  command = ""
+  
+  # O diretório base (a raiz do repositório)
+  # É importante deixar em branco ou não definir, 
+  # para que ele encontre a pasta "admin" na raiz.
+  base = ""
