@@ -54,8 +54,8 @@ collections:
         fields:
           - { label: "URL", name: "url", widget: "image", default: "" }
           - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", default: "" }
-          - { label: "Largura", name: "width", widget: "number", default: 600 }
-          - { label: "Altura", name: "height", widget: "number", default: 400 }
+          - { label: "Largura", name: "width", widget: "hidden", default: 600 }
+          - { label: "Altura", name: "height", widget: "hidden", default: 400 }
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
       - label: "Imagem de Capa (Cover)"
         name: "cover_image"
@@ -65,8 +65,8 @@ collections:
         fields:
           - { label: "URL", name: "url", widget: "image", default: "" }
           - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", default: "" }
-          - { label: "Largura", name: "width", widget: "number", default: 1920 }
-          - { label: "Altura", name: "height", widget: "number", default: 1080 }
+          - { label: "Largura", name: "width", widget: "hidden", default: 1920 }
+          - { label: "Altura", name: "height", widget: "hidden", default: 1080 }
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
           - { label: "Crédito (Foto)", name: "credit", widget: "string", default: "", optional: true }
 
@@ -80,8 +80,8 @@ collections:
           - { label: "URL", name: "url", widget: "image", default: "" }
           - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", default: "" }
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
-          - { label: "Largura", name: "width", widget: "number", default: 1000 }
-          - { label: "Altura", name: "height", widget: "number", default: 600 }
+          - { label: "Largura", name: "width", widget: "hidden", default: 1000 }
+          - { label: "Altura", name: "height", widget: "hidden", default: 600 }
       - label: "Vídeos"
         name: "videos"
         widget: "list"
