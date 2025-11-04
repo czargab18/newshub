@@ -7,7 +7,7 @@ backend:
 publish_mode: editorial_workflow
 media_folder: "artigos/uploads"
 public_folder: "uploads"
-collections:
+collections:""
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
