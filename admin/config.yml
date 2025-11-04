@@ -1,47 +1,53 @@
+# Backend: Ligação ao seu repositório 'newshub' através do Netlify
 backend:
   name: git-gateway
   repo: "czargab18/newshub"
-  branch: news
+  branch: news # O branch onde o CMS salvará os dados
 
+# --- NOVA ALTERAÇÃO ---
+# Ativa o "Fluxo de Trabalho Editorial"
+# Isto muda o botão "Publish" para o menu "Save Draft" / "Ready" 
+# (como na sua imagem)
+publish_mode: editorial_workflow
+
+# Mídia: Onde as imagens/ficheiros carregados serão salvos
 media_folder: "artigos/uploads"
 public_folder: "uploads"
 
+# --- COLEÇÃO ÚNICA BASEADA NO SEU SCHEMA ---
 collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
-    folder: "artigos"
+    folder: "artigos" # Salva todos os JSONs aqui
     create: true
-    # O nome do ficheiro JSON será gerado a partir do título (ex: 2025-11-04-novo-artigo.json)
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" 
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato do nome do ficheiro
     extension: "json"
     format: "json"
     
+    # --- CAMPOS TRADUZIDOS DA SUA DOCUMENTAÇÃO ---
     fields:
       # --- 1. Identificação e Datas (Campos Ocultos) ---
-      # Estes campos são preenchidos automaticamente ou ficam
-      # vazios por padrão, mas não aparecem para o jornalista.
-      
-      - { label: "ID", name: "id", widget: "uuid", hidden: true, default: "" }
+      # Ocultos para o jornalista, mas presentes no JSON
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
       - { label: "Ano (YYYY)", name: "ano", widget: "hidden", default: "" }
       - { label: "Mês (MM)", name: "month", widget: "hidden", default: "" }
       - { label: "Data de Atualização", name: "date_updated", widget: "hidden", default: "" }
       - { label: "Slug (URL)", name: "slug", widget: "hidden", default: "" }
 
-      # --- CAMPO DE DATA VISÍVEL ---
-      - { label: "Data de Publicação", name: "date_format", widget: "string", default: "", hint: "Ex: 4 de Novembro de 2025. Este é o texto que será exibido." }
+      # --- Campo de Data Visível ---
+      - { label: "Data Formatada", name: "date_format", widget: "string", default: "", hint: "A data principal para exibição. Ex: 4 de Novembro de 2025" }
 
       # --- 2. Status de Publicação (Visível) ---
-      # Estes são os controlos principais do jornalista
+      # O "draft" (rascunho) é agora controlado pelo botão "Save Draft" (publish_mode)
       - { label: "Publicado", name: "published", widget: "boolean", default: false }
       - { label: "Em Destaque", name: "featured", widget: "boolean", default: false }
-      - { label: "Rascunho", name: "draft", widget: "boolean", default: true, hint: "Marque como 'Falso' quando o artigo estiver pronto." }
 
       # --- 3. Conteúdo Principal (Visível) ---
       - { label: "Título", name: "title", widget: "string", default: "" }
       - { label: "Subtítulo", name: "subtitle", widget: "string", default: "", optional: true }
-      - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true }
-      - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true }
+      - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true, hint: "120-160 caracteres. Usado em listagens e meta description." }
+      - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true, hint: "200-300 caracteres." }
 
       # --- 4. Autoria (Visível) ---
       - { label: "Autor", name: "author", widget: "string", default: "" }
@@ -52,6 +58,7 @@ collections:
         widget: "list"
         default: []
         optional: true
+        collapsed: true
         fields:
           - { label: "Nome", name: "name", widget: "string", default: "" }
           - { label: "Função", name: "role", widget: "select", default: "Co-autor", options: ["Editor", "Revisor Técnico", "Co-autor", "Pesquisador", "Designer Gráfico", "Fotógrafo", "Tradutor", "Consultor"] }
@@ -60,7 +67,7 @@ collections:
       # --- 5. Categorização (Visível) ---
       - { label: "Tipo", name: "type", widget: "select", default: "news", options: ["news", "article", "event", "press", "analysis", "report"] }
       - { label: "Categoria", name: "category", widget: "select", multiple: true, default: [], options: ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"] }
-      - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true }
+      - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true, hint: "Ex: Demografia, Economia" }
       - { label: "Tags (Busca Interna)", name: "tags", widget: "list", default: [], optional: true }
       - { label: "Palavras-chave (SEO)", name: "keywords", widget: "list", default: [], optional: true }
       - { label: "Idioma", name: "language", widget: "select", default: "pt-BR", options: ["pt-BR", "en-US", "es-ES"] }
@@ -130,7 +137,8 @@ collections:
           - { label: "Tamanho", name: "size", widget: "string", default: "", optional: true, hint: "Ex: 1.8MB" }
 
       # --- 8. Corpo do Artigo (Visível) ---
-      - { label: "Corpo do Artigo", name: "body", widget: "markdown", default: "" }
+      # Usando "wysiwyg" para uma melhor experiência de edição
+      - { label: "Corpo do Artigo", name: "body", widget: "wysiwyg", default: "" }
 
       # --- 9. Referências e Citações (Visível) ---
       - label: "Referências (Bibliografia)"
@@ -178,4 +186,4 @@ collections:
         fields:
           - { label: "Projeto de Pesquisa", name: "research_project", widget: "string", default: "" }
           - { label: "Fonte de Financiamento", name: "funding_source", widget: "string", default: "" }
-          - { label: "Instituição", name: "institution", widget: "string", default: "IBGE - Instituto Brasileiro de Geografia e Estatística" }
+          - { label: "Instituição", name: "institution", widget: "string", default: "Departamento de Estatística - UnB" } # Valor padrão atualizado
