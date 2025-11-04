@@ -1,14 +1,21 @@
-# Backend: Ligação ao seu repositório 'newshub' através do Netlify
+# Backend: Configurado para o GitLab
 backend:
-  name: github
-  repo: "czargab18/newshub"
-  branch: news # O branch onde o CMS salvará os dados
+  name: gitlab
+  # O repositório PRIVADO no GitLab onde os dados são salvos
+  repo: "czargab18/newshub" 
+  branch: news
+  
+  # A "magia" que permite o login direto sem Netlify
+  auth_type: "implicit" 
+  
+  # A "chave" pública que você copiou do GitLab
+  app_id: "COLE_O_SEU_APPLICATION_ID_DO_GITLAB_AQUI" 
 
 # Ativa o "Fluxo de Trabalho Editorial" (botão de Rascunho/Publicar)
 #
 publish_mode: editorial_workflow
 
-# Mídia: Onde as imagens/ficheiros carregados serão salvos
+# Mídia: Onde as imagens/ficheiros carregados serão salvos (no GitLab)
 media_folder: "artigos/uploads"
 public_folder: "uploads"
 
@@ -17,7 +24,7 @@ collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
-    folder: "artigos" # Salva todos os JSONs aqui
+    folder: "artigos" # Salva todos os JSONs no repo 'newshub'
     create: true
     slug: "{{slug}}" # O nome do ficheiro será o 'slug' (do Título)
     extension: "json"
@@ -33,10 +40,6 @@ collections:
 
       # --- Campo de Data Visível ---
       - { label: "Data de Publicação", name: "date_format", widget: "datetime", default: "" }
-
-      # --- 2. Status de Publicação (REMOVIDOS) ---
-      # Os campos "published" e "featured" foram removidos
-      # conforme solicitado. O status é gerido pelo botão "Set status".
 
       # --- 3. Conteúdo Principal (Visível) ---
       - { label: "Título", name: "title", widget: "string", default: "" }
@@ -71,7 +74,7 @@ collections:
       - label: "Miniatura (Thumbnail)"
         name: "thumbnail"
         widget: "object"
-        optional: true # <-- O objeto inteiro é opcional
+        optional: true 
         collapsed: true
         fields:
           - { label: "URL", name: "url", widget: "image", default: "" }
@@ -83,7 +86,7 @@ collections:
       - label: "Imagem de Capa (Cover)"
         name: "cover_image"
         widget: "object"
-        optional: true # <-- O objeto inteiro é opcional
+        optional: true 
         collapsed: true
         fields:
           - { label: "URL", name: "url", widget: "image", default: "" }
@@ -164,7 +167,7 @@ collections:
       - label: "Série"
         name: "series"
         widget: "object"
-        optional: true # <-- O objeto inteiro é opcional
+        optional: true 
         collapsed: true
         fields:
           - { label: "Título da Série", name: "title_series", widget: "string", default: "" }
@@ -175,7 +178,7 @@ collections:
       - label: "Campos Personalizados (Institucional)"
         name: "custom_fields"
         widget: "object"
-        optional: true # <-- O objeto inteiro é opcional
+        optional: true 
         collapsed: true
         fields:
           - { label: "Projeto de Pesquisa", name: "research_project", widget: "string", default: "" }
