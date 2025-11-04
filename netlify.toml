@@ -1,13 +1,21 @@
 # Configurações de Build (Construção)
 [build]
-  # Define o diretório que o Netlify deve publicar.
-  # Isto substitui a configuração manual "Publish directory: admin".
+  # Diz ao Netlify para publicar APENAS a pasta "admin"
   publish = "admin"
   
-  # O comando de build (não precisamos de um para o admin)
+  # Não precisamos de um comando de build
   command = ""
   
-  # O diretório base (a raiz do repositório)
-  # É importante deixar em branco ou não definir, 
-  # para que ele encontre a pasta "admin" na raiz.
+  # Começa a procurar a partir da raiz do repositório
   base = ""
+
+# --- ADICIONE ISTO ---
+# Regra de redirecionamento para Aplicações de Página Única (SPA)
+#
+# Isto diz ao Netlify: "Se um URL não for encontrado (404),
+# em vez de mostrar 'Site Not Found',
+# simplesmente carregue o /index.html (o painel do CMS)."
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
