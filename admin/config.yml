@@ -130,7 +130,7 @@ collections:
           - { label: "Tamanho", name: "size", widget: "string", default: "", optional: true, hint: "Ex: 1.8MB" }
 
       # --- 8. Corpo do Artigo (Visível) ---
-      - { label: "Corpo do Artigo", name: "body", widget: "html", default: "" }
+      - { label: "Corpo do Artigo", name: "body", widget: "markdown", default: "" }
 
       # --- 9. Referências e Citações (Visível) ---
       - label: "Referências (Bibliografia)"
