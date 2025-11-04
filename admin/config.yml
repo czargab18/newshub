@@ -1,9 +1,9 @@
 backend:
-  name: gitlab
+  name: github
   repo: "czargab18/newshub" 
   branch: news
-  auth_type: "pkce" 
-  app_id: "5c58f50a66cf84390665ba97282cdbcfeb98c03f99eb4988269123118c3b95fb" 
+
+
 publish_mode: editorial_workflow
 media_folder: "artigos/uploads"
 public_folder: "uploads"
