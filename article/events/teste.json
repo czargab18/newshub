@@ -28,7 +28,7 @@
     }
   ],
 
-  "category": ["quickread","release",""],
+  "category": ["QUICK READ","EST STATEMENT","PHOTOS","PRESS RELEASE","RELEASE", "UPDATE"],
   "subcategory": "",
   "tags": [],
   "keywords": [],
@@ -77,13 +77,6 @@
       "thumbnail": ""
     }
   ],
-
-  "audio": {
-    "url": "",
-    "duration": "",
-    "type": ""
-  },
-
   "attachments": [
     {
       "name": "",
@@ -94,17 +87,6 @@
   ],
 
   "body": "",
-
-  "body_markdown": "",
-
-  "sections": [
-    {
-      "title": "",
-      "content": "",
-      "order": 0
-    }
-  ],
-
   "references": [
     {
       "title": "",
@@ -131,68 +113,9 @@
     "total_parts": 0
   },
 
-  "seo": {
-    "meta_title": "",
-    "meta_description": "",
-    "og_title": "",
-    "og_description": "",
-    "og_image": "",
-    "twitter_card": "",
-    "twitter_title": "",
-    "twitter_description": "",
-    "twitter_image": "",
-    "canonical_url": ""
-  },
-
-  "analytics": {
-    "views": 0,
-    "likes": 0,
-    "shares": 0,
-    "comments_count": 0,
-    "average_rating": 0,
-    "total_ratings": 0
-  },
-
-  "comments_enabled": false,
-  "sharing_enabled": false,
-
-  "permissions": {
-    "visibility": "",
-    "access_level": "",
-    "requires_login": false,
-    "allowed_roles": []
-  },
-
-  "version": "",
-  "revision_history": [
-    {
-      "version": "",
-      "date": "",
-      "author": "",
-      "changes": ""
-    }
-  ],
-
-  "status": "",
-  "workflow_state": "",
-
-  "notifications": {
-    "notify_subscribers": false,
-    "send_newsletter": false
-  },
-
   "custom_fields": {
     "research_project": "",
     "funding_source": "",
     "institution": ""
-  },
-
-  "metadata": {
-    "created_at": "",
-    "updated_at": "",
-    "created_by": "",
-    "last_modified_by": "",
-    "ip_address": "",
-    "user_agent": ""
   }
 }
