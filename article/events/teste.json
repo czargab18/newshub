@@ -27,7 +27,7 @@
   ],
 
   "type": "",
-  "category": ["QUICK READ","EST STATEMENT","PHOTOS","PRESS RELEASE","RELEASE", "UPDATE"],
+  "category": ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"],
   "subcategory": "",
   "tags": [],
   "keywords": [],
@@ -36,16 +36,16 @@
   "thumbnail": {
     "url": "",
     "alt": "",
-    "width": 0,
-    "height": 0,
+    "width": 600,
+    "height": 400,
     "caption": ""
   },
 
   "cover_image": {
     "url": "",
     "alt": "",
-    "width": 0,
-    "height": 0,
+    "width": 1920,
+    "height": 1080,
     "caption": "",
     "credit": ""
   },
@@ -55,8 +55,8 @@
       "url": "",
       "alt": "",
       "caption": "",
-      "width": 0,
-      "height": 0
+      "width": 1000,
+      "height": 600
     }
   ],
 
@@ -68,6 +68,7 @@
       "thumbnail": ""
     }
   ],
+
   "attachments": [
     {
       "name": "",
