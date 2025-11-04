@@ -1,0 +1,108 @@
+{
+  "id": "",
+  "ano": "",
+  "month": "",
+  "date_format": "",
+  "date_updated": "",
+  "published": false,
+  "featured": false,
+  "draft": false,
+
+  "title": "",
+  "subtitle": "",
+  "slug": "",
+  "excerpt": "",
+  "summary": "",
+
+  "author": "",
+  "author_bio": "",
+  "author_avatar": "",
+  "contributors": [
+    {
+      "name": "",
+      "role": "",
+      "email": ""
+    }
+  ],
+
+  "type": "",
+  "category": [],
+  "subcategory": "",
+  "tags": [],
+  "keywords": [],
+  "language": "",
+
+  "thumbnail": {
+    "url": "",
+    "alt": "",
+    "width": 600,
+    "height": 400,
+    "caption": ""
+  },
+
+  "cover_image": {
+    "url": "",
+    "alt": "",
+    "width": 1920,
+    "height": 1080,
+    "caption": "",
+    "credit": ""
+  },
+
+  "images": [
+    {
+      "url": "",
+      "alt": "",
+      "caption": "",
+      "width": 1000,
+      "height": 600
+    }
+  ],
+
+  "videos": [
+    {
+      "url": "",
+      "type": "",
+      "title": "",
+      "thumbnail": ""
+    }
+  ],
+
+  "attachments": [
+    {
+      "name": "",
+      "url": "",
+      "type": "",
+      "size": ""
+    }
+  ],
+
+  "body": "",
+  "custom_fields": {
+    "research_project": "",
+    "funding_source": "",
+    "institution": ""
+  },
+  "references": [
+    {
+      "title": "",
+      "authors": [],
+      "year": "",
+      "url": "",
+      "doi": ""
+    }
+  ],
+  "citations": [
+    {
+      "text": "",
+      "author": "",
+      "source": ""
+    }
+  ],
+  "related_articles": [],
+  "series": {
+    "title_series": "",
+    "part": 0,
+    "total_parts": 0
+  }
+}
