@@ -79,6 +79,11 @@
   ],
 
   "body": "",
+  "custom_fields": {
+    "research_project": "",
+    "funding_source": "",
+    "institution": ""
+  },
   "references": [
     {
       "title": "",
@@ -88,7 +93,6 @@
       "doi": ""
     }
   ],
-
   "citations": [
     {
       "text": "",
@@ -96,18 +100,10 @@
       "source": ""
     }
   ],
-
   "related_articles": [],
-
   "series": {
     "name": "",
     "part": 0,
     "total_parts": 0
-  },
-
-  "custom_fields": {
-    "research_project": "",
-    "funding_source": "",
-    "institution": ""
   }
 }
