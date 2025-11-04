@@ -28,7 +28,7 @@
     }
   ],
 
-  "category": "",
+  "category": ["quickread","release",""],
   "subcategory": "",
   "tags": [],
   "keywords": [],
