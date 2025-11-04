@@ -1,6 +1,6 @@
 # Backend: Ligação ao seu repositório 'newshub' através do Netlify
 backend:
-  name: git-gateway
+  name: github
   repo: "czargab18/newshub"
   branch: news # O branch onde o CMS salvará os dados
 
