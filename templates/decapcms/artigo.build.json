@@ -17,43 +17,47 @@
   "contributors": [
     {
       "name": "hidden - ainda não estruturado",
-      "role": "hidden - ainda não estruturado",
-      "email": "hidden - ainda não estruturado"
+      "role": "hidden - ainda não estruturado"
     }
   ],
 
   "thumbnail": {
-    "url": "",
-    "alt": "",
-    "caption": ""
+    "_comment": "Imagem pequena usada em: Listagens de artigos, Cards de preview, Compartilhamento em redes sociais, Normalmente 300x200px ou similar",
+    "url": "Caminho/URL da imagem miniatura (pequena)",
+    "alt": "Texto alternativo para acessibilidade",
+    "caption": "Legenda que aparece abaixo da miniatura"
   },
   "cover_image": {
-    "url": "",
-    "alt": "",
-    "caption": "",
-    "credit": ""
+    "_comment": " HIDDEN - Imagem principal do artigo. Banner no topo, primeira coisa que o leitor ve. Geralmente em alta resolucao (1920x1080px ou maior)",
+    "url": "Caminho/URL da imagem de capa (grande)",
+    "alt": "Texto alternativo para acessibilidade",
+    "caption": "Legenda da imagem de capa",
+    "credit": "Creditos do fotografo/fonte (ex: 'Foto por Joao Silva')"
   },
   "images": [
     {
-      "url": "",
-      "alt": "",
-      "caption": ""
+      "_comment": "Imagens adicionais no corpo do artigo. Graficos, fotos, ilustracoes. Pode ter 0, 1 ou muitas imagens",
+      "url": "Caminho/URL da imagem",
+      "alt": "Texto alternativo para acessibilidade",
+      "caption": "Legenda da imagem"
     }
   ],
   "videos": [
     {
-      "url": "",
-      "type": "",
-      "title": "",
-      "thumbnail": ""
+      "_comment": "Videos incorporados no artigo. Pode ser link externo (YouTube, Vimeo) ou arquivo local. Pode ter multiplos videos",
+      "url": "URL do video (YouTube, Vimeo, arquivo local)",
+      "type": "Tipo do video: 'youtube', 'vimeo', 'local', 'embed'",
+      "title": "Titulo do video",
+      "thumbnail": "Miniatura do video (preview antes de reproduzir)"
     }
   ],
   "attachments": [
     {
-      "name": "",
-      "url": "",
-      "type": "",
-      "size": ""
+      "_comment": "Arquivos para download. PDFs, documentos, planilhas, datasets, arquivos ZIP. Qualquer arquivo que o usuario possa baixar",
+      "name": "Nome do arquivo (ex: 'relatorio.pdf')",
+      "url": "Caminho/URL do arquivo",
+      "type": "Tipo do arquivo: 'pdf', 'docx', 'xlsx', 'zip', etc",
+      "size": "Tamanho do arquivo (ex: '2.5 MB')"
     }
   ],
 
