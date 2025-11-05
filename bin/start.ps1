@@ -1,11 +1,12 @@
 # ============================================
-# Script All-in-One: Decap CMS Server
+# Script All-in-One: Decap CMS Server + Auth
 # ============================================
 # Este script faz tudo automaticamente:
 # 1. Verifica se Node.js esta instalado
 # 2. Instala Node.js se necessario
-# 3. Instala dependencias (decap-server, http-server)
-# 4. Inicia os servidores
+# 3. Instala dependencias (http-server + auth-server)
+# 4. Configura ambiente local (config.local.yml)
+# 5. Inicia os servidores (auth + http)
 
 $ErrorActionPreference = "Stop"
 
@@ -24,6 +25,10 @@ $PROJECT_ROOT = Split-Path $BIN_DIR -Parent
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "  Decap CMS - Servidor Local (All-in-One)" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Este script iniciara:" -ForegroundColor Yellow
+Write-Host "  1. Auth Server (porta 3000)" -ForegroundColor Gray
+Write-Host "  2. HTTP Server (porta 8080)" -ForegroundColor Gray
 Write-Host ""
 
 # ============================================
@@ -108,7 +113,8 @@ if (Test-Path $NODE_EXE) {
 # ============================================
 
 $HTTP_SERVER_CHECK = Join-Path $NODE_DIR "node_modules\http-server"
-$DECAP_SERVER_CHECK = Join-Path $NODE_DIR "node_modules\decap-server"
+$AUTH_DIR = Join-Path $PROJECT_ROOT "auth"
+$AUTH_NODE_MODULES = Join-Path $AUTH_DIR "node_modules"
 
 # Verificar http-server
 if (-not (Test-Path $HTTP_SERVER_CHECK)) {
@@ -119,19 +125,54 @@ if (-not (Test-Path $HTTP_SERVER_CHECK)) {
     Write-Host "[OK] http-server ja instalado!" -ForegroundColor Green
 }
 
-# Verificar decap-server
-if (-not (Test-Path $DECAP_SERVER_CHECK)) {
-    Write-Host "[!] Instalando decap-server..." -ForegroundColor Yellow
-    & $NPM_CMD install -g decap-server --prefix $NODE_DIR --silent
-    Write-Host "[OK] decap-server instalado!" -ForegroundColor Green
+# Verificar dependencias do auth-server
+if (-not (Test-Path $AUTH_NODE_MODULES)) {
+    Write-Host "[!] Instalando dependencias do auth-server..." -ForegroundColor Yellow
+    Push-Location $AUTH_DIR
+    & $NPM_CMD install
+    Pop-Location
+    Write-Host "[OK] auth-server dependencias instaladas!" -ForegroundColor Green
 } else {
-    Write-Host "[OK] decap-server ja instalado!" -ForegroundColor Green
+    Write-Host "[OK] auth-server dependencias ja instaladas!" -ForegroundColor Green
 }
 
 Write-Host ""
 
 # ============================================
-# PASSO 3: Iniciar Servidores
+# PASSO 3: Configurar Ambiente Local
+# ============================================
+
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host "  Configurando Ambiente Local" -ForegroundColor Cyan
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
+
+$ADMIN_DIR = Join-Path $PROJECT_ROOT "admin"
+$CONFIG_LOCAL = Join-Path $ADMIN_DIR "config.local.yml"
+$CONFIG_PROD = Join-Path $ADMIN_DIR "config.yml"
+$CONFIG_BACKUP = Join-Path $ADMIN_DIR "config.prod.yml"
+
+# Backup do config.yml de producao se nao existir
+if ((Test-Path $CONFIG_PROD) -and -not (Test-Path $CONFIG_BACKUP)) {
+    Write-Host "[*] Criando backup do config.yml de producao..." -ForegroundColor Yellow
+    Copy-Item $CONFIG_PROD $CONFIG_BACKUP -Force
+    Write-Host "[OK] Backup criado: config.prod.yml" -ForegroundColor Green
+}
+
+# Copiar config.local.yml para config.yml
+if (Test-Path $CONFIG_LOCAL) {
+    Write-Host "[*] Aplicando configuracao local..." -ForegroundColor Yellow
+    Copy-Item $CONFIG_LOCAL $CONFIG_PROD -Force
+    Write-Host "[OK] config.yml agora aponta para localhost:3000" -ForegroundColor Green
+} else {
+    Write-Host "[!] AVISO: config.local.yml nao encontrado!" -ForegroundColor Red
+    Write-Host "    Usando config.yml existente (pode apontar para producao)" -ForegroundColor Yellow
+}
+
+Write-Host ""
+
+# ============================================
+# PASSO 4: Iniciar Servidores
 # ============================================
 
 Write-Host "============================================" -ForegroundColor Cyan
@@ -142,43 +183,68 @@ Write-Host ""
 # Navegar para o diretorio do projeto
 Set-Location $PROJECT_ROOT
 
-# Iniciar servidor HTTP na porta 8080 em background
-Write-Host "[*] Iniciando HTTP Server (porta 8080)..." -ForegroundColor Yellow
-$httpServer = Start-Job -ScriptBlock {
-    param($npxCmd, $workDir)
-    Set-Location $workDir
-    & $npxCmd http-server -p 8080 -c-1
-} -ArgumentList $NPX_CMD, $PROJECT_ROOT
+# Iniciar auth-server na porta 3000 em background
+Write-Host "[*] Iniciando Auth Server (porta 3000)..." -ForegroundColor Yellow
+$authServer = Start-Job -ScriptBlock {
+    param($nodeExe, $authDir)
+    Set-Location $authDir
+    & $nodeExe app.js
+} -ArgumentList $NODE_EXE, $AUTH_DIR
 
 Start-Sleep -Seconds 3
 
-# Iniciar decap-server na porta 8081
-Write-Host "[*] Iniciando Decap Server (porta 8081)..." -ForegroundColor Yellow
+# Verificar se auth-server esta rodando
+$authRunning = $false
+try {
+    $response = Invoke-WebRequest -Uri "http://localhost:3000/" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
+    if ($response.StatusCode -eq 200) {
+        $authRunning = $true
+        Write-Host "[OK] Auth Server iniciado!" -ForegroundColor Green
+    }
+} catch {
+    Write-Host "[!] Auth Server pode nao ter iniciado. Verifique o log." -ForegroundColor Yellow
+}
+
+# Iniciar servidor HTTP na porta 8080
+Write-Host "[*] Iniciando HTTP Server (porta 8080)..." -ForegroundColor Yellow
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Green
 Write-Host "  Servidores iniciados com sucesso!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "CMS Admin: " -NoNewline -ForegroundColor Cyan
+Write-Host "CMS Admin:  " -NoNewline -ForegroundColor Cyan
 Write-Host "http://localhost:8080/admin/" -ForegroundColor White
-Write-Host "API Local: " -NoNewline -ForegroundColor Cyan
-Write-Host "http://localhost:8081" -ForegroundColor White
+Write-Host "Auth Server:" -NoNewline -ForegroundColor Cyan
+Write-Host " http://localhost:3000/" -ForegroundColor White
+Write-Host ""
+Write-Host "Para fazer login:" -ForegroundColor Yellow
+Write-Host "  1. Acesse http://localhost:8080/admin/" -ForegroundColor Gray
+Write-Host "  2. Clique em 'Login with GitHub'" -ForegroundColor Gray
+Write-Host "  3. Autorize a aplicacao no GitHub" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Pressione Ctrl+C para parar os servidores." -ForegroundColor Yellow
 Write-Host ""
 
 try {
-    # Executar o decap-server (bloqueia ate Ctrl+C)
-    & $NPX_CMD decap-server
+    # Executar o http-server (bloqueia ate Ctrl+C)
+    & $NPX_CMD http-server -p 8080 -c-1
 }
 catch {
     Write-Host ""
 }
 finally {
-    # Quando o decap-server parar, parar tambem o http-server
+    # Quando parar, encerrar tambem o auth-server
     Write-Host ""
     Write-Host "Parando servidores..." -ForegroundColor Yellow
-    Stop-Job -Job $httpServer -ErrorAction SilentlyContinue
-    Remove-Job -Job $httpServer -ErrorAction SilentlyContinue
+    Stop-Job -Job $authServer -ErrorAction SilentlyContinue
+    Remove-Job -Job $authServer -ErrorAction SilentlyContinue
+    
+    # Restaurar config de producao
+    if (Test-Path $CONFIG_BACKUP) {
+        Write-Host "Restaurando config.yml de producao..." -ForegroundColor Yellow
+        Copy-Item $CONFIG_BACKUP $CONFIG_PROD -Force
+        Write-Host "[OK] Configuracao de producao restaurada" -ForegroundColor Green
+    }
+    
     Write-Host "Servidores encerrados." -ForegroundColor Red
 }
