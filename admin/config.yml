@@ -24,6 +24,14 @@ publish_mode: editorial_workflow
 media_folder: "article/uploads"
 public_folder: "uploads"
 
+# ========================================
+# PREVIEW TEMPLATE SETTINGS
+# ========================================
+# Configuração para corrigir visualização quebrada
+show_preview_links: true
+editor:
+  preview: true
+
 collections:
   - name: "conteudo"
     label: "Conteúdo"
