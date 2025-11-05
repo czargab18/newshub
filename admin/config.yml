@@ -24,9 +24,9 @@ backend:
     delete: Delete {{collection}} "{{slug}}"
     uploadMedia: Upload "{{path}}"
     deleteMedia: Delete "{{path}}"
-    openAuthoring: '{{message}}'
+    openAuthoring: "{{message}}"
 
-  locale: 'pt-br'
+  locale: "pt-br"
   show_preview_links: true
   search: true
   # Modo de publicação: editorial workflow
@@ -35,7 +35,7 @@ backend:
     preview: true
     preview_path: "article/{{slug}}"
 
-# Configuração de mídia   
+# Configuração de mídia
 
 media_folder: "article/uploads"
 public_folder: "uploads"
@@ -49,12 +49,10 @@ display_url: https://czargab18.github.io
 #   src: /images/logo.svg
 #   show_in_header: true
 
-
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "_"
-
 
 collections:
   - name: "conteudo"
@@ -70,8 +68,8 @@ collections:
     format: "json"
     identifier_field: "title"
     summary: "{{title}} - {{type}} - {{date_format}}"
-    sortable_fields: ['date_format', 'title', 'type', 'commit_date', 'commit_author']
-    
+    sortable_fields: ["date_format", "title", "type", "commit_date", "commit_author"]
+
     view_filters:
       - { label: "Notícias", field: type, pattern: "news" }
       - { label: "Artigos", field: type, pattern: "article" }
@@ -80,19 +78,19 @@ collections:
       - { label: "Inglês", field: language, pattern: "en" }
       - { label: "Publicados", field: published, pattern: true }
       - { label: "Rascunhos", field: draft, pattern: true }
-    
+
     # Grupos de visualização
     view_groups:
       - { label: "Ano", field: date_format, pattern: '\d{4}' }
       - { label: "Tipo", field: type }
       - { label: "Categoria", field: category }
       - { label: "Idioma", field: language }
-    
+
     # Editor com preview
     editor:
       preview: true
       preview_path: "article/{{slug}}"
-    
+
     fields:
       # --- CAMPOS OCULTOS (Gerenciados automaticamente) ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
@@ -106,51 +104,51 @@ collections:
       - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
       - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
       - { label: "Miniatura", name: "thumbnail", widget: "hidden", default: { url: "", alt: "", caption: "" } }
-      
+
       # --- CAMPOS VISÍVEIS ---
       - { label: "Título", name: "title", widget: "string", required: true }
       - { label: "Descrição", name: "description", widget: "text", required: true }
-      
-      - label: "Tipo"
-        name: "type"
-        widget: "select"
-        required: true
-        options:
-          - { label: "Notícia", value: "news" }
-          - { label: "Artigo", value: "article" }
-          - { label: "Evento", value: "event" }
-      
-      - label: "Data de Formatação"
-        name: "date_format"
-        widget: "datetime"
-        required: true
-        date_format: "DD/MM/YYYY"
-        time_format: "HH:mm"
-      
-      - label: "Categoria"
-        name: "category"
-        widget: "select"
-        required: true
-        options:
-          - { label: "Tecnologia", value: "technology" }
-          - { label: "Ciência", value: "science" }
-          - { label: "Negócios", value: "business" }
-          - { label: "Esportes", value: "sports" }
-          - { label: "Entretenimento", value: "entertainment" }
-      
-      - label: "Idioma"
-        name: "language"
-        widget: "select"
-        required: true
-        default: "pt-BR"
-        options:
-          - { label: "Português (Brasil)", value: "pt-BR" }
-          - { label: "Inglês", value: "en" }
-      
-      - label: "Tags"
-        name: "tags"
-        widget: "list"
-        required: false
-        allow_add: true
-      
+      - {
+          label: "Tipo",
+          name: "type",
+          widget: "select",
+          required: true,
+          options:
+            [
+              { label: "Notícia", value: "news" },
+              { label: "Artigo", value: "article" },
+              { label: "Evento", value: "event" },
+            ],
+        }
+      - {
+          label: "Data de Formatação",
+          name: "date_format",
+          widget: "datetime",
+          required: true,
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+        }
+      - {
+          label: "Categoria",
+          name: "category",
+          widget: "select",
+          required: true,
+          options:
+            [
+              { label: "Tecnologia", value: "technology" },
+              { label: "Ciência", value: "science" },
+              { label: "Negócios", value: "business" },
+              { label: "Esportes", value: "sports" },
+              { label: "Entretenimento", value: "entertainment" },
+            ],
+        }
+      - {
+          label: "Idioma",
+          name: "language",
+          widget: "select",
+          required: true,
+          default: "pt-BR",
+          options: [{ label: "Português (Brasil)", value: "pt-BR" }, { label: "Inglês", value: "en" }],
+        }
+      - { label: "Tags", name: "tags", widget: "list", required: false, allow_add: true }
       - { label: "Corpo do Conteúdo", name: "body", widget: "markdown", required: true }
