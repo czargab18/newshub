@@ -18,6 +18,10 @@ backend:
   name: git-gateway
   repo: "czargab18/newshub"
   branch: news
+  site_domain: "czargab18.github.io/estatistica"
+  base_url: "/estatistica/newshub/"
+  auth_endpoint: "https://git-gateway.netlify.app/auth"
+  cms_label_prefix: 
 
 publish_mode: editorial_workflow
 
@@ -31,6 +35,8 @@ public_folder: "uploads"
 show_preview_links: true
 editor:
   preview: true
+  preview_path: "article/{{slug}}"
+
 
 collections:
   - name: "conteudo"
@@ -44,7 +50,9 @@ collections:
     extension: "json"
     format: "json"
     
-    # Filtros e agrupamentos para facilitar navegação
+    preview_path: "article/{{slug}}"
+    sortable_fields: ['date_format', 'title', 'type']
+    
     view_filters:
       - label: "Notícias"
         field: type
