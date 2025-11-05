@@ -57,39 +57,19 @@ collections:
     fields:
       # --- CAMPOS OCULTOS ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "Formato de Data", name: "date_format", widget: "hidden", default: "" }
       
       # --- INFORMAÇÕES BÁSICAS ---
-      - label: "Título"
-        name: "headline"
-        widget: "string"
-        required: true
-        hint: "Título principal do artigo"
-      
-      - label: "Subtítulo"
-        name: "subhead"
-        widget: "string"
-        required: false
-        hint: "Subtítulo ou linha de apoio"
-      
-      - label: "Data de Publicação"
-        name: "date_updated"
-        widget: "datetime"
-        default: ""
-        date_format: "DD/MM/YYYY"
-        time_format: "HH:mm"
-        format: "YYYY-MM-DD HH:mm:ss"
-        required: true
-      
-      - label: "Formato de Data (gerado automaticamente)"
-        name: "date_format"
-        widget: "hidden"
-        default: ""
+      - { label: "Título", name: "headline", widget: "string", required: true, hint: "Título principal do artigo" }
+      - { label: "Subtítulo", name: "subhead", widget: "string", required: false, hint: "Subtítulo ou linha de apoio" }
+      - { label: "Data de Publicação", name: "date_updated", widget: "datetime", default: "", date_format: "DD/MM/YYYY", time_format: "HH:mm", format: "YYYY-MM-DD HH:mm:ss", required: true }
       
       # --- CATEGORIA E PÚBLICO ---
       - label: "Categoria"
         name: "category"
         widget: "select"
         required: true
+        hint: "Categoria principal do artigo"
         options:
           - { label: "Leitura Rápida", value: "QUICK READ" }
           - { label: "Comunicado EST", value: "EST STATEMENT" }
@@ -97,68 +77,28 @@ collections:
           - { label: "Press Release", value: "PRESS RELEASE" }
           - { label: "Lançamento", value: "RELEASE" }
           - { label: "Atualização", value: "UPDATE" }
-        hint: "Categoria principal do artigo"
       
       - label: "Público-Alvo"
         name: "public"
         widget: "select"
         multiple: true
         required: false
+        hint: "Selecione o(s) público(s) alvo"
         options:
           - { label: "Graduação", value: "GRADUAÇÃO" }
           - { label: "Pós-Graduação", value: "PÓS-GRADUAÇÃO" }
           - { label: "Comunidade Externa", value: "COMUNIDADE EXTERNA" }
-        hint: "Selecione o(s) público(s) alvo"
       
       # --- CONTEÚDO ---
-      - label: "Resumo"
-        name: "summary"
-        widget: "text"
-        required: false
-        hint: "Breve resumo do artigo (1-2 parágrafos)"
-      
-      - label: "Descrição (SEO)"
-        name: "description"
-        widget: "text"
-        required: false
-        hint: "Descrição para motores de busca (150-160 caracteres)"
-      
-      - label: "Corpo do Artigo"
-        name: "body"
-        widget: "markdown"
-        required: true
-        hint: "Conteúdo principal do artigo (suporta Markdown e imagens)"
+      - { label: "Resumo", name: "summary", widget: "text", required: false, hint: "Breve resumo do artigo (1-2 parágrafos)" }
+      - { label: "Descrição (SEO)", name: "description", widget: "text", required: false, hint: "Descrição para motores de busca (150-160 caracteres)" }
+      - { label: "Corpo do Artigo", name: "body", widget: "markdown", required: true, hint: "Conteúdo principal do artigo (suporta Markdown e imagens)" }
       
       # --- METADADOS ---
-      - label: "Tags"
-        name: "tags"
-        widget: "list"
-        required: false
-        hint: "Tags para organizar e pesquisar artigos"
-        field: { label: "Tag", name: "tag", widget: "string" }
-      
-      - label: "Palavras-chave (SEO)"
-        name: "keywords"
-        widget: "list"
-        required: false
-        hint: "Palavras-chave para otimização de busca"
-        field: { label: "Palavra-chave", name: "keyword", widget: "string" }
-      
-      - label: "Idioma"
-        name: "lang"
-        widget: "select"
-        required: false
-        default: "portugues"
-        options:
-          - { label: "Português", value: "portugues" }
-          - { label: "Inglês", value: "ingles" }
-          - { label: "Espanhol", value: "espanhol" }
-      
-      - label: "Link Canônico"
-        name: "link_canonical"
-        widget: "string"
-        required: false
-        hint: "URL canônica do artigo (se republicado de outra fonte)"
+      - { label: "Tags", name: "tags", widget: "list", required: false, hint: "Tags para organizar e pesquisar artigos", field: { label: "Tag", name: "tag", widget: "string" } }
+      - { label: "Palavras-chave (SEO)", name: "keywords", widget: "list", required: false, hint: "Palavras-chave para otimização de busca", field: { label: "Palavra-chave", name: "keyword", widget: "string" } }
+      - { label: "Idioma", name: "lang", widget: "select", required: false, default: "portugues", options: [{ label: "Português", value: "portugues" }, { label: "Inglês", value: "ingles" }, { label: "Espanhol", value: "espanhol" }] }
+      - { label: "Link Canônico", name: "link_canonical", widget: "string", required: false, hint: "URL canônica do artigo (se republicado de outra fonte)" }
       
       # --- IMAGEM DE CAPA ---
       - label: "Miniatura"
@@ -172,16 +112,5 @@ collections:
           - { label: "Legenda", name: "caption", widget: "string", required: false }
       
       # --- REFERÊNCIAS E ARTIGOS RELACIONADOS ---
-      - label: "Referências"
-        name: "references"
-        widget: "list"
-        required: false
-        hint: "Links de artigos ou fontes de referência"
-        field: { label: "Link de Referência", name: "reference", widget: "string" }
-      
-      - label: "Artigos Relacionados"
-        name: "related_articles"
-        widget: "list"
-        required: false
-        hint: "IDs ou slugs de artigos relacionados"
-        field: { label: "ID do Artigo", name: "article_id", widget: "string" }
+      - { label: "Referências", name: "references", widget: "list", required: false, hint: "Links de artigos ou fontes de referência", field: { label: "Link de Referência", name: "reference", widget: "string" } }
+      - { label: "Artigos Relacionados", name: "related_articles", widget: "list", required: false, hint: "IDs ou slugs de artigos relacionados", field: { label: "ID do Artigo", name: "article_id", widget: "string" } }
