@@ -21,15 +21,15 @@ backend:
 
 publish_mode: editorial_workflow
 
-media_folder: "artigos/uploads"
+media_folder: "article/uploads"
 public_folder: "uploads"
 
 collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
-    description: "Gerenciamento de artigos, notícias e conteúdos do site"
-    folder: "artigos"
+    description: "Gerenciamento de article, notícias e conteúdos do site"
+    folder: "article"
     create: true
     slug: "{{slug}}"
     summary: "{{title}} - {{type}} - {{date_format}}"
@@ -41,7 +41,7 @@ collections:
       - label: "Notícias"
         field: type
         pattern: "news"
-      - label: "Artigos"
+      - label: "article"
         field: type
         pattern: "article"
       - label: "Eventos"
@@ -266,7 +266,7 @@ collections:
           - { label: "Fonte", name: "source", widget: "string", default: "" }
 
       # --- RELACIONAMENTOS ---
-      - { label: "Artigos Relacionados (IDs)", name: "related_articles", widget: "list", default: [], optional: true, hint: "Insira os IDs de outros artigos. Ex: 0023" }
+      - { label: "article Relacionados (IDs)", name: "related_articles", widget: "list", default: [], optional: true, hint: "Insira os IDs de outros article. Ex: 0023" }
       
       - label: "Série"
         name: "series"
