@@ -1,13 +1,7 @@
 {
-  "id": "",
-  "ano": "",
-  "month": "",
-  "date_format": "",
+  "id": "identificador que será criado automaticamente por um script python",
+  "date_format": "Usara a 'date_updated' para formatar a data de exibição do artigo na página",
   "date_updated": "",
-  "published": false,
-  "featured": false,
-  "draft": false,
-
   "title": "",
   "subtitle": "",
   "slug": "",
