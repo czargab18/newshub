@@ -75,27 +75,13 @@ collections:
     sortable_fields: ['date_format', 'title', 'type', 'commit_date', 'commit_author']
     
     view_filters:
-      - label: "Notícias"
-        field: type
-        pattern: "news"
-      - label: "Artigos"
-        field: type
-        pattern: "article"
-      - label: "Eventos"
-        field: type
-        pattern: "event"
-      - label: "Português"
-        field: language
-        pattern: "pt-BR"
-      - label: "Inglês"
-        field: language
-        pattern: "en"
-      - label: "Publicados"
-        field: published
-        pattern: true
-      - label: "Rascunhos"
-        field: draft
-        pattern: true
+      - { label: "Notícias", field: type, pattern: "news" }
+      - { label: "Artigos", field: type, pattern: "article" }
+      - { label: "Eventos", field: type, pattern: "event" }
+      - { label: "Português", field: language, pattern: "pt-BR" }
+      - { label: "Inglês", field: language, pattern: "en" }
+      - { label: "Publicados", field: published, pattern: true }
+      - { label: "Rascunhos", field: draft, pattern: true }
     
     # Grupos de visualização
     view_groups:
