@@ -1,0 +1,69 @@
+local_backend: true
+
+backend:
+  name: github
+  branch: news
+  repo: czargab18/newshub
+  commit_messages:
+    create: Create {{collection}} "{{slug}}"
+    update: Update {{collection}} "{{slug}}"
+    delete: Delete {{collection}} "{{slug}}"
+    uploadMedia: Upload "{{path}}"
+    deleteMedia: Delete "{{path}}"
+    openAuthoring: "{{message}}"
+
+publish_mode: editorial_workflow
+media_folder: "article/uploads"
+public_folder: "uploads"
+# site_url: https://czargab18.github.io/estatistica/
+# display_url: https://czargab18.github.io/estatistica/
+locale: "pt-br"
+search: true
+show_preview_links: true
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+
+collections:
+  - name: "conteudo"
+    label: "Publicações"
+    label_singular: "Artigo"
+    description: "Gerenciamento de artigos, notícias e conteúdos do site"
+    folder: "article"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}_{{category}}"
+    preview_path: "article/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "headline"
+    summary: "{{headline}} - {{category}} - {{date_updated}}"
+    sortable_fields: ["date_updated", "headline", "category", "commit_date", "commit_author"]
+
+    view_filters:
+      - { label: "Graduação", field: public, pattern: "GRADUAÇÃO" }
+      - { label: "Pós-Graduação", field: public, pattern: "PÓS-GRADUAÇÃO" }
+      - { label: "Comunidade Externa", field: public, pattern: "COMUNIDADE EXTERNA" }
+
+    view_groups:
+      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
+      - { label: "Categoria", field: category }
+      - { label: "Idioma", field: lang }
+
+    editor:
+      preview: true
+
+    fields:
+      # --- CAMPOS OCULTOS ---
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Data de Criação",
+          name: "date_updated",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
