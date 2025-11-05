@@ -11,5 +11,6 @@
     // "**/*libs*/" : true,
     "**/article/.gitignore" : true,
     "**/libs/": true,
+    "**/node_modules/": true,
   }
 }

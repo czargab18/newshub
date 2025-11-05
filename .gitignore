@@ -1,3 +1,21 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+.*
+*.sqlite
+pids
+logs
+results
+
+node_modules
+npm-debug.log
+
+
 # Output files
 build/run/output/*.html
 build/run/output/src/*
@@ -38,4 +56,5 @@ libs
 *_books*
 *_index*/
 *index_*/
+!.github
 artefatos/
