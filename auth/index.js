@@ -1,6 +1,6 @@
 const simpleOauthModule = require('simple-oauth2')
 const authMiddleWareInit = require('./auth.js')
-const callbackMiddleWareInit = require('./callback.js')
+const callbackMiddleWareInit = require('./callback')
 const oauthProvider = process.env.OAUTH_PROVIDER || 'github'
 const loginAuthTarget = process.env.AUTH_TARGET || '_self'
 
