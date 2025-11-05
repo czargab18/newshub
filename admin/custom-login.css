@@ -1,0 +1,248 @@
+/* ========================================
+   CUSTOM LOGIN PAGE - DEPARTAMENTO DE ESTATÍSTICA
+   ======================================== */
+
+/* Ocultar logo padrão do Decap CMS */
+[class*="AppHeader-logo"],
+[class*="AuthenticationPage"] [class*="Logo"],
+.nc-githubAuthenticationPage-logo,
+.nc-gitGatewayAuthenticationPage-logo,
+[class*="Logo"] img,
+[class*="Logo"] svg {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Background gradient customizado */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+[class*="AuthenticationPage"],
+.nc-githubAuthenticationPage-root,
+.nc-gitGatewayAuthenticationPage-root {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+/* Padrão de background (opcional) */
+[class*="AuthenticationPage"]::before,
+.nc-githubAuthenticationPage-root::before,
+.nc-gitGatewayAuthenticationPage-root::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%) !important;
+  pointer-events: none !important;
+}
+
+/* Card de login customizado */
+[class*="AuthenticationPage-card"],
+.nc-githubAuthenticationPage-card,
+.nc-gitGatewayAuthenticationPage-card {
+  background: white !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  padding: 3rem 2.5rem !important;
+  max-width: 450px !important;
+  width: 90% !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Logo institucional customizada */
+[class*="AuthenticationPage-card"]::before,
+.nc-githubAuthenticationPage-card::before,
+.nc-gitGatewayAuthenticationPage-card::before {
+  content: '📊' !important;
+  font-size: 4.5rem !important;
+  display: block !important;
+  text-align: center !important;
+  margin-bottom: 1.5rem !important;
+  animation: float 3s ease-in-out infinite !important;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Título institucional */
+[class*="AuthenticationPage-card"]::after,
+.nc-githubAuthenticationPage-card::after,
+.nc-gitGatewayAuthenticationPage-card::after {
+  content: 'Departamento de Estatística' !important;
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 0.5rem !important;
+  letter-spacing: -0.5px !important;
+}
+
+/* Subtítulo */
+[class*="AuthenticationPage"] h1,
+.nc-githubAuthenticationPage-root h1,
+.nc-gitGatewayAuthenticationPage-root h1 {
+  font-size: 1rem !important;
+  color: #666 !important;
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+  margin-top: 0 !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+/* Campos de formulário */
+[class*="AuthenticationPage"] label,
+.nc-githubAuthenticationPage-root label,
+.nc-gitGatewayAuthenticationPage-root label {
+  display: block !important;
+  margin-bottom: 0.5rem !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+}
+
+[class*="AuthenticationPage"] input,
+.nc-githubAuthenticationPage-root input,
+.nc-gitGatewayAuthenticationPage-root input {
+  width: 100% !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 10px !important;
+  padding: 0.875rem 1rem !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  box-sizing: border-box !important;
+  margin-bottom: 1rem !important;
+}
+
+[class*="AuthenticationPage"] input:focus,
+.nc-githubAuthenticationPage-root input:focus,
+.nc-gitGatewayAuthenticationPage-root input:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
+  outline: none !important;
+}
+
+/* Botões */
+[class*="AuthenticationPage"] button,
+.nc-githubAuthenticationPage-root button,
+.nc-gitGatewayAuthenticationPage-root button {
+  width: 100% !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 1rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: white !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 1rem !important;
+}
+
+[class*="AuthenticationPage"] button:hover,
+.nc-githubAuthenticationPage-root button:hover,
+.nc-gitGatewayAuthenticationPage-root button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+}
+
+[class*="AuthenticationPage"] button:active,
+.nc-githubAuthenticationPage-root button:active,
+.nc-gitGatewayAuthenticationPage-root button:active {
+  transform: translateY(0) !important;
+}
+
+/* Links */
+[class*="AuthenticationPage"] a,
+.nc-githubAuthenticationPage-root a,
+.nc-gitGatewayAuthenticationPage-root a {
+  color: #667eea !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+[class*="AuthenticationPage"] a:hover,
+.nc-githubAuthenticationPage-root a:hover,
+.nc-gitGatewayAuthenticationPage-root a:hover {
+  color: #764ba2 !important;
+  text-decoration: underline !important;
+}
+
+/* Mensagens de erro */
+[class*="AuthenticationPage"] [class*="error"],
+.nc-githubAuthenticationPage-root [class*="error"],
+.nc-gitGatewayAuthenticationPage-root [class*="error"] {
+  background: #fee !important;
+  border: 1px solid #fcc !important;
+  color: #c33 !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px !important;
+  margin-bottom: 1rem !important;
+  font-size: 0.9rem !important;
+}
+
+/* Loading spinner */
+[class*="AuthenticationPage"] [class*="spinner"],
+.nc-githubAuthenticationPage-root [class*="spinner"],
+.nc-gitGatewayAuthenticationPage-root [class*="spinner"] {
+  border-color: #667eea !important;
+  border-top-color: transparent !important;
+}
+
+/* Rodapé institucional */
+body::after {
+  content: 'Universidade de Brasília © 2025' !important;
+  position: fixed !important;
+  bottom: 1.5rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  z-index: 1000 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  [class*="AuthenticationPage-card"],
+  .nc-githubAuthenticationPage-card,
+  .nc-gitGatewayAuthenticationPage-card {
+    padding: 2rem 1.5rem !important;
+    width: 95% !important;
+  }
+  
+  [class*="AuthenticationPage-card"]::before,
+  .nc-githubAuthenticationPage-card::before,
+  .nc-gitGatewayAuthenticationPage-card::before {
+    font-size: 3.5rem !important;
+  }
+  
+  [class*="AuthenticationPage-card"]::after,
+  .nc-githubAuthenticationPage-card::after,
+  .nc-gitGatewayAuthenticationPage-card::after {
+    font-size: 1.5rem !important;
+  }
+}
