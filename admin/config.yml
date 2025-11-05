@@ -6,8 +6,6 @@
 # 1. Draft (Rascunho) - Artigo em construção
 # 2. In Review (Em Revisão) - Pronto para revisão
 # 3. Ready (Pronto) - Aprovado para publicação
-# Os campos 'published', 'featured' e 'draft' estão ocultos
-# e serão gerenciados automaticamente pelo workflow ou scripts.
 # ========================================
 
 # Backend local para desenvolvimento
@@ -26,17 +24,10 @@ backend:
     deleteMedia: Delete "{{path}}"
     openAuthoring: "{{message}}"
 
-  locale: "pt-br"
-  show_preview_links: true
-  search: true
-  # Modo de publicação: editorial workflow
-  publish_mode: editorial_workflow
-  editor:
-    preview: true
-    preview_path: "article/{{slug}}"
+# Modo de publicação: editorial workflow (IMPORTANTE)
+publish_mode: editorial_workflow
 
-# Configuração de mídia
-
+# Configurações de mídia
 media_folder: "article/uploads"
 public_folder: "uploads"
 
@@ -44,16 +35,23 @@ public_folder: "uploads"
 site_url: https://czargab18.github.io
 display_url: https://czargab18.github.io
 
-# Logo customizado (opcional)
-# logo:
-#   src: /images/logo.svg
-#   show_in_header: true
+# Configurações gerais
+locale: "pt-br"
+show_preview_links: false
+search: true
 
+# Desabilitar autosave
+autosave: false
+
+# Configuração de slug
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "_"
 
+# ========================================
+# COLEÇÕES
+# ========================================
 collections:
   - name: "conteudo"
     label: "Conteúdo"
@@ -76,23 +74,18 @@ collections:
       - { label: "Eventos", field: type, pattern: "event" }
       - { label: "Português", field: language, pattern: "pt-BR" }
       - { label: "Inglês", field: language, pattern: "en" }
-      - { label: "Publicados", field: published, pattern: true }
-      - { label: "Rascunhos", field: draft, pattern: true }
 
-    # Grupos de visualização
     view_groups:
       - { label: "Ano", field: date_format, pattern: '\d{4}' }
       - { label: "Tipo", field: type }
       - { label: "Categoria", field: category }
       - { label: "Idioma", field: language }
 
-    # Editor com preview
     editor:
       preview: true
-      preview_path: "article/{{slug}}"
 
     fields:
-      # --- CAMPOS OCULTOS (Gerenciados automaticamente) ---
+      # --- CAMPOS OCULTOS ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
       - { label: "Ano", name: "ano", widget: "hidden", default: "" }
       - { label: "Mês", name: "month", widget: "hidden", default: "" }
@@ -103,7 +96,12 @@ collections:
       - { label: "Publicado", name: "published", widget: "hidden", default: false }
       - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
       - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
-      - { label: "Miniatura", name: "thumbnail", widget: "hidden", default: { url: "", alt: "", caption: "" } }
+      - {
+          label: "Miniatura",
+          name: "thumbnail",
+          widget: "hidden",
+          default: { url: "", alt: "", width: 600, height: 400, caption: "" },
+        }
 
       # --- CAMPOS VISÍVEIS ---
       - { label: "Título", name: "title", widget: "string", required: true }
