@@ -32,7 +32,7 @@ collections:
     folder: "article"
     create: true
     delete: true
-    slug: "{{date_updated}}_{{category}}"
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}_{{category}}"
     preview_path: "article/{{slug}}"
     extension: "json"
     format: "json"
