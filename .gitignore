@@ -1,6 +1,11 @@
 # Output files
 build/run/output/*.html
 build/run/output/src/*
+
+# Node.js local installation
+bin/node/
+bin/*.zip
+
 # Cache files
 **/*cache*/
 **/__pycache__/
