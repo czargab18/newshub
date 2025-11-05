@@ -4,6 +4,7 @@ backend:
   name: github
   branch: news
   repo: czargab18/newshub
+  base_url: https://czargab18.github.io/estatistica/newshub/admin/
   commit_messages:
     create: Create {{collection}} "{{slug}}"
     update: Update {{collection}} "{{slug}}"
