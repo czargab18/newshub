@@ -1,9 +1,24 @@
+# ========================================
+# DECAP CMS - CONFIGURAÇÃO
+# ========================================
+# 
+# EDITORIAL WORKFLOW:
+# O Decap CMS gerencia o status de publicação através de 3 estados:
+# 1. Draft (Rascunho) - Artigo em construção
+# 2. In Review (Em Revisão) - Pronto para revisão
+# 3. Ready (Pronto) - Aprovado para publicação
+#
+# Os campos 'published', 'featured' e 'draft' estão ocultos
+# e serão gerenciados automaticamente pelo workflow ou scripts.
+# ========================================
+
 local_backend: true
 
 backend:
   name: git-gateway
   repo: "czargab18/newshub"
   branch: news
+
 publish_mode: editorial_workflow
 
 media_folder: "artigos/uploads"
@@ -13,67 +28,160 @@ collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
+    description: "Gerenciamento de artigos, notícias e conteúdos do site"
     folder: "artigos"
     create: true
-    slug: "{{fields.ano}}-{{fields.month}}-{{fields.id}}-{{slug}}"
+    slug: "{{slug}}"
+    summary: "{{title}} - {{type}} - {{date_format}}"
     extension: "json"
     format: "json"
+    
+    # Filtros e agrupamentos para facilitar navegação
+    view_filters:
+      - label: "Notícias"
+        field: type
+        pattern: "news"
+      - label: "Artigos"
+        field: type
+        pattern: "article"
+      - label: "Eventos"
+        field: type
+        pattern: "event"
+      - label: "Português"
+        field: language
+        pattern: "pt-BR"
+    
+    view_groups:
+      - label: "Tipo"
+        field: type
+      - label: "Categoria"
+        field: category
+      - label: "Idioma"
+        field: language
+    
     fields:
-      - label: "ID"
-        name: "id"
-        widget: "string"
-        default: ""
-        hint: "Identificador único. Ex: 0001, 0156, 1234"
-        pattern: ['\d{4}', 'Use exatamente 4 dígitos (ex: 0001)']
-      - { label: "Ano (YYYY)", name: "ano", widget: "string", default: "" }
-      - { label: "Mês (MM)", name: "month", widget: "string", default: "" }
+      # --- CAMPOS OCULTOS (Preenchidos por script) ---
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "Ano", name: "ano", widget: "hidden", default: "" }
+      - { label: "Mês", name: "month", widget: "hidden", default: "" }
+      - { label: "Slug", name: "slug", widget: "hidden", default: "" }
+      
+      # --- CAMPOS OCULTOS (Informações de autor automáticas) ---
+      - { label: "Autor", name: "author", widget: "hidden", default: "" }
+      - { label: "Bio do Autor", name: "author_bio", widget: "hidden", default: "" }
+      - { label: "Avatar do Autor", name: "author_avatar", widget: "hidden", default: "" }
+      
+      # --- CAMPOS OCULTOS (Status gerenciados pelo Editorial Workflow) ---
+      - { label: "Publicado", name: "published", widget: "hidden", default: false }
+      - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
+      - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
+      
+      # --- CAMPOS OCULTOS (Thumbnail não necessária) ---
+      - label: "Miniatura"
+        name: "thumbnail"
+        widget: "hidden"
+        default:
+          url: ""
+          alt: ""
+          width: 600
+          height: 400
+          caption: ""
+      
+      # --- DATAS ---
       - label: "Data de Publicação"
         name: "date_format"
+        widget: "datetime"
+        default: "{{now}}"
+        date_format: "DD [de] MMMM [de] YYYY"
+        time_format: false
+        format: "YYYY-MM-DDTHH:mm:ss.SSSZ"
+        hint: "Selecione a data de publicação"
+        required: true
+      - label: "Data de Atualização"
+        name: "date_updated"
         widget: "datetime"
         default: ""
         date_format: "DD [de] MMMM [de] YYYY"
         time_format: false
         format: "YYYY-MM-DDTHH:mm:ss.SSSZ"
-        hint: "Selecione a data de publicação no calendário"
-      - { label: "Data de Atualização", name: "date_updated", widget: "datetime", default: "" }
-      - { label: "Publicado", name: "published", widget: "boolean", default: false }
-      - { label: "Em Destaque", name: "featured", widget: "boolean", default: false }
-      - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
-      - { label: "Título", name: "title", widget: "string", default: "" }
-      - { label: "Subtítulo", name: "subtitle", widget: "string", default: "", optional: true }
-      - { label: "Slug (URL)", name: "slug", widget: "string", default: "", optional: true, hint: "URL amigável. Ex: censo-2025-populacao" }
-      - { label: "Excerto (Resumo curto)", name: "excerpt", widget: "text", default: "", optional: true, hint: "120-160 caracteres. Usado em listagens e meta description." }
-      - { label: "Sumário (Resumo detalhado)", name: "summary", widget: "text", default: "", optional: true, hint: "200-300 caracteres." }
-      - { label: "Autor", name: "author", widget: "string", default: "" }
-      - { label: "Bio do Autor", name: "author_bio", widget: "text", default: "", optional: true }
-      - { label: "Avatar do Autor", name: "author_avatar", widget: "image", default: "", optional: true }
+        required: false
+        optional: true
+      
+      # --- CONTEÚDO PRINCIPAL ---
+      - label: "Título"
+        name: "title"
+        widget: "string"
+        required: true
+        hint: "Título principal do artigo"
+      - label: "Subtítulo"
+        name: "subtitle"
+        widget: "string"
+        default: ""
+        required: false
+        optional: true
+        hint: "Subtítulo opcional para complementar o título"
+      - label: "Excerto (Resumo curto)"
+        name: "excerpt"
+        widget: "text"
+        default: ""
+        required: false
+        optional: true
+        hint: "120-160 caracteres. Usado em listagens e meta description para SEO"
+      - label: "Sumário (Resumo detalhado)"
+        name: "summary"
+        widget: "text"
+        default: ""
+        required: false
+        optional: true
+        hint: "200-300 caracteres. Resumo mais detalhado do conteúdo"
+      
+      # --- CATEGORIZAÇÃO ---
       - label: "Contribuidores"
         name: "contributors"
         widget: "list"
         default: []
         optional: true
+        collapsed: true
         fields:
           - { label: "Nome", name: "name", widget: "string", default: "" }
           - { label: "Função", name: "role", widget: "select", default: "Co-autor", options: ["Editor", "Revisor Técnico", "Co-autor", "Pesquisador", "Designer Gráfico", "Fotógrafo", "Tradutor", "Consultor"] }
           - { label: "Email", name: "email", widget: "string", default: "", optional: true }
-      - { label: "Tipo", name: "type", widget: "select", default: "news", options: ["news", "article", "event", "press", "analysis", "report"] }
-      - { label: "Categoria", name: "category", widget: "select", multiple: true, default: [], options: ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"] }
+      
+      - label: "Tipo"
+        name: "type"
+        widget: "select"
+        default: "news"
+        required: true
+        options:
+          - { label: "Notícia", value: "news" }
+          - { label: "Artigo", value: "article" }
+          - { label: "Evento", value: "event" }
+          - { label: "Press Release", value: "press" }
+          - { label: "Análise", value: "analysis" }
+          - { label: "Relatório", value: "report" }
+        hint: "Tipo de conteúdo sendo publicado"
+      
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        multiple: true
+        default: []
+        required: false
+        options:
+          - { label: "Leitura Rápida", value: "QUICK READ" }
+          - { label: "Declaração Oficial", value: "EST STATEMENT" }
+          - { label: "Fotos", value: "PHOTOS" }
+          - { label: "Comunicado à Imprensa", value: "PRESS RELEASE" }
+          - { label: "Lançamento", value: "RELEASE" }
+          - { label: "Atualização", value: "UPDATE" }
+        hint: "Selecione uma ou mais categorias"
+      
       - { label: "Subcategoria", name: "subcategory", widget: "string", default: "", optional: true, hint: "Ex: Demografia, Economia" }
       - { label: "Tags (Busca Interna)", name: "tags", widget: "list", default: [], optional: true }
       - { label: "Palavras-chave (SEO)", name: "keywords", widget: "list", default: [], optional: true }
       - { label: "Idioma", name: "language", widget: "select", default: "pt-BR", options: ["pt-BR", "en-US", "es-ES"] }
-      - label: "Miniatura (Thumbnail)"
-        name: "thumbnail"
-        widget: "object"
-        optional: true
-        collapsed: true
-        fields:
-          - { label: "URL", name: "url", widget: "image", default: "" }
-          - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", default: "" }
-          - { label: "Largura", name: "width", widget: "number", default: 600 }
-          - { label: "Altura", name: "height", widget: "number", default: 400 }
-          - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
       
+      # --- IMAGENS E MÍDIA ---
       - label: "Imagem de Capa (Cover)"
         name: "cover_image"
         widget: "object"
@@ -86,7 +194,8 @@ collections:
           - { label: "Altura", name: "height", widget: "number", default: 1080 }
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
           - { label: "Crédito (Foto)", name: "credit", widget: "string", default: "", optional: true }
-      - label: "Galeria de Imagens (no corpo)"
+      
+      - label: "Galeria de Imagens"
         name: "images"
         widget: "list"
         default: []
@@ -98,6 +207,7 @@ collections:
           - { label: "Legenda", name: "caption", widget: "string", default: "", optional: true }
           - { label: "Largura", name: "width", widget: "number", default: 1000 }
           - { label: "Altura", name: "height", widget: "number", default: 600 }
+      
       - label: "Vídeos"
         name: "videos"
         widget: "list"
@@ -121,7 +231,16 @@ collections:
           - { label: "Ficheiro", name: "url", widget: "file", default: "" }
           - { label: "Tipo", name: "type", widget: "select", default: "application/pdf", options: ["application/pdf", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/csv", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/zip"] }
           - { label: "Tamanho", name: "size", widget: "string", default: "", optional: true, hint: "Ex: 1.8MB" }
-      - { label: "Corpo do Artigo", name: "body", widget: "html", default: "" }
+      
+      # --- CORPO DO ARTIGO ---
+      - label: "Corpo do Artigo"
+        name: "body"
+        widget: "markdown"
+        default: ""
+        required: true
+        hint: "Conteúdo principal do artigo. Use Markdown para formatação."
+      
+      # --- REFERÊNCIAS E CITAÇÕES ---
       - label: "Referências (Bibliografia)"
         name: "references"
         widget: "list"
@@ -146,7 +265,9 @@ collections:
           - { label: "Autor", name: "author", widget: "string", default: "" }
           - { label: "Fonte", name: "source", widget: "string", default: "" }
 
+      # --- RELACIONAMENTOS ---
       - { label: "Artigos Relacionados (IDs)", name: "related_articles", widget: "list", default: [], optional: true, hint: "Insira os IDs de outros artigos. Ex: 0023" }
+      
       - label: "Série"
         name: "series"
         widget: "object"
@@ -156,6 +277,8 @@ collections:
           - { label: "Título da Série", name: "title_series", widget: "string", default: "" }
           - { label: "Parte Nº", name: "part", widget: "number", default: 0 }
           - { label: "Total de Partes", name: "total_parts", widget: "number", default: 0 }
+      
+      # --- CAMPOS PERSONALIZADOS ---
       - label: "Campos Personalizados (Institucional)"
         name: "custom_fields"
         widget: "object"
@@ -164,4 +287,4 @@ collections:
         fields:
           - { label: "Projeto de Pesquisa", name: "research_project", widget: "string", default: "" }
           - { label: "Fonte de Financiamento", name: "funding_source", widget: "string", default: "" }
-          - { label: "Instituição", name: "institution", widget: "string", default: "IBGE - Instituto Brasileiro de Geografia e Estatística" }
+          - { label: "Instituição", name: "institution", widget: "string", default: "Departamento de Estatística - UnB" }
