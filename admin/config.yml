@@ -1,5 +1,3 @@
-local_backend: true
-
 # ========================================
 # DECAP CMS - CONFIGURAÇÃO
 # ========================================
@@ -12,56 +10,176 @@ local_backend: true
 # e serão gerenciados automaticamente pelo workflow ou scripts.
 # ========================================
 
+# Backend local para desenvolvimento
+local_backend: true
+
 # Backend Git Gateway com Netlify Identity
 backend:
   name: git-gateway
   branch: news
   repo: czargab18/newshub
-  api_root: https://api.github.com
-  base_url: https://seu-oauth-server.com
-  auth_endpoint: auth
-  site_domain: czargab18.github.io
-  cms_label_prefix: decap-cms/
   commit_messages:
-    create: Create {{collection}} “{{slug}}”
-    update: Update {{collection}} “{{slug}}”
-    delete: Delete {{collection}} “{{slug}}”
-    uploadMedia: Upload “{{path}}”
-    deleteMedia: Delete “{{path}}”
+    create: Create {{collection}} "{{slug}}"
+    update: Update {{collection}} "{{slug}}"
+    delete: Delete {{collection}} "{{slug}}"
+    uploadMedia: Upload "{{path}}"
+    deleteMedia: Delete "{{path}}"
     openAuthoring: '{{message}}'
 
-# Configurações de autenticação
-# O Netlify Identity gerencia automaticamente a autenticação
-# base_url e auth_endpoint são desnecessários com git-gateway padrão
-
+# Modo de publicação: editorial workflow
 publish_mode: editorial_workflow
 media_folder: "article/uploads"
 public_folder: "uploads"
+
+# URLs do site
+site_url: https://czargab18.github.io
+display_url: https://czargab18.github.io
+
+# Logo customizado (opcional)
+# logo:
+#   src: /images/logo.svg
+#   show_in_header: true
+
+# Configurações gerais
+locale: 'pt-br'
 show_preview_links: true
 search: true
+
+# Configuração de slug
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "_"
 
-
+# Configurações do editor
 editor:
   preview: true
-  preview_path: "article/{{slug}}"
 
-
-
+# ========================================
+# COLEÇÕES
+# ========================================
 collections:
   - name: "conteudo"
-    description: "Gerenciamento dos artigos"
     label: "Conteúdo"
     label_singular: "Artigo"
+    description: "Gerenciamento de artigos, notícias e conteúdos do site"
     folder: "article"
     create: true
+    delete: true
     slug: "{{slug}}"
-    summary: "{{title}} - {{type}} - {{date_format}}"
+    preview_path: "article/{{slug}}"
     extension: "json"
     format: "json"
-    preview_path: "article/{{slug}}"
-    sortable_fields: ['commit_date', 'title', 'commit_author', 'type']
+    identifier_field: "title"
+    summary: "{{title}} - {{type}} - {{date_format}}"
+    sortable_fields: ['date_format', 'title', 'type', 'commit_date', 'commit_author']
     
+    view_filters:
+      - label: "Notícias"
+        field: type
+        pattern: "news"
+      - label: "Artigos"
+        field: type
+        pattern: "article"
+      - label: "Eventos"
+        field: type
+        pattern: "event"
+      - label: "Português"
+        field: language
+        pattern: "pt-BR"
+      - label: "Inglês"
+        field: language
+        pattern: "en"
+      - label: "Publicados"
+        field: published
+        pattern: true
+      - label: "Rascunhos"
+        field: draft
+        pattern: true
+    
+    # Grupos de visualização
+    view_groups:
+      - label: "Ano"
+        field: date_format
+        pattern: \d{4}
+      - label: "Tipo"
+        field: type
+      - label: "Categoria"
+        field: category
+      - label: "Idioma"
+        field: language
+    
+    # Editor com preview
+    editor:
+      preview: true
+    
+    fields:
+      # --- CAMPOS OCULTOS (Gerenciados automaticamente) ---
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "Ano", name: "ano", widget: "hidden", default: "" }
+      - { label: "Mês", name: "month", widget: "hidden", default: "" }
+      - { label: "Slug", name: "slug", widget: "hidden", default: "" }
+      - { label: "Autor", name: "author", widget: "hidden", default: "" }
+      - { label: "Bio do Autor", name: "author_bio", widget: "hidden", default: "" }
+      - { label: "Avatar do Autor", name: "author_avatar", widget: "hidden", default: "" }
+      - { label: "Publicado", name: "published", widget: "hidden", default: false }
+      - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
+      - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
+      
+      - label: "Miniatura"
+        name: "thumbnail"
+        widget: "hidden"
+        default:
+          url: ""
+          alt: ""
+          width: 600
+          height: 400
+          caption: ""
+      
+      # --- CAMPOS VISÍVEIS ---
+      - { label: "Título", name: "title", widget: "string", required: true }
+      - { label: "Descrição", name: "description", widget: "text", required: true }
+      
+      - label: "Tipo"
+        name: "type"
+        widget: "select"
+        required: true
+        options:
+          - { label: "Notícia", value: "news" }
+          - { label: "Artigo", value: "article" }
+          - { label: "Evento", value: "event" }
+      
+      - label: "Data de Formatação"
+        name: "date_format"
+        widget: "datetime"
+        required: true
+        date_format: "DD/MM/YYYY"
+        time_format: "HH:mm"
+      
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - { label: "Tecnologia", value: "technology" }
+          - { label: "Ciência", value: "science" }
+          - { label: "Negócios", value: "business" }
+          - { label: "Esportes", value: "sports" }
+          - { label: "Entretenimento", value: "entertainment" }
+      
+      - label: "Idioma"
+        name: "language"
+        widget: "select"
+        required: true
+        default: "pt-BR"
+        options:
+          - { label: "Português (Brasil)", value: "pt-BR" }
+          - { label: "Inglês", value: "en" }
+      
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        allow_add: true
+      
+      - { label: "Corpo do Conteúdo", name: "body", widget: "markdown", required: true }
