@@ -6,6 +6,7 @@ Esta pasta contém scripts para instalar o Node.js localmente e iniciar o servid
 
 ```
 bin/
+├── start.ps1           # Script All-in-One (RECOMENDADO - faz tudo automaticamente)
 ├── install-node.ps1    # Instala Node.js localmente
 ├── start-server.ps1    # Inicia apenas o servidor Decap CMS (porta 8081)
 ├── start-decap.ps1     # Inicia HTTP Server + Decap Server (portas 8080 e 8081)
@@ -16,57 +17,49 @@ bin/
 
 ## 🚀 Como Usar
 
-### Opção 1: Setup Completo (Recomendado para primeira vez)
+### ⭐ Opção Recomendada: Script All-in-One
 
-Execute este comando na raiz do projeto:
+**Um único comando que faz tudo:**
+
+```powershell
+.\bin\start.ps1
+```
+
+Este script:
+- ✅ Verifica se Node.js está instalado
+- ✅ Baixa e instala Node.js automaticamente se necessário
+- ✅ Instala http-server e decap-server se necessário
+- ✅ Inicia ambos os servidores
+- ✅ Você só precisa executar e usar!
+
+Acesse: `http://localhost:8080/admin/`
+
+---
+
+### Outras Opções (avançado)
+
+**Opção 1: Setup Completo (primeira vez):**
 
 ```powershell
 .\bin\setup.ps1
 ```
 
-Este script irá:
-1. Baixar e instalar o Node.js v20.11.0 na pasta `bin/node`
-2. Instalar o Decap Server
-3. Iniciar o servidor local em `http://localhost:8081`
-
-### Opção 2: Decap CMS Completo (HTTP + Backend)
-
-Para usar o CMS com interface admin completa:
+**Opção 2: CMS Completo (HTTP + Backend):**
 
 ```powershell
 .\bin\start-decap.ps1
 ```
 
-Este script inicia:
-- **HTTP Server** (porta 8080) - Serve a interface admin
-- **Decap Server** (porta 8081) - Backend local para Git
-
-Acesse em: `http://localhost:8080/admin/`
-
-### Opção 3: Apenas Decap Server
-
-Para apenas o backend (sem servidor HTTP):
+**Opção 3: Apenas Decap Server:**
 
 ```powershell
 .\bin\start-server.ps1
 ```
 
-### Opção 4: Instalação Manual
-
-**1. Instalar Node.js localmente:**
+**Opção 4: Instalação Manual:**
 
 ```powershell
 .\bin\install-node.ps1
-```
-
-**2. Escolher como iniciar:**
-
-```powershell
-# Apenas Decap Server
-.\bin\start-server.ps1
-
-# Ou ambos servidores
-.\bin\start-decap.ps1
 ```
 
 ## 📋 Requisitos
