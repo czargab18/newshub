@@ -1,58 +1,45 @@
 {
   "id": "identificador que será criado automaticamente por um script python",
   "date_format": "Usara a 'date_updated' para formatar a data de exibição do artigo na página",
-  "date_updated": "",
-  "title": "",
-  "subtitle": "",
-  "slug": "",
-  "excerpt": "",
-  "summary": "",
+  "date_updated": "Data informada ao publicar o artigo pelo editor Decap CMS",
 
-  "author": "",
-  "author_bio": "",
-  "author_avatar": "",
+  "link_canonical": "",
+  "description": "",
+  "summary": "",
+  "tags": ["uma lista de tags que serão usadas para organizar e pesquisar artigos relacionados."],
+  "keywords": ["uma lista de palavras-chave para SEO."],
+  "lang": "uma lista de opções de idioma, como: 'portugues, ingles, espanhol'.",
+
+  "author": "hidden - ainda não estruturado",
+  "author_bio": "hidden - ainda não estruturado",
+  "author_avatar": "hidden - ainda não estruturado",
+  "author_page": "hidden - ainda não estruturado",
   "contributors": [
     {
-      "name": "",
-      "role": "",
-      "email": ""
+      "name": "hidden - ainda não estruturado",
+      "role": "hidden - ainda não estruturado",
+      "email": "hidden - ainda não estruturado"
     }
   ],
-
-  "type": "",
-  "category": [],
-  "subcategory": "",
-  "tags": [],
-  "keywords": [],
-  "language": "",
 
   "thumbnail": {
     "url": "",
     "alt": "",
-    "width": 600,
-    "height": 400,
     "caption": ""
   },
-
   "cover_image": {
     "url": "",
     "alt": "",
-    "width": 1920,
-    "height": 1080,
     "caption": "",
     "credit": ""
   },
-
   "images": [
     {
       "url": "",
       "alt": "",
-      "caption": "",
-      "width": 1000,
-      "height": 600
+      "caption": ""
     }
   ],
-
   "videos": [
     {
       "url": "",
@@ -61,7 +48,6 @@
       "thumbnail": ""
     }
   ],
-
   "attachments": [
     {
       "name": "",
@@ -71,6 +57,12 @@
     }
   ],
 
+  "headline": "",
+  "subhead": "",
+
+  "category": [
+    "Uma única categoria que será exibida na página do artigo: 'QUICK READ','EST STATEMENT','PHOTOS','PRESS RELEASE','RELEASE', 'UPDATE'. "
+  ],
   "body": "",
   "custom_fields": {
     "research_project": "",
