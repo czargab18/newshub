@@ -27,30 +27,7 @@
     "alt": "Texto alternativo para acessibilidade",
     "caption": "Legenda que aparece abaixo da miniatura"
   },
-  "cover_image": {
-    "_comment": " HIDDEN - Imagem principal do artigo. Banner no topo, primeira coisa que o leitor ve. Geralmente em alta resolucao (1920x1080px ou maior)",
-    "url": "Caminho/URL da imagem de capa (grande)",
-    "alt": "Texto alternativo para acessibilidade",
-    "caption": "Legenda da imagem de capa",
-    "credit": "Creditos do fotografo/fonte (ex: 'Foto por Joao Silva')"
-  },
-  "images": [
-    {
-      "_comment": "Imagens adicionais no corpo do artigo. Graficos, fotos, ilustracoes. Pode ter 0, 1 ou muitas imagens",
-      "url": "Caminho/URL da imagem",
-      "alt": "Texto alternativo para acessibilidade",
-      "caption": "Legenda da imagem"
-    }
-  ],
-  "videos": [
-    {
-      "_comment": "Videos incorporados no artigo. Pode ser link externo (YouTube, Vimeo) ou arquivo local. Pode ter multiplos videos",
-      "url": "URL do video (YouTube, Vimeo, arquivo local)",
-      "type": "Tipo do video: 'youtube', 'vimeo', 'local', 'embed'",
-      "title": "Titulo do video",
-      "thumbnail": "Miniatura do video (preview antes de reproduzir)"
-    }
-  ],
+
   "attachments": [
     {
       "_comment": "Arquivos para download. PDFs, documentos, planilhas, datasets, arquivos ZIP. Qualquer arquivo que o usuario possa baixar",
