@@ -1,5 +1,4 @@
 
-local_backend: true
 backend:
   name: github
   branch: news
