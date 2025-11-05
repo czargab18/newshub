@@ -13,9 +13,10 @@
       padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
       line-height: 1.6;
       color: #333;
+      background: #ffffff;
     }
   
     .cms-preview-content h1 {
@@ -23,135 +24,235 @@
       font-weight: 700;
       margin-bottom: 0.5rem;
       color: #1a1a1a;
+      line-height: 1.2;
     }
   
     .cms-preview-content h2 {
       font-size: 1.5rem;
       font-weight: 600;
       color: #555;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
     }
   
     .cms-preview-content .metadata {
       color: #666;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
       padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
+      border-bottom: 2px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
   
     .cms-preview-content .excerpt {
       font-style: italic;
       color: #555;
       font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      padding-left: 1rem;
-      border-left: 3px solid #0066cc;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      padding-left: 1.5rem;
+      background: #f8f9fa;
+      border-left: 4px solid #0066cc;
+      border-radius: 4px;
     }
   
     .cms-preview-content img {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
-      margin: 1.5rem 0;
+      margin: 2rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
   
+    /* Estilos para o corpo do artigo (Markdown) */
     .cms-preview-content .body-content {
-      font-size: 1rem;
+      font-size: 1.05rem;
       line-height: 1.8;
+      color: #333;
+      margin-top: 2rem;
     }
   
     .cms-preview-content .body-content p {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
   
+    .cms-preview-content .body-content h1,
     .cms-preview-content .body-content h2,
-    .cms-preview-content .body-content h3 {
+    .cms-preview-content .body-content h3,
+    .cms-preview-content .body-content h4 {
       margin-top: 2rem;
       margin-bottom: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #1a1a1a;
     }
+    
+    .cms-preview-content .body-content h1 { font-size: 2rem; }
+    .cms-preview-content .body-content h2 { font-size: 1.6rem; }
+    .cms-preview-content .body-content h3 { font-size: 1.3rem; }
+    .cms-preview-content .body-content h4 { font-size: 1.1rem; }
   
     .cms-preview-content .body-content ul,
     .cms-preview-content .body-content ol {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
+      margin-left: 2rem;
+      margin-bottom: 1.2rem;
+    }
+    
+    .cms-preview-content .body-content li {
+      margin-bottom: 0.5rem;
     }
   
     .cms-preview-content .body-content blockquote {
       border-left: 4px solid #0066cc;
-      padding-left: 1rem;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: #f8f9fa;
       color: #555;
       font-style: italic;
-      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .cms-preview-content .body-content blockquote p {
+      margin: 0;
     }
   
     .cms-preview-content .body-content code {
       background: #f4f4f4;
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
-      font-family: 'Courier New', monospace;
+      font-family: 'Courier New', Consolas, monospace;
       font-size: 0.9em;
+      color: #c7254e;
     }
   
     .cms-preview-content .body-content pre {
-      background: #f4f4f4;
-      padding: 1rem;
-      border-radius: 5px;
+      background: #282c34;
+      color: #abb2bf;
+      padding: 1.5rem;
+      border-radius: 6px;
       overflow-x: auto;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
+      line-height: 1.5;
     }
   
     .cms-preview-content .body-content pre code {
       background: none;
       padding: 0;
+      color: inherit;
+      font-size: 0.95rem;
+    }
+    
+    .cms-preview-content .body-content a {
+      color: #0066cc;
+      text-decoration: none;
+      border-bottom: 1px solid #0066cc;
+    }
+    
+    .cms-preview-content .body-content a:hover {
+      color: #0052a3;
+      border-bottom-color: #0052a3;
+    }
+    
+    .cms-preview-content .body-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    
+    .cms-preview-content .body-content th,
+    .cms-preview-content .body-content td {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    .cms-preview-content .body-content th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    
+    .cms-preview-content .body-content hr {
+      border: none;
+      border-top: 2px solid #eee;
+      margin: 2rem 0;
     }
   </style>
 </head>
 
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
   <!-- Custom Preview Template -->
   <script>
-    // Registrar template de preview customizado
-    CMS.registerPreviewTemplate('conteudo', createClass({
-      render: function () {
-        const entry = this.props.entry;
+      const { h } = window;
+
+      // Preview Component
+      const ArticlePreview = ({ entry, widgetFor, getAsset }) => {
         const title = entry.getIn(['data', 'title']);
         const subtitle = entry.getIn(['data', 'subtitle']);
         const excerpt = entry.getIn(['data', 'excerpt']);
-        const body = entry.getIn(['data', 'body']);
-        const date = entry.getIn(['data', 'date_format']);
-        const author = entry.getIn(['data', 'author']) || 'Departamento de Estatística';
-        const coverImage = entry.getIn(['data', 'cover_image', 'url']);
-        const coverAlt = entry.getIn(['data', 'cover_image', 'alt']);
-        const type = entry.getIn(['data', 'type']);
-        const category = entry.getIn(['data', 'category']);
+      const date = entry.getIn(['data', 'date_format']);
+      const author = entry.getIn(['data', 'author']) || 'Departamento de Estatística';
+      const coverImage = entry.getIn(['data', 'cover_image', 'url']);
+      const coverAlt = entry.getIn(['data', 'cover_image', 'alt']);
+      const type = entry.getIn(['data', 'type']);
 
-        return h('div', { className: 'cms-preview-content' },
-          h('h1', {}, title || 'Título do Artigo'),
-          subtitle && h('h2', {}, subtitle),
-          h('div', { className: 'metadata' },
-            h('span', {}, (date ? new Date(date).toLocaleDateString('pt-BR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            }) : 'Data não definida') + ' • ' + author),
-            type && h('span', { style: { marginLeft: '1rem', background: '#e3f2fd', padding: '0.2rem 0.5rem', borderRadius: '3px', fontSize: '0.85rem' } }, type.toUpperCase())
-          ),
-          coverImage && h('img', { src: coverImage, alt: coverAlt || 'Imagem de capa' }),
-          excerpt && h('div', { className: 'excerpt' }, excerpt),
-          h('div', {
-            className: 'body-content',
-            dangerouslySetInnerHTML: {
-              __html: body ? this.props.widgetFor('body') : '<p>Conteúdo do artigo aparecerá aqui...</p>'
-            }
-          })
-        );
+      // Formatar data
+      let formattedDate = 'Data não definida';
+      if (date) {
+        try {
+          const dateObj = new Date(date);
+          formattedDate = dateObj.toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+        } catch (e) {
+          formattedDate = date;
+        }
       }
-    }));
 
-    // Aplicar estilos ao preview
-    CMS.registerPreviewStyle('/admin/preview.css', { raw: false });
+      return h('div', { className: 'cms-preview-content' },
+        // Título
+        h('h1', {}, title || 'Título do Artigo'),
+
+        // Subtítulo
+        subtitle ? h('h2', {}, subtitle) : null,
+
+        // Metadata
+        h('div', { className: 'metadata' },
+          h('span', {}, `${formattedDate} • ${author}`),
+          type ? h('span', {
+            style: {
+              marginLeft: '1rem',
+              background: '#e3f2fd',
+              padding: '0.2rem 0.5rem',
+              borderRadius: '3px',
+              fontSize: '0.85rem',
+              textTransform: 'uppercase'
+            }
+          }, type) : null
+        ),
+
+        // Imagem de capa
+        coverImage ? h('img', {
+          src: coverImage,
+          alt: coverAlt || 'Imagem de capa',
+          style: { maxWidth: '100%', height: 'auto' }
+        }) : null,
+
+        // Excerto
+        excerpt ? h('div', { className: 'excerpt' }, excerpt) : null,
+
+        // Corpo do artigo (Markdown renderizado)
+        h('div', { className: 'body-content' }, widgetFor('body'))
+      );
+      };
+    
+      // Registrar o preview template
+      CMS.registerPreviewTemplate('conteudo', ArticlePreview);
   </script>
 </body>
 
