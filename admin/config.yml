@@ -15,11 +15,18 @@ backend:
   name: git-gateway
   branch: news
   repo: czargab18/newshub
-  api_root: https://api.github.com  # Para GitHub Enterprise
-  base_url: https://seu-oauth-server.com  # Para OAuth customizado
-  auth_endpoint: auth  # Endpoint de autenticação
-  site_domain: czargab18.github.io  # Domínio do site
-  cms_label_prefix: decap-cms/  # Prefixo para PRs
+  api_root: https://api.github.com
+  base_url: https://seu-oauth-server.com
+  auth_endpoint: auth
+  site_domain: czargab18.github.io
+  cms_label_prefix: decap-cms/
+  commit_messages:
+    create: Create {{collection}} “{{slug}}”
+    update: Update {{collection}} “{{slug}}”
+    delete: Delete {{collection}} “{{slug}}”
+    uploadMedia: Upload “{{path}}”
+    deleteMedia: Delete “{{path}}”
+    openAuthoring: '{{message}}'
 
 # Configurações de autenticação
 # O Netlify Identity gerencia automaticamente a autenticação
