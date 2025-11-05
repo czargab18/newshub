@@ -1,48 +1,44 @@
 # ========================================
 # DECAP CMS - CONFIGURAÇÃO
 # ========================================
-# 
 # EDITORIAL WORKFLOW:
 # O Decap CMS gerencia o status de publicação através de 3 estados:
 # 1. Draft (Rascunho) - Artigo em construção
 # 2. In Review (Em Revisão) - Pronto para revisão
 # 3. Ready (Pronto) - Aprovado para publicação
-#
 # Os campos 'published', 'featured' e 'draft' estão ocultos
 # e serão gerenciados automaticamente pelo workflow ou scripts.
 # ========================================
 
-local_backend: true
-
+# Backend Git Gateway com Netlify Identity
 backend:
   name: git-gateway
-  repo: "czargab18/newshub"
   branch: news
-  site_domain: "czargab18.github.io/estatistica"
-  base_url: "/estatistica/newshub/"
-  auth_endpoint: "https://git-gateway.netlify.app/auth"
-  cms_label_prefix: 
+  repo: czargab18/newshub
+  # site_domain: usado apenas para OAuth customizado
+  # Para Netlify Identity padrão, não é necessário
 
+# Configurações de autenticação
+# O Netlify Identity gerencia automaticamente a autenticação
+# base_url e auth_endpoint são desnecessários com git-gateway padrão
+
+# Modo de publicação: editorial workflow
 publish_mode: editorial_workflow
-
 media_folder: "article/uploads"
 public_folder: "uploads"
 
-# ========================================
-# PREVIEW TEMPLATE SETTINGS
-# ========================================
-# Configuração para corrigir visualização quebrada
+
+local_backend: true
 show_preview_links: true
 editor:
   preview: true
   preview_path: "article/{{slug}}"
 
-
 collections:
   - name: "conteudo"
     label: "Conteúdo"
     label_singular: "Artigo"
-    description: "Gerenciamento de article, notícias e conteúdos do site"
+    description: "Gerenciamento de artigos, notícias e conteúdos do site"
     folder: "article"
     create: true
     slug: "{{slug}}"
@@ -57,7 +53,7 @@ collections:
       - label: "Notícias"
         field: type
         pattern: "news"
-      - label: "article"
+      - label: "Artigos"
         field: type
         pattern: "article"
       - label: "Eventos"
