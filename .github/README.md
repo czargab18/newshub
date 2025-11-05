@@ -4,6 +4,26 @@ Sistema avançado de renderização de Markdown para HTML no estilo estatística
 
 - Exemplo de uso: [artigo](https://czargab18.github.io/newshub/archive/2025/07/0000/index.html)
 
+## 🎯 Início Rápido
+
+### 📝 Gerenciar Conteúdo com Decap CMS
+
+**Setup Automático (Primeira vez):**
+```powershell
+.\setup-cms.ps1
+```
+
+**Iniciar Servidor (após instalação):**
+```powershell
+.\start-cms.ps1
+```
+
+O servidor estará disponível em: `http://localhost:8081`
+
+> **Nota:** Os scripts instalam o Node.js localmente na pasta `bin/` sem afetar seu sistema.
+
+---
+
 ## 🚀 Características Principais
 
 - **🎨 Templates estatística/newsroom**: Design autêntico e responsivo
