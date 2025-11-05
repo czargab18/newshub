@@ -1,0 +1,37 @@
+{
+  "id": "_comment: identificador que será criado automaticamente por um script python",
+  "date_format": "_comment: Usara a 'date_updated' para formatar a data de exibição do artigo na página",
+  "date_updated": "_comment: Data informada ao publicar o artigo pelo editor Decap CMS",
+
+  "link_canonical": "_comment: ",
+  "description": "_comment: ",
+  "summary": "_comment: ",
+  "tags": ["uma lista de tags que serão usadas para organizar e pesquisar artigos relacionados."],
+  "keywords": ["uma lista de palavras-chave para SEO."],
+  "lang": "uma lista de opções de idioma, como: 'portugues, ingles, espanhol'.",
+
+  "thumbnail": {
+    "_comment": "Imagem pequena usada em: Listagens de artigos, Cards de preview, Compartilhamento em redes sociais, Normalmente 300x200px ou similar",
+    "url": "Caminho/URL da imagem miniatura (pequena)",
+    "alt": "Texto alternativo para acessibilidade",
+    "caption": "Legenda que aparece abaixo da miniatura"
+  },
+
+  "headline": "",
+  "subhead": "",
+  "category": [
+    "Uma única categoria que será exibida na página do artigo: 'QUICK READ','EST STATEMENT','PHOTOS','PRESS RELEASE','RELEASE', 'UPDATE'. "
+  ],
+  "body": "",
+  "references": [
+    {
+      "type": ["AVISO", "NOTICE", "ANNOUNCEMENT", "COMUNICADO", "AVISO DE PESQUISA", "RESEARCH NOTICE"],
+      "title": "",
+      "authors": [],
+      "year": "",
+      "url": "",
+      "doi": ""
+    }
+  ],
+  "related_articles": []
+}
