@@ -19,19 +19,19 @@ Write-Host ""
 
 # Verificar se o Node.js já está instalado
 if (Test-Path (Join-Path $NODE_DIR "node.exe")) {
-    Write-Host "Node.js já está instalado em: $NODE_DIR" -ForegroundColor Green
+    Write-Host "Node.js ja esta instalado em: $NODE_DIR" -ForegroundColor Green
     
-    # Verificar versão
+    # Verificar versao
     $installedVersion = & (Join-Path $NODE_DIR "node.exe") --version
-    Write-Host "Versão instalada: $installedVersion" -ForegroundColor Green
+    Write-Host "Versao instalada: $installedVersion" -ForegroundColor Green
     
     $response = Read-Host "Deseja reinstalar? (s/N)"
     if ($response -ne "s" -and $response -ne "S") {
-        Write-Host "Instalação cancelada." -ForegroundColor Yellow
+        Write-Host "Instalacao cancelada." -ForegroundColor Yellow
         exit 0
     }
     
-    Write-Host "Removendo instalação anterior..." -ForegroundColor Yellow
+    Write-Host "Removendo instalacao anterior..." -ForegroundColor Yellow
     Remove-Item -Path $NODE_DIR -Recurse -Force -ErrorAction SilentlyContinue
 }
 
@@ -49,7 +49,7 @@ try {
     # Usar WebClient para mostrar progresso
     $webClient = New-Object System.Net.WebClient
     $webClient.DownloadFile($NODE_URL, $NODE_ZIP)
-    Write-Host "Download concluído!" -ForegroundColor Green
+    Write-Host "Download concluido!" -ForegroundColor Green
 }
 catch {
     Write-Host "Erro ao baixar Node.js: $_" -ForegroundColor Red
@@ -64,13 +64,13 @@ try {
     # Descompactar usando Expand-Archive
     Expand-Archive -Path $NODE_ZIP -DestinationPath $BIN_DIR -Force
     
-    # Renomear pasta extraída para "node"
+    # Renomear pasta extraida para "node"
     $extractedFolder = Join-Path $BIN_DIR "node-v$NODE_VERSION-win-$ARCHITECTURE"
     if (Test-Path $extractedFolder) {
         Move-Item -Path $extractedFolder -Destination $NODE_DIR -Force
     }
     
-    Write-Host "Descompactação concluída!" -ForegroundColor Green
+    Write-Host "Descompactacao concluida!" -ForegroundColor Green
 }
 catch {
     Write-Host "Erro ao descompactar: $_" -ForegroundColor Red
@@ -84,9 +84,9 @@ finally {
     }
 }
 
-# Verificar instalação
+# Verificar instalacao
 Write-Host ""
-Write-Host "Verificando instalação..." -ForegroundColor Yellow
+Write-Host "Verificando instalacao..." -ForegroundColor Yellow
 
 $nodeExe = Join-Path $NODE_DIR "node.exe"
 $npmCmd = Join-Path $NODE_DIR "npm.cmd"
@@ -97,17 +97,17 @@ if ((Test-Path $nodeExe) -and (Test-Path $npmCmd)) {
     
     Write-Host ""
     Write-Host "============================================" -ForegroundColor Green
-    Write-Host "✓ Node.js instalado com sucesso!" -ForegroundColor Green
+    Write-Host "Node.js instalado com sucesso!" -ForegroundColor Green
     Write-Host "============================================" -ForegroundColor Green
     Write-Host "Node.js: $nodeVersion" -ForegroundColor Cyan
     Write-Host "npm: $npmVersion" -ForegroundColor Cyan
-    Write-Host "Localização: $NODE_DIR" -ForegroundColor Cyan
+    Write-Host "Localizacao: $NODE_DIR" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Para usar o Node.js local, execute:" -ForegroundColor Yellow
     Write-Host "  .\bin\start-server.ps1" -ForegroundColor White
     Write-Host ""
 }
 else {
-    Write-Host "Erro: Instalação falhou!" -ForegroundColor Red
+    Write-Host "Erro: Instalacao falhou!" -ForegroundColor Red
     exit 1
 }

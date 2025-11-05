@@ -4,7 +4,7 @@
 
 $ErrorActionPreference = "Stop"
 
-# Configurações
+# Configuracoes
 $BIN_DIR = $PSScriptRoot
 $NODE_DIR = Join-Path $BIN_DIR "node"
 $NODE_EXE = Join-Path $NODE_DIR "node.exe"
@@ -16,9 +16,9 @@ Write-Host "Iniciando Decap CMS Server" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Verificar se o Node.js está instalado
+# Verificar se o Node.js esta instalado
 if (-not (Test-Path $NODE_EXE)) {
-    Write-Host "Node.js não encontrado em: $NODE_DIR" -ForegroundColor Red
+    Write-Host "Node.js nao encontrado em: $NODE_DIR" -ForegroundColor Red
     Write-Host ""
     Write-Host "Execute primeiro:" -ForegroundColor Yellow
     Write-Host "  .\bin\install-node.ps1" -ForegroundColor White
@@ -35,7 +35,7 @@ if (-not (Test-Path $NODE_EXE)) {
     }
 }
 
-# Exibir versões
+# Exibir versoes
 $nodeVersion = & $NODE_EXE --version
 $npmVersion = & $NPM_CMD --version
 
@@ -43,12 +43,12 @@ Write-Host "Node.js: $nodeVersion" -ForegroundColor Green
 Write-Host "npm: $npmVersion" -ForegroundColor Green
 Write-Host ""
 
-# Verificar se o decap-server está instalado globalmente na pasta local
+# Verificar se o decap-server esta instalado globalmente na pasta local
 $NPX_CMD = Join-Path $NODE_DIR "npx.cmd"
 $DECAP_SERVER_CHECK = Join-Path $NODE_DIR "node_modules\decap-server"
 
 if (-not (Test-Path $DECAP_SERVER_CHECK)) {
-    Write-Host "Decap Server não encontrado. Instalando..." -ForegroundColor Yellow
+    Write-Host "Decap Server nao encontrado. Instalando..." -ForegroundColor Yellow
     Write-Host ""
     
     try {

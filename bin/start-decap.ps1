@@ -7,7 +7,7 @@
 
 $ErrorActionPreference = "Stop"
 
-# Configurações
+# Configuracoes
 $BIN_DIR = $PSScriptRoot
 $NODE_DIR = Join-Path $BIN_DIR "node"
 $NODE_EXE = Join-Path $NODE_DIR "node.exe"
@@ -20,9 +20,9 @@ Write-Host "  Decap CMS - Servidor Local" -ForegroundColor Cyan
 Write-Host "==================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Verificar se o Node.js está instalado
+# Verificar se o Node.js esta instalado
 if (-not (Test-Path $NODE_EXE)) {
-    Write-Host "Node.js não encontrado em: $NODE_DIR" -ForegroundColor Red
+    Write-Host "Node.js nao encontrado em: $NODE_DIR" -ForegroundColor Red
     Write-Host ""
     Write-Host "Execute primeiro:" -ForegroundColor Yellow
     Write-Host "  .\bin\install-node.ps1" -ForegroundColor White
@@ -39,14 +39,14 @@ if (-not (Test-Path $NODE_EXE)) {
     }
 }
 
-# Exibir versões
+# Exibir versoes
 Write-Host "Node.js: " -NoNewline -ForegroundColor Green
 & $NODE_EXE --version
 Write-Host "npm: " -NoNewline -ForegroundColor Green
 & $NPM_CMD --version
 Write-Host ""
 
-# Verificar e instalar dependências se necessário
+# Verificar e instalar dependencias se necessario
 $HTTP_SERVER_CHECK = Join-Path $NODE_DIR "node_modules\http-server"
 $DECAP_SERVER_CHECK = Join-Path $NODE_DIR "node_modules\decap-server"
 
@@ -79,7 +79,7 @@ Start-Sleep -Seconds 3
 Write-Host "Iniciando Decap Server na porta 8081..." -ForegroundColor Yellow
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Green
-Write-Host "✓ Servidores iniciados com sucesso!" -ForegroundColor Green
+Write-Host "Servidores iniciados com sucesso!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Acesse o CMS em: " -NoNewline -ForegroundColor Cyan
@@ -96,7 +96,7 @@ catch {
     Write-Host ""
 }
 finally {
-    # Quando o decap-server parar, parar também o http-server
+    # Quando o decap-server parar, parar tambem o http-server
     Write-Host ""
     Write-Host "Parando servidor HTTP..." -ForegroundColor Yellow
     Stop-Job -Job $httpServer -ErrorAction SilentlyContinue
