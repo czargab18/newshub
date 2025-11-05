@@ -7,7 +7,8 @@ Esta pasta contém scripts para instalar o Node.js localmente e iniciar o servid
 ```
 bin/
 ├── install-node.ps1    # Instala Node.js localmente
-├── start-server.ps1    # Inicia o servidor Decap CMS
+├── start-server.ps1    # Inicia apenas o servidor Decap CMS (porta 8081)
+├── start-decap.ps1     # Inicia HTTP Server + Decap Server (portas 8080 e 8081)
 ├── setup.ps1           # Script completo (instala + inicia)
 ├── node/               # Node.js será instalado aqui (criado automaticamente)
 └── README.md           # Este arquivo
@@ -15,9 +16,9 @@ bin/
 
 ## 🚀 Como Usar
 
-### Opção 1: Setup Completo (Recomendado)
+### Opção 1: Setup Completo (Recomendado para primeira vez)
 
-Execute este comando na raiz do projeto ou dentro da pasta `bin`:
+Execute este comando na raiz do projeto:
 
 ```powershell
 .\bin\setup.ps1
@@ -28,7 +29,29 @@ Este script irá:
 2. Instalar o Decap Server
 3. Iniciar o servidor local em `http://localhost:8081`
 
-### Opção 2: Instalação Manual
+### Opção 2: Decap CMS Completo (HTTP + Backend)
+
+Para usar o CMS com interface admin completa:
+
+```powershell
+.\bin\start-decap.ps1
+```
+
+Este script inicia:
+- **HTTP Server** (porta 8080) - Serve a interface admin
+- **Decap Server** (porta 8081) - Backend local para Git
+
+Acesse em: `http://localhost:8080/admin/`
+
+### Opção 3: Apenas Decap Server
+
+Para apenas o backend (sem servidor HTTP):
+
+```powershell
+.\bin\start-server.ps1
+```
+
+### Opção 4: Instalação Manual
 
 **1. Instalar Node.js localmente:**
 
@@ -36,10 +59,14 @@ Este script irá:
 .\bin\install-node.ps1
 ```
 
-**2. Iniciar o servidor:**
+**2. Escolher como iniciar:**
 
 ```powershell
+# Apenas Decap Server
 .\bin\start-server.ps1
+
+# Ou ambos servidores
+.\bin\start-decap.ps1
 ```
 
 ## 📋 Requisitos

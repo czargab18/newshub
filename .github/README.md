@@ -13,12 +13,17 @@ Sistema avançado de renderização de Markdown para HTML no estilo estatística
 .\bin\setup.ps1
 ```
 
-**Iniciar Servidor (após instalação):**
+**CMS Completo (HTTP + Backend):**
+```powershell
+.\bin\start-decap.ps1
+```
+Acesse em: `http://localhost:8080/admin/`
+
+**Apenas Backend:**
 ```powershell
 .\bin\start-server.ps1
 ```
-
-O servidor estará disponível em: `http://localhost:8081`
+Servidor em: `http://localhost:8081`
 
 > **Nota:** Os scripts instalam o Node.js localmente na pasta `bin/` sem afetar seu sistema.
 > 
