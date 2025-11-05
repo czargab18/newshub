@@ -1,17 +1,4 @@
-# ========================================
-# DECAP CMS - CONFIGURAÇÃO
-# ========================================
-# EDITORIAL WORKFLOW:
-# O Decap CMS gerencia o status de publicação através de 3 estados:
-# 1. Draft (Rascunho) - Artigo em construção
-# 2. In Review (Em Revisão) - Pronto para revisão
-# 3. Ready (Pronto) - Aprovado para publicação
-# ========================================
-
-# Backend local para desenvolvimento
 local_backend: true
-
-# Backend Git Gateway com Netlify Identity
 backend:
   name: git-gateway
   branch: news
@@ -24,34 +11,19 @@ backend:
     deleteMedia: Delete "{{path}}"
     openAuthoring: "{{message}}"
 
-# Modo de publicação: editorial workflow (IMPORTANTE)
 publish_mode: editorial_workflow
-
-# Configurações de mídia
 media_folder: "article/uploads"
 public_folder: "uploads"
-
-# URLs do site
-site_url: https://czargab18.github.io
-display_url: https://czargab18.github.io
-
-# Configurações gerais
+# site_url: https://czargab18.github.io/estatistica/
+# display_url: https://czargab18.github.io/estatistica/
 locale: "pt-br"
-show_preview_links: false
 search: true
-
-# Desabilitar autosave
-autosave: false
-
-# Configuração de slug
+show_preview_links: true
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "_"
 
-# ========================================
-# COLEÇÕES
-# ========================================
 collections:
   - name: "conteudo"
     label: "Conteúdo"
@@ -93,13 +65,10 @@ collections:
       - { label: "Autor", name: "author", widget: "hidden", default: "" }
       - { label: "Bio do Autor", name: "author_bio", widget: "hidden", default: "" }
       - { label: "Avatar do Autor", name: "author_avatar", widget: "hidden", default: "" }
-
-      - {
-          label: "Miniatura",
-          name: "thumbnail",
-          widget: "hidden",
-          default: { url: "", alt: "", caption: "" },
-        }
+      - { label: "Publicado", name: "published", widget: "hidden", default: false }
+      - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
+      - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
+      - { label: "Miniatura", name: "thumbnail", widget: "hidden", default: { url: "", alt: "", caption: "" } }
 
       # --- CAMPOS VISÍVEIS ---
       - { label: "Título", name: "title", widget: "string", required: true }
