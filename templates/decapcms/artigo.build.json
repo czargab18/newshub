@@ -28,16 +28,6 @@
     "caption": "Legenda que aparece abaixo da miniatura"
   },
 
-  "attachments": [
-    {
-      "_comment": "Arquivos para download. PDFs, documentos, planilhas, datasets, arquivos ZIP. Qualquer arquivo que o usuario possa baixar",
-      "name": "Nome do arquivo (ex: 'relatorio.pdf')",
-      "url": "Caminho/URL do arquivo",
-      "type": "Tipo do arquivo: 'pdf', 'docx', 'xlsx', 'zip', etc",
-      "size": "Tamanho do arquivo (ex: '2.5 MB')"
-    }
-  ],
-
   "headline": "",
   "subhead": "",
 
