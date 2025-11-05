@@ -5,13 +5,20 @@
 /* ============================================
    CUSTOMIZAÇÃO DO TÍTULO "COLLECTIONS" NA SIDEBAR
    ============================================ */
+/* ============================================
+   CUSTOMIZAÇÃO DO TÍTULO "COLLECTIONS" NA SIDEBAR
+   ============================================ */
 [class*="SidebarHeading"] {
-  content: "";
+  font-size: 0 !important;
+    line-height: 0 !important;
 }
 
 [class*="SidebarHeading"]::before {
   content: 'Coleções' !important;
+  font-size: 1.5rem !important;
+  line-height: 1.5 !important;
   display: block !important;
+  font-weight: 600 !important;
 }
 /* ============================================
    CUSTOMIZAÇÃO DA LOGO (OPCIONAL)
