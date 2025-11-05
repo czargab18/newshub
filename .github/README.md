@@ -8,29 +8,19 @@ Sistema avançado de renderização de Markdown para HTML no estilo estatística
 
 ### 📝 Gerenciar Conteúdo com Decap CMS
 
-**⭐ Comando Único (Recomendado):**
+**⭐ Um único comando:**
 ```powershell
 .\bin\start.ps1
 ```
-Este script faz tudo automaticamente! Apenas execute e use.
 
-Acesse em: `http://localhost:8080/admin/`
+Este script faz tudo automaticamente:
+- ✅ Instala Node.js se necessário
+- ✅ Configura dependências
+- ✅ Inicia os servidores
 
----
+**Acesse:** `http://localhost:8080/admin/`
 
-**Outras opções:**
-
-**CMS Completo (HTTP + Backend):**
-```powershell
-.\bin\start-decap.ps1
-```
-
-**Apenas Backend:**
-```powershell
-.\bin\start-server.ps1
-```
-
-> **Nota:** Os scripts instalam o Node.js localmente na pasta `bin/` sem afetar seu sistema.
+> **Nota:** O script instala o Node.js localmente na pasta `bin/` sem afetar seu sistema.
 > 
 > **Documentação completa:** Veja `bin/README.md` para mais detalhes e solução de problemas.
 
