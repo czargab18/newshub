@@ -1,3 +1,5 @@
+local_backend: true
+
 # ========================================
 # DECAP CMS - CONFIGURAÇÃO
 # ========================================
@@ -32,17 +34,15 @@ backend:
 # O Netlify Identity gerencia automaticamente a autenticação
 # base_url e auth_endpoint são desnecessários com git-gateway padrão
 
-# Modo de publicação: editorial workflow
 publish_mode: editorial_workflow
 media_folder: "article/uploads"
 public_folder: "uploads"
-
-
-local_backend: true
 show_preview_links: true
 editor:
   preview: true
   preview_path: "article/{{slug}}"
+
+
 
 collections:
   - name: "conteudo"
