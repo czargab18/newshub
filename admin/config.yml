@@ -40,24 +40,18 @@ display_url: https://czargab18.github.io
 #   src: /images/logo.svg
 #   show_in_header: true
 
-# Configurações gerais
 locale: 'pt-br'
 show_preview_links: true
 search: true
 
-# Configuração de slug
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "_"
 
-# Configurações do editor
 editor:
   preview: true
 
-# ========================================
-# COLEÇÕES
-# ========================================
 collections:
   - name: "conteudo"
     label: "Conteúdo"
@@ -85,15 +79,10 @@ collections:
     
     # Grupos de visualização
     view_groups:
-      - label: "Ano"
-        field: date_format
-        pattern: \d{4}
-      - label: "Tipo"
-        field: type
-      - label: "Categoria"
-        field: category
-      - label: "Idioma"
-        field: language
+      - { label: "Ano", field: date_format, pattern: \d{4} }
+      - { label: "Tipo", field: type }
+      - { label: "Categoria", field: category }
+      - { label: "Idioma", field: language }
     
     # Editor com preview
     editor:
