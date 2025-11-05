@@ -3,6 +3,17 @@
    ============================================ */
 
 /* ============================================
+   CUSTOMIZAÇÃO DO TÍTULO "COLLECTIONS" NA SIDEBAR
+   ============================================ */
+[class*="SidebarHeading"] {
+  content: "";
+}
+
+[class*="SidebarHeading"]::before {
+  content: 'Coleções' !important;
+  display: block !important;
+}
+/* ============================================
    CUSTOMIZAÇÃO DA LOGO (OPCIONAL)
    ============================================
    Para usar uma logo personalizada em vez do emoji:

@@ -26,7 +26,7 @@ slug:
 
 collections:
   - name: "conteudo"
-    label: "Conteúdo"
+    label: "Publicações"
     label_singular: "Artigo"
     description: "Gerenciamento de artigos, notícias e conteúdos do site"
     folder: "article"
@@ -41,11 +41,9 @@ collections:
     sortable_fields: ["date_format", "title", "type", "commit_date", "commit_author"]
 
     view_filters:
-      - { label: "Notícias", field: type, pattern: "news" }
-      - { label: "Artigos", field: type, pattern: "article" }
-      - { label: "Eventos", field: type, pattern: "event" }
-      - { label: "Português", field: language, pattern: "pt-BR" }
-      - { label: "Inglês", field: language, pattern: "en" }
+      - { label: "UnB", field: type, pattern: "unb" }
+      - { label: "EST", field: type, pattern: "est" }
+      - { label: "IE", field: type, pattern: "ie" }
 
     view_groups:
       - { label: "Ano", field: date_format, pattern: '\d{4}' }
@@ -59,61 +57,3 @@ collections:
     fields:
       # --- CAMPOS OCULTOS ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
-      - { label: "Ano", name: "ano", widget: "hidden", default: "" }
-      - { label: "Mês", name: "month", widget: "hidden", default: "" }
-      - { label: "Slug", name: "slug", widget: "hidden", default: "" }
-      - { label: "Autor", name: "author", widget: "hidden", default: "" }
-      - { label: "Bio do Autor", name: "author_bio", widget: "hidden", default: "" }
-      - { label: "Avatar do Autor", name: "author_avatar", widget: "hidden", default: "" }
-      - { label: "Publicado", name: "published", widget: "hidden", default: false }
-      - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
-      - { label: "Rascunho", name: "draft", widget: "hidden", default: false }
-      - { label: "Miniatura", name: "thumbnail", widget: "hidden", default: { url: "", alt: "", caption: "" } }
-
-      # --- CAMPOS VISÍVEIS ---
-      - { label: "Título", name: "title", widget: "string", required: true }
-      - { label: "Descrição", name: "description", widget: "text", required: true }
-      - {
-          label: "Tipo",
-          name: "type",
-          widget: "select",
-          required: true,
-          options:
-            [
-              { label: "Notícia", value: "news" },
-              { label: "Artigo", value: "article" },
-              { label: "Evento", value: "event" },
-            ],
-        }
-      - {
-          label: "Data de Formatação",
-          name: "date_format",
-          widget: "datetime",
-          required: true,
-          date_format: "DD/MM/YYYY",
-          time_format: "HH:mm",
-        }
-      - {
-          label: "Categoria",
-          name: "category",
-          widget: "select",
-          required: true,
-          options:
-            [
-              { label: "Tecnologia", value: "technology" },
-              { label: "Ciência", value: "science" },
-              { label: "Negócios", value: "business" },
-              { label: "Esportes", value: "sports" },
-              { label: "Entretenimento", value: "entertainment" },
-            ],
-        }
-      - {
-          label: "Idioma",
-          name: "language",
-          widget: "select",
-          required: true,
-          default: "pt-BR",
-          options: [{ label: "Português (Brasil)", value: "pt-BR" }, { label: "Inglês", value: "en" }],
-        }
-      - { label: "Tags", name: "tags", widget: "list", required: false, allow_add: true }
-      - { label: "Corpo do Conteúdo", name: "body", widget: "markdown", required: true }
