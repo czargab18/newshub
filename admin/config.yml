@@ -32,24 +32,23 @@ collections:
     folder: "article"
     create: true
     delete: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}_{{slug}}"
     preview_path: "article/{{slug}}"
     extension: "json"
     format: "json"
-    identifier_field: "title"
-    summary: "{{title}} - {{type}} - {{date_format}}"
-    sortable_fields: ["date_format", "title", "type", "commit_date", "commit_author"]
+    identifier_field: "headline"
+    summary: "{{headline}} - {{category}} - {{date_updated}}"
+    sortable_fields: ["date_updated", "headline", "category", "commit_date", "commit_author"]
 
     view_filters:
-      - { label: "UnB", field: type, pattern: "unb" }
-      - { label: "EST", field: type, pattern: "est" }
-      - { label: "IE", field: type, pattern: "ie" }
+      - { label: "Graduação", field: public, pattern: "GRADUAÇÃO" }
+      - { label: "Pós-Graduação", field: public, pattern: "PÓS-GRADUAÇÃO" }
+      - { label: "Comunidade Externa", field: public, pattern: "COMUNIDADE EXTERNA" }
 
     view_groups:
-      - { label: "Ano", field: date_format, pattern: '\d{4}' }
-      - { label: "Tipo", field: type }
+      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
       - { label: "Categoria", field: category }
-      - { label: "Idioma", field: language }
+      - { label: "Idioma", field: lang }
 
     editor:
       preview: true
