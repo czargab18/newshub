@@ -4,13 +4,20 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["**/*.css", "**/*.yml", "**/*.html", "**/*.bib","**/*.qmd"] 
+    paths:
+      [
+        "**/assets/**/*.css",
+        "**/assets/**/*.js",
+        "**/admin/**/*.html",
+        "**/admin/**/*.yml",
+        "**/auth/**/*.js",
+        "**/auth/**/*.json",
+      ]
 
 permissions:
   contents: write
   pull-requests: read
   id-token: write
-
 
 jobs:
   dispatch:
@@ -28,10 +35,8 @@ jobs:
           repository: ${{ env.USERNAME }}/estatistica
           token: ${{ env.TOKEN }}
           event-type: atualizar-newshub
-      
+
       - name: Mensagem sucesso
         run: echo "Disparo realizado com sucesso!"
-
-
 # referências:
 # - https://medium.com/@0xWerz/how-to-automatically-update-git-submodules-using-github-actions-d71c8126e82e
