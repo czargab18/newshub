@@ -93,14 +93,12 @@ collections:
       - { label: "Autor", name: "author", widget: "hidden", default: "" }
       - { label: "Bio do Autor", name: "author_bio", widget: "hidden", default: "" }
       - { label: "Avatar do Autor", name: "author_avatar", widget: "hidden", default: "" }
-      - { label: "Publicado", name: "published", widget: "hidden", default: false }
-      - { label: "Em Destaque", name: "featured", widget: "hidden", default: false }
-      - { label: "Rascunho", name: "draft", widget: "hidden", default: true }
+
       - {
           label: "Miniatura",
           name: "thumbnail",
           widget: "hidden",
-          default: { url: "", alt: "", width: 600, height: 400, caption: "" },
+          default: { url: "", alt: "", caption: "" },
         }
 
       # --- CAMPOS VISÍVEIS ---
