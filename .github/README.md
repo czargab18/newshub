@@ -10,17 +10,19 @@ Sistema avançado de renderização de Markdown para HTML no estilo estatística
 
 **Setup Automático (Primeira vez):**
 ```powershell
-.\setup-cms.ps1
+.\bin\setup.ps1
 ```
 
 **Iniciar Servidor (após instalação):**
 ```powershell
-.\start-cms.ps1
+.\bin\start-server.ps1
 ```
 
 O servidor estará disponível em: `http://localhost:8081`
 
 > **Nota:** Os scripts instalam o Node.js localmente na pasta `bin/` sem afetar seu sistema.
+> 
+> **Documentação completa:** Veja `bin/README.md` para mais detalhes e solução de problemas.
 
 ---
 
