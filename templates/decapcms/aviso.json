@@ -11,7 +11,7 @@
   "lang": "uma lista de opções de idioma, como: 'portugues, ingles, espanhol'.",
 
   "thumbnail": {
-    "_comment": "Imagem pequena usada em: Listagens de artigos, Cards de preview, Compartilhamento em redes sociais, Normalmente 300x200px ou similar",
+    "_comment": "Imagem de listagem do artigo adicionada por um script a depender de 'category",
     "url": "Caminho/URL da imagem miniatura (pequena)",
     "alt": "Texto alternativo para acessibilidade",
     "caption": "Legenda que aparece abaixo da miniatura"
@@ -20,18 +20,11 @@
   "headline": "",
   "subhead": "",
   "category": [
-    "Uma única categoria que será exibida na página do artigo: 'QUICK READ','EST STATEMENT','PHOTOS','PRESS RELEASE','RELEASE', 'UPDATE'. "
+    "opção para este modelo é 'EST STATEMENT'",
+    "_comment: Uma única categoria que será exibida na página do artigo: 'QUICK READ','EST STATEMENT','PHOTOS','PRESS RELEASE','RELEASE', 'UPDATE'. "
   ],
+  "public": ["GRADUAÇÃO", "PÓS-GRADUAÇÃO", "COMUNIDADE EXTERNA"],
   "body": "",
-  "references": [
-    {
-      "type": ["AVISO", "COMUNICADO", "EVENTO", "OPORTUNIDADE", "PRAZO", "ALTERAÇÃO", "CANCELAMENTO", "NOTICE", "ANNOUNCEMENT"],
-      "title": "",
-      "authors": [],
-      "year": "",
-      "url": "",
-      "doi": ""
-    }
-  ],
-  "related_articles": []
+  "related_articles": [],
+  "references": ["link do artigo de referencia"]
 }
