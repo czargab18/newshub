@@ -64,7 +64,7 @@ collections:
           label: "Início",
           name: "date_start",
           widget: "datetime",
-          format: "YYYY-MM-DD HH:mm",
+          format: "DD-MM-YYYY HH:mm",
           default: "",
           description: "Data e hora de início da exibição (deixe vazio para exibir imediatamente)",
         }
@@ -72,7 +72,7 @@ collections:
           label: "Término",
           name: "date_end",
           widget: "datetime",
-          format: "YYYY-MM-DD HH:mm",
+          format: "DD-MM-YYYY HH:mm",
           default: "",
           description: "Data e hora de término da exibição (deixe vazio para exibir indefinidamente)",
         }
