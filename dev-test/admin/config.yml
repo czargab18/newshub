@@ -58,7 +58,7 @@ collections:
       preview: true
 
     fields:
-      - { label: "Tipo", name: "tipo", widget: "hidden", default: "fita-aviso" }
+      - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
       - { label: "ID", name: "id", widget: "hidden", default: "" }
       - {
           label: "Início",
@@ -94,10 +94,10 @@ collections:
           field: { label: "Página", name: "pagina", widget: "string" },
         }
       - {
-          label: "Atualização",
-          name: "date_start",
+          label: "Data de Criação",
+          name: "date_updated",
           widget: "datetime",
           format: "DD-MM-YYYY HH:mm",
           default: "",
-          description: "Data e hora da publicação do artigo",
+          description: "",
         }
