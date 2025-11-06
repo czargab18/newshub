@@ -203,3 +203,667 @@ collections:
           required: false,
           hint: "Links de referência ou fontes",
         }
+
+  # --- COLEÇÃO: EDUCAÇÃO ---
+  - name: "educacao"
+    label: "Educação"
+    label_singular: "Conteúdo Educacional"
+    description: "Materiais educacionais, cursos, tutoriais e recursos didáticos"
+    folder: "article/educacao"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
+    preview_path: "educacao/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titulo"
+    summary: "{{titulo}} - {{tipo_conteudo}} - {{date_updated}}"
+    sortable_fields: ["date_updated", "titulo", "tipo_conteudo", "nivel", "commit_date"]
+
+    view_filters:
+      - { label: "Graduação", field: nivel, pattern: "graduacao" }
+      - { label: "Pós-Graduação", field: nivel, pattern: "pos-graduacao" }
+      - { label: "Ensino Médio", field: nivel, pattern: "ensino-medio" }
+      - { label: "Educação Básica", field: nivel, pattern: "educacao-basica" }
+
+    view_groups:
+      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
+      - { label: "Tipo", field: tipo_conteudo }
+      - { label: "Nível", field: nivel }
+
+    editor:
+      preview: true
+
+    fields:
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Data de Criação",
+          name: "date_updated",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Título",
+          name: "titulo",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Título do conteúdo educacional",
+        }
+      - {
+          label: "Descrição",
+          name: "descricao",
+          widget: "text",
+          default: "",
+          required: true,
+          hint: "Descrição breve do conteúdo (150-200 caracteres)",
+        }
+      - {
+          label: "Tipo de Conteúdo",
+          name: "tipo_conteudo",
+          widget: "select",
+          default: "tutorial",
+          options: ["tutorial", "curso", "apostila", "video-aula", "exercicio", "material-apoio", "webinar"],
+          required: true,
+        }
+      - {
+          label: "Nível Educacional",
+          name: "nivel",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["educacao-basica", "ensino-medio", "graduacao", "pos-graduacao", "extensao"],
+          required: true,
+          hint: "Selecione o(s) nível(is) educacional(is)",
+        }
+      - {
+          label: "Área do Conhecimento",
+          name: "area",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["estatistica", "matematica", "geografia", "economia", "demografia", "computacao", "ciencias-sociais"],
+          required: false,
+        }
+      - {
+          label: "Duração Estimada",
+          name: "duracao",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Ex: 2 horas, 5 semanas, 30 minutos",
+        }
+      - {
+          label: "Carga Horária",
+          name: "carga_horaria",
+          widget: "number",
+          default: 0,
+          required: false,
+          hint: "Carga horária em horas",
+        }
+      - {
+          label: "Idioma",
+          name: "lang",
+          widget: "select",
+          default: "pt-BR",
+          options: ["pt-BR", "en-US", "es-ES"],
+          required: true,
+        }
+      - label: "Miniatura"
+        name: "thumbnail"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "URL da Imagem", name: "url", widget: "image", default: "", required: false }
+          - { label: "Texto Alternativo", name: "alt", widget: "string", default: "", required: false }
+          - { label: "Legenda", name: "caption", widget: "string", default: "", required: false }
+      - {
+          label: "Conteúdo",
+          name: "body",
+          widget: "markdown",
+          default: "",
+          required: true,
+          hint: "Conteúdo do material educacional",
+        }
+      - {
+          label: "Objetivos de Aprendizagem",
+          name: "objetivos",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Liste os objetivos de aprendizagem",
+        }
+      - {
+          label: "Pré-requisitos",
+          name: "prerequisitos",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Conhecimentos prévios necessários",
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          default: [],
+          required: false,
+        }
+      - {
+          label: "Recursos Complementares",
+          name: "recursos",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Links para materiais complementares",
+        }
+
+  # --- COLEÇÃO: SENTINDO RIBBON ---
+  - name: "sentindo_ribbon"
+    label: "Sentindo Ribbon"
+    label_singular: "Ribbon"
+    description: "Conteúdo destacado no formato ribbon/banner para destaque na página inicial"
+    folder: "article/ribbon"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
+    preview_path: "ribbon/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titulo"
+    summary: "{{titulo}} - {{tipo}} - {{date_updated}}"
+    sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
+
+    view_filters:
+      - { label: "Ativo", field: ativo, pattern: true }
+      - { label: "Inativo", field: ativo, pattern: false }
+      - { label: "Alta Prioridade", field: prioridade, pattern: "alta" }
+
+    view_groups:
+      - { label: "Tipo", field: tipo }
+      - { label: "Prioridade", field: prioridade }
+      - { label: "Status", field: ativo }
+
+    editor:
+      preview: true
+
+    fields:
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Data de Criação",
+          name: "date_updated",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Título",
+          name: "titulo",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Título do ribbon/banner",
+        }
+      - {
+          label: "Subtítulo",
+          name: "subtitulo",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Texto complementar ou linha fina",
+        }
+      - {
+          label: "Tipo de Ribbon",
+          name: "tipo",
+          widget: "select",
+          default: "destaque",
+          options: ["destaque", "alerta", "informacao", "promocao", "evento", "urgente"],
+          required: true,
+        }
+      - {
+          label: "Prioridade",
+          name: "prioridade",
+          widget: "select",
+          default: "media",
+          options: ["baixa", "media", "alta", "urgente"],
+          required: true,
+          hint: "Define a ordem de exibição",
+        }
+      - {
+          label: "Ativo",
+          name: "ativo",
+          widget: "boolean",
+          default: true,
+          required: true,
+          hint: "Marque para exibir o ribbon",
+        }
+      - {
+          label: "Data de Início",
+          name: "data_inicio",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: false,
+          hint: "Data de início da exibição",
+        }
+      - {
+          label: "Data de Término",
+          name: "data_fim",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: false,
+          hint: "Data de término da exibição",
+        }
+      - {
+          label: "Link de Destino",
+          name: "link",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "URL para onde o ribbon deve direcionar",
+        }
+      - {
+          label: "Texto do Botão",
+          name: "texto_botao",
+          widget: "string",
+          default: "Saiba mais",
+          required: false,
+        }
+      - {
+          label: "Cor de Fundo",
+          name: "cor_fundo",
+          widget: "select",
+          default: "azul",
+          options: ["azul", "verde", "amarelo", "vermelho", "laranja", "roxo", "cinza"],
+          required: false,
+        }
+      - label: "Imagem de Fundo"
+        name: "imagem_fundo"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "URL da Imagem", name: "url", widget: "image", default: "", required: false }
+          - { label: "Texto Alternativo", name: "alt", widget: "string", default: "", required: false }
+      - {
+          label: "Mensagem",
+          name: "mensagem",
+          widget: "text",
+          default: "",
+          required: false,
+          hint: "Texto curto da mensagem (até 200 caracteres)",
+        }
+      - {
+          label: "Público-Alvo",
+          name: "publico",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["GRADUAÇÃO", "PÓS-GRADUAÇÃO", "COMUNIDADE EXTERNA", "TODOS"],
+          required: false,
+        }
+
+  # --- COLEÇÃO: NOTÍCIAS ---
+  - name: "noticias"
+    label: "Notícias"
+    label_singular: "Notícia"
+    description: "Notícias institucionais, comunicados e informações gerais"
+    folder: "article/noticias"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
+    preview_path: "noticias/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titulo"
+    summary: "{{titulo}} - {{categoria}} - {{date_updated}}"
+    sortable_fields: ["date_updated", "titulo", "categoria", "urgencia", "commit_date"]
+
+    view_filters:
+      - { label: "Urgente", field: urgencia, pattern: "alta" }
+      - { label: "Publicado", field: publicado, pattern: true }
+      - { label: "Institucional", field: categoria, pattern: "institucional" }
+
+    view_groups:
+      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
+      - { label: "Categoria", field: categoria }
+      - { label: "Urgência", field: urgencia }
+
+    editor:
+      preview: true
+
+    fields:
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Data de Publicação",
+          name: "date_updated",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Título",
+          name: "titulo",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Título da notícia",
+        }
+      - {
+          label: "Subtítulo",
+          name: "subtitulo",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Linha fina ou subtítulo",
+        }
+      - {
+          label: "Chamada/Resumo",
+          name: "chamada",
+          widget: "text",
+          default: "",
+          required: true,
+          hint: "Resumo da notícia (100-150 caracteres)",
+        }
+      - {
+          label: "Categoria",
+          name: "categoria",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["institucional", "academica", "pesquisa", "eventos", "comunicado", "destaque", "servico"],
+          required: true,
+        }
+      - {
+          label: "Urgência",
+          name: "urgencia",
+          widget: "select",
+          default: "normal",
+          options: ["baixa", "normal", "alta", "urgente"],
+          required: true,
+        }
+      - {
+          label: "Publicado",
+          name: "publicado",
+          widget: "boolean",
+          default: false,
+          required: true,
+        }
+      - {
+          label: "Destaque na Home",
+          name: "destaque_home",
+          widget: "boolean",
+          default: false,
+          required: false,
+        }
+      - {
+          label: "Autor",
+          name: "autor",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Nome do autor ou assessoria",
+        }
+      - label: "Imagem Principal"
+        name: "imagem_principal"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "URL da Imagem", name: "url", widget: "image", default: "", required: false }
+          - { label: "Texto Alternativo", name: "alt", widget: "string", default: "", required: false }
+          - { label: "Legenda", name: "caption", widget: "string", default: "", required: false }
+          - { label: "Crédito", name: "credito", widget: "string", default: "", required: false }
+      - {
+          label: "Corpo da Notícia",
+          name: "body",
+          widget: "markdown",
+          default: "",
+          required: true,
+        }
+      - {
+          label: "Fonte",
+          name: "fonte",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Fonte da notícia",
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          default: [],
+          required: false,
+        }
+      - {
+          label: "Público-Alvo",
+          name: "publico",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["GRADUAÇÃO", "PÓS-GRADUAÇÃO", "COMUNIDADE EXTERNA", "TODOS"],
+          required: false,
+        }
+      - {
+          label: "Links Relacionados",
+          name: "links_relacionados",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "URLs de notícias ou conteúdos relacionados",
+        }
+
+  # --- COLEÇÃO: EDITAIS ---
+  - name: "editais"
+    label: "Editais"
+    label_singular: "Edital"
+    description: "Editais, avisos, chamadas públicas e processos seletivos"
+    folder: "article/editais"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
+    preview_path: "editais/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titulo"
+    summary: "{{titulo}} - {{tipo}} - {{status}}"
+    sortable_fields: ["date_updated", "titulo", "tipo", "data_encerramento", "status", "commit_date"]
+
+    view_filters:
+      - { label: "Aberto", field: status, pattern: "aberto" }
+      - { label: "Encerrado", field: status, pattern: "encerrado" }
+      - { label: "Concurso", field: tipo, pattern: "concurso" }
+      - { label: "Seleção", field: tipo, pattern: "selecao" }
+
+    view_groups:
+      - { label: "Tipo", field: tipo }
+      - { label: "Status", field: status }
+      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
+
+    editor:
+      preview: true
+
+    fields:
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Data de Publicação",
+          name: "date_updated",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Número do Edital",
+          name: "numero_edital",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Ex: 001/2025, EDITAL-2025-01",
+        }
+      - {
+          label: "Título",
+          name: "titulo",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Título do edital",
+        }
+      - {
+          label: "Tipo",
+          name: "tipo",
+          widget: "select",
+          default: "selecao",
+          options: ["concurso", "selecao", "chamada-publica", "credenciamento", "licitacao", "pregao", "processo-seletivo"],
+          required: true,
+        }
+      - {
+          label: "Status",
+          name: "status",
+          widget: "select",
+          default: "aberto",
+          options: ["previsto", "aberto", "em-andamento", "suspenso", "encerrado", "cancelado", "homologado"],
+          required: true,
+        }
+      - {
+          label: "Data de Abertura",
+          name: "data_abertura",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Data de Encerramento",
+          name: "data_encerramento",
+          widget: "datetime",
+          default: "",
+          date_format: "DD/MM/YYYY",
+          time_format: "HH:mm",
+          format: "YYYY-MM-DD HH:mm:ss",
+          required: true,
+        }
+      - {
+          label: "Prazo de Inscrição",
+          name: "prazo_inscricao",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Ex: até 15/12/2025 às 18h",
+        }
+      - {
+          label: "Objeto",
+          name: "objeto",
+          widget: "text",
+          default: "",
+          required: true,
+          hint: "Descrição do objeto do edital",
+        }
+      - {
+          label: "Número de Vagas",
+          name: "vagas",
+          widget: "number",
+          default: 0,
+          required: false,
+          hint: "Total de vagas disponíveis",
+        }
+      - {
+          label: "Valor/Remuneração",
+          name: "valor",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Ex: R$ 5.000,00",
+        }
+      - {
+          label: "Órgão/Instituição",
+          name: "orgao",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Nome do órgão responsável",
+        }
+      - {
+          label: "Descrição",
+          name: "descricao",
+          widget: "markdown",
+          default: "",
+          required: true,
+          hint: "Descrição completa do edital",
+        }
+      - {
+          label: "Requisitos",
+          name: "requisitos",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Liste os requisitos para participação",
+        }
+      - label: "Documento do Edital"
+        name: "documento"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "URL do Arquivo", name: "url", widget: "file", default: "", required: false }
+          - { label: "Nome do Arquivo", name: "nome", widget: "string", default: "", required: false }
+          - { label: "Tamanho", name: "tamanho", widget: "string", default: "", required: false, hint: "Ex: 2.5MB" }
+      - {
+          label: "Anexos Adicionais",
+          name: "anexos",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "URLs de documentos complementares",
+        }
+      - {
+          label: "Link de Inscrição",
+          name: "link_inscricao",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "URL para inscrição online",
+        }
+      - {
+          label: "Contato",
+          name: "contato",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Email ou telefone para informações",
+        }
+      - {
+          label: "Observações",
+          name: "observacoes",
+          widget: "text",
+          default: "",
+          required: false,
+          hint: "Informações adicionais relevantes",
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          default: [],
+          required: false,
+        }

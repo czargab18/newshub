@@ -1,0 +1,32 @@
+{
+  "id": "",
+  "date_updated": "2025-11-06 00:00:00",
+  "numero_edital": "001/2025",
+  "titulo": "Processo Seletivo para Bolsistas de Iniciação Científica",
+  "tipo": "processo-seletivo",
+  "status": "aberto",
+  "data_abertura": "2025-11-01 09:00:00",
+  "data_encerramento": "2025-11-30 18:00:00",
+  "prazo_inscricao": "até 30/11/2025 às 18h",
+  "objeto": "Seleção de estudantes de graduação para atuarem como bolsistas de iniciação científica em projetos de pesquisa do Departamento de Estatística.",
+  "vagas": 10,
+  "valor": "R$ 400,00/mês",
+  "orgao": "Departamento de Estatística - UnB",
+  "descricao": "# Edital de Processo Seletivo\n\n## Objeto\nSeleção de bolsistas para projetos de pesquisa.\n\n## Requisitos\n- Estar regularmente matriculado em curso de graduação\n- Ter cursado pelo menos 4 semestres\n- Coeficiente de rendimento mínimo: 3.0\n\n## Documentação Necessária\n- Histórico escolar\n- Carta de motivação\n- Currículo Lattes\n\n## Processo Seletivo\n1. Análise de documentação\n2. Entrevista\n3. Resultado final",
+  "requisitos": [
+    "Estar regularmente matriculado",
+    "Mínimo de 4 semestres cursados",
+    "CR igual ou superior a 3.0",
+    "Disponibilidade de 20h semanais"
+  ],
+  "documento": {
+    "url": "",
+    "nome": "edital_001_2025.pdf",
+    "tamanho": ""
+  },
+  "anexos": [],
+  "link_inscricao": "https://inscricoes.unb.br/edital001-2025",
+  "contato": "estatistica@unb.br",
+  "observacoes": "Resultado será divulgado no dia 15/12/2025 no site do departamento.",
+  "tags": ["bolsa", "iniciacao-cientifica", "pesquisa"]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "",
+  "date_updated": "2025-11-06 00:00:00",
+  "titulo": "Introdução à Estatística Descritiva",
+  "descricao": "Tutorial completo sobre conceitos básicos de estatística descritiva, incluindo medidas de tendência central e dispersão.",
+  "tipo_conteudo": "tutorial",
+  "nivel": ["graduacao"],
+  "area": ["estatistica"],
+  "duracao": "2 horas",
+  "carga_horaria": 2,
+  "lang": "pt-BR",
+  "thumbnail": {
+    "url": "",
+    "alt": "",
+    "caption": ""
+  },
+  "body": "# Introdução à Estatística Descritiva\n\nEste tutorial apresenta os conceitos fundamentais de estatística descritiva.\n\n## Medidas de Tendência Central\n- Média\n- Mediana\n- Moda\n\n## Medidas de Dispersão\n- Variância\n- Desvio Padrão\n- Amplitude",
+  "objetivos": [
+    "Compreender conceitos básicos de estatística",
+    "Calcular medidas de tendência central",
+    "Interpretar medidas de dispersão"
+  ],
+  "prerequisitos": [
+    "Matemática básica",
+    "Noções de conjuntos"
+  ],
+  "tags": ["estatistica", "tutorial", "basico"],
+  "recursos": []
+}
