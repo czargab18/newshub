@@ -61,14 +61,6 @@ collections:
       - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
       - { label: "ID", name: "id", widget: "hidden", default: "" }
       - {
-          label: "Última atualização",
-          name: "date_updated",
-          widget: "datetime",
-          format: "YYYY-MM-DD HH:mm",
-          default: "",
-          description: "Data e hora da última atualização da faixa",
-        }
-      - {
           label: "Início",
           name: "date_start",
           widget: "datetime",
@@ -91,20 +83,6 @@ collections:
           widget: "text",
           default: "",
           description: "Texto principal exibido na faixa",
-        }
-      - {
-          label: "Texto do botão",
-          name: "texto_botao",
-          widget: "string",
-          default: "",
-          description: "Texto do botão de ação, se houver",
-        }
-      - {
-          label: "Link do botão",
-          name: "link",
-          widget: "string",
-          default: "",
-          description: "URL que será aberta ao clicar no botão (use caminho relativo ou URL completa)",
         }
       - {
           label: "Páginas",
