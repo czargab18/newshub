@@ -58,59 +58,60 @@ collections:
       preview: true
 
     fields:
-      - label: "Tipo"
-        name: "tipo"
-        widget: "hidden"
-        default: "section_ribbon"
-      - label: "ID"
-        name: "id"
-        widget: "hidden"
-        default: ""
-      - label: "Última atualização"
-        name: "date_updated"
-        widget: "datetime"
-        format: "YYYY-MM-DD HH:mm"
-        default: ""
-        description: "Data e hora da última atualização da faixa"
-      - label: "Início (opcional)"
-        name: "date_start"
-        widget: "datetime"
-        format: "YYYY-MM-DD HH:mm"
-        default: ""
-        description: "Data e hora de início da exibição (deixe vazio para exibir imediatamente)"
-      - label: "Término (opcional)"
-        name: "date_end"
-        widget: "datetime"
-        format: "YYYY-MM-DD HH:mm"
-        default: ""
-        description: "Data e hora de término da exibição (deixe vazio para exibir indefinidamente)"
-      - label: "Ativo"
-        name: "ativo"
-        widget: "boolean"
-        default: true
-        description: "Marque para exibir a faixa"
-      - label: "Mensagem"
-        name: "mensagem"
-        widget: "text"
-        default: ""
-        description: "Texto principal exibido na faixa"
-      - label: "Texto do botão (opcional)"
-        name: "texto_botao"
-        widget: "string"
-        default: ""
-        description: "Texto do botão de ação, se houver"
-      - label: "Link do botão (opcional)"
-        name: "link"
-        widget: "string"
-        default: ""
-        description: "URL que será aberta ao clicar no botão (use caminho relativo ou URL completa)"
-      - label: "Páginas"
-        name: "paginas"
-        widget: "list"
-        default: []
-        description: "Lista de páginas onde a faixa será exibida (deixe vazia para todas)"
-        collapsed: true
-        field:
-          label: "Página"
-          name: "pagina"
-          widget: "string"
+      - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Última atualização",
+          name: "date_updated",
+          widget: "datetime",
+          format: "YYYY-MM-DD HH:mm",
+          default: "",
+          description: "Data e hora da última atualização da faixa",
+        }
+      - {
+          label: "Início",
+          name: "date_start",
+          widget: "datetime",
+          format: "YYYY-MM-DD HH:mm",
+          default: "",
+          description: "Data e hora de início da exibição (deixe vazio para exibir imediatamente)",
+        }
+      - {
+          label: "Término",
+          name: "date_end",
+          widget: "datetime",
+          format: "YYYY-MM-DD HH:mm",
+          default: "",
+          description: "Data e hora de término da exibição (deixe vazio para exibir indefinidamente)",
+        }
+      - { label: "Ativo", name: "ativo", widget: "boolean", default: true, description: "Marque para exibir a faixa" }
+      - {
+          label: "Mensagem",
+          name: "mensagem",
+          widget: "text",
+          default: "",
+          description: "Texto principal exibido na faixa",
+        }
+      - {
+          label: "Texto do botão",
+          name: "texto_botao",
+          widget: "string",
+          default: "",
+          description: "Texto do botão de ação, se houver",
+        }
+      - {
+          label: "Link do botão",
+          name: "link",
+          widget: "string",
+          default: "",
+          description: "URL que será aberta ao clicar no botão (use caminho relativo ou URL completa)",
+        }
+      - {
+          label: "Páginas",
+          name: "paginas",
+          widget: "list",
+          default: [],
+          description: "Lista de páginas onde a faixa será exibida (deixe vazia para todas)",
+          collapsed: true,
+          field: { label: "Página", name: "pagina", widget: "string" },
+        }
