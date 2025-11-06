@@ -13,8 +13,10 @@ backend:
     openAuthoring: "{{message}}"
 
 publish_mode: editorial_workflow
+
 media_folder: "article/uploads"
 public_folder: "uploads"
+
 # site_url: https://czargab18.github.io/estatistica/
 # display_url: https://czargab18.github.io/estatistica/
 locale: "pt-br"
@@ -33,7 +35,7 @@ collections:
     folder: "article"
     create: true
     delete: true
-    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}_{{category}}"
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
     preview_path: "article/{{slug}}"
     extension: "json"
     format: "json"
@@ -133,6 +135,15 @@ collections:
           default: "",
           required: true,
           hint: "Título do artigo/notícia",
+        }
+      - {
+          label: "Slug (URL amigável)",
+          name: "slug",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Será gerado automaticamente a partir do título. Ex: meu-artigo-sobre-estatistica",
+          pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "Apenas letras minúsculas, números e hífens"],
         }
       - {
           label: "Subtítulo",
