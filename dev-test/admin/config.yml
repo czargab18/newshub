@@ -41,7 +41,7 @@ collections:
     extension: "json"
     format: "json"
     identifier_field: "mensagem"
-    summary: "{{mensagem}} {{date_updated}}"
+    summary: "{{mensagem}} - {{date_updated}}"
     sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
 
     view_filters:
@@ -83,6 +83,7 @@ collections:
           widget: "text",
           default: "",
           description: "Texto principal exibido na faixa",
+          required: true,
         }
       - {
           label: "Páginas",
@@ -97,7 +98,8 @@ collections:
           label: "Data de Criação",
           name: "date_updated",
           widget: "datetime",
-          format: "DD [de] MMMM YYYY HH:mm",
+          format: "DD [de] MMMM YYYY",
           default: "",
           description: "",
+          required: true,
         }
