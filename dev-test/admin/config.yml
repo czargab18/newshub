@@ -58,125 +58,59 @@ collections:
       preview: true
 
     fields:
-      - { label: "ID", name: "id", widget: "hidden", default: "" }
-      - {
-          label: "Data de Criação",
-          name: "date_updated",
-          widget: "datetime",
-          default: "",
-          date_format: "DD/MM/YYYY",
-          time_format: "HH:mm",
-          format: "YYYY-MM-DD HH:mm:ss",
-          required: true,
-        }
-      - {
-          label: "Título",
-          name: "titulo",
-          widget: "string",
-          default: "",
-          required: true,
-          hint: "Título do ribbon/banner",
-        }
-      - {
-          label: "Subtítulo",
-          name: "subtitulo",
-          widget: "string",
-          default: "",
-          required: false,
-          hint: "Texto complementar ou linha fina",
-        }
-      - {
-          label: "Tipo de Ribbon",
-          name: "tipo",
-          widget: "select",
-          default: "destaque",
-          options: ["destaque", "alerta", "informacao", "promocao", "evento", "urgente"],
-          required: true,
-        }
-      - {
-          label: "Prioridade",
-          name: "prioridade",
-          widget: "select",
-          default: "media",
-          options: ["baixa", "media", "alta", "urgente"],
-          required: true,
-          hint: "Define a ordem de exibição",
-        }
-      - {
-          label: "Ativo",
-          name: "ativo",
-          widget: "boolean",
-          default: true,
-          required: true,
-          hint: "Marque para exibir o ribbon",
-        }
-      - {
-          label: "Data de Início",
-          name: "data_inicio",
-          widget: "datetime",
-          default: "",
-          date_format: "DD/MM/YYYY",
-          time_format: "HH:mm",
-          format: "YYYY-MM-DD HH:mm:ss",
-          required: false,
-          hint: "Data de início da exibição",
-        }
-      - {
-          label: "Data de Término",
-          name: "data_fim",
-          widget: "datetime",
-          default: "",
-          date_format: "DD/MM/YYYY",
-          time_format: "HH:mm",
-          format: "YYYY-MM-DD HH:mm:ss",
-          required: false,
-          hint: "Data de término da exibição",
-        }
-      - {
-          label: "Link de Destino",
-          name: "link",
-          widget: "string",
-          default: "",
-          required: false,
-          hint: "URL para onde o ribbon deve direcionar",
-        }
-      - {
-          label: "Texto do Botão",
-          name: "texto_botao",
-          widget: "string",
-          default: "Saiba mais",
-          required: false,
-        }
-      - {
-          label: "Cor de Fundo",
-          name: "cor_fundo",
-          widget: "select",
-          default: "azul",
-          options: ["azul", "verde", "amarelo", "vermelho", "laranja", "roxo", "cinza"],
-          required: false,
-        }
-      - label: "Imagem de Fundo"
-        name: "imagem_fundo"
-        widget: "object"
-        required: false
+      - label: "Tipo"
+        name: "tipo"
+        widget: "hidden"
+        default: "section_ribbon"
+      - label: "ID"
+        name: "id"
+        widget: "hidden"
+        default: ""
+      - label: "Última atualização"
+        name: "date_updated"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        default: ""
+        description: "Data e hora da última atualização da faixa"
+      - label: "Início (opcional)"
+        name: "date_start"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        default: ""
+        description: "Data e hora de início da exibição (deixe vazio para exibir imediatamente)"
+      - label: "Término (opcional)"
+        name: "date_end"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        default: ""
+        description: "Data e hora de término da exibição (deixe vazio para exibir indefinidamente)"
+      - label: "Ativo"
+        name: "ativo"
+        widget: "boolean"
+        default: true
+        description: "Marque para exibir a faixa"
+      - label: "Mensagem"
+        name: "mensagem"
+        widget: "text"
+        default: ""
+        description: "Texto principal exibido na faixa"
+      - label: "Texto do botão (opcional)"
+        name: "texto_botao"
+        widget: "string"
+        default: ""
+        description: "Texto do botão de ação, se houver"
+      - label: "Link do botão (opcional)"
+        name: "link"
+        widget: "string"
+        default: ""
+        description: "URL que será aberta ao clicar no botão (use caminho relativo ou URL completa)"
+      - label: "Páginas"
+        name: "paginas"
+        widget: "list"
+        default: []
+        description: "Lista de páginas onde a faixa será exibida (deixe vazia para todas)"
         collapsed: true
-        fields:
-          - { label: "URL da Imagem", name: "url", widget: "image", default: "", required: false }
-          - { label: "Texto Alternativo", name: "alt", widget: "string", default: "", required: false }
-      - {
-          label: "Mensagem",
-          name: "mensagem",
-          widget: "text",
-          default: "",
-          required: false,
-          hint: "Texto curto da mensagem (até 200 caracteres)",
-        }
-      - {
-          label: "Público-Alvo",
-          name: "publico",
-          widget: "select",
-          multiple: true,
-          default: [],
-          options: ["GRADUAÇÃO", "PÓS-GRADUAÇÃO", "COMUNIDADE EXTERNA", "TODOS"],
-          required: false,
-        }
+        field:
+          label: "Página"
+          name: "pagina"
+          widget: "string"
