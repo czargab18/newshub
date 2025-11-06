@@ -40,8 +40,8 @@ collections:
     preview_path: "ribbon/{{slug}}"
     extension: "json"
     format: "json"
-    identifier_field: "titulo"
-    summary: "{{titulo}} - {{tipo}} - {{date_updated}}"
+    identifier_field: "mensagem"
+    summary: "[{{tipo}}]: {{mensagem}} - {{date_updated}}"
     sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
 
     view_filters:
@@ -60,6 +60,7 @@ collections:
     fields:
       - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
       - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "date_updated", name: "date_updated", widget: "hidden", default: "" }
       - {
           label: "Início",
           name: "date_start",
