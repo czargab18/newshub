@@ -1,20 +1,11 @@
 {
   "id": "",
   "date_updated": "2025-11-06 00:00:00",
-  "titulo": "Censo 2025 - Participe!",
-  "subtitulo": "Sua participação é fundamental para o Brasil",
-  "tipo": "destaque",
-  "prioridade": "alta",
-  "ativo": true,
   "data_inicio": "2025-11-01 00:00:00",
   "data_fim": "2025-12-31 23:59:00",
-  "link": "https://censo2025.ibge.gov.br",
-  "texto_botao": "Saiba mais",
-  "cor_fundo": "azul",
-  "imagem_fundo": {
-    "url": "",
-    "alt": ""
-  },
+  "ativo": true,
   "mensagem": "O Censo 2025 está chegando! Participe e ajude a construir um Brasil melhor com dados precisos sobre nossa população.",
-  "publico": ["TODOS"]
+  "texto_botao": "Saiba mais",
+  "link": "",
+  "paginas": ["as páginas onde deve aparecer o ribbon"]
 }
