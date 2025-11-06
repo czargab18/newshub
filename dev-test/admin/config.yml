@@ -58,9 +58,8 @@ collections:
       preview: true
 
     fields:
-      - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
+      - { label: "Tipo", name: "tipo", widget: "hidden", default: "fita-aviso" }
       - { label: "ID", name: "id", widget: "hidden", default: "" }
-      - { label: "date_updated", name: "date_updated", widget: "hidden", default: "" }
       - {
           label: "Início",
           name: "date_start",
@@ -93,4 +92,12 @@ collections:
           description: "Lista de páginas onde a faixa será exibida (deixe vazia para todas)",
           collapsed: true,
           field: { label: "Página", name: "pagina", widget: "string" },
+        }
+      - {
+          label: "Atualização",
+          name: "date_start",
+          widget: "datetime",
+          format: "DD-MM-YYYY HH:mm",
+          default: "",
+          description: "Data e hora da publicação do artigo",
         }
