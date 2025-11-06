@@ -12,7 +12,7 @@ backend:
     deleteMedia: Delete "{{path}}"
     openAuthoring: "{{message}}"
 
-  publish_mode: editorial_workflow
+publish_mode: editorial_workflow
 media_folder: "article/uploads"
 public_folder: "uploads"
 # site_url: https://czargab18.github.io/estatistica/

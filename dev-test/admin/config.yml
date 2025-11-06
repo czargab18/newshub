@@ -1,0 +1,105 @@
+local_backend: true
+
+backend:
+  name: github
+  branch: news
+  repo: czargab18/newshub
+  commit_messages:
+    create: create {{collection}} "{{slug}}"
+    update: update {{collection}} "{{slug}}"
+    delete: delete {{collection}} "{{slug}}"
+    uploadMedia: upload "{{path}}"
+    deleteMedia: delete "{{path}}"
+    openAuthoring: "{{message}}"
+
+publish_mode: editorial_workflow
+
+media_folder: "article/uploads"
+public_folder: "uploads"
+
+# site_url: https://czargab18.github.io/estatistica/
+# display_url: https://czargab18.github.io/estatistica/
+locale: "pt-br"
+search: true
+show_preview_links: true
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+
+collections:
+  #>> COLEÇÃO: SENTINDO RIBBON
+  - name: "sentindo_ribbon"
+    label: "Faixa de aviso"
+    label_singular: "Faixa de aviso"
+    description: "Mensagen de aviso importante, exibida como faixa/fita abaixo da globalnavbar"
+    folder: "article/ribbon"
+    create: true
+    delete: true
+    slug: "{{day}}-{{month}}-{{year}}_{{hour}}-{{minute}}-{{second}}"
+    preview_path: "ribbon/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "mensagem"
+    summary: "{{mensagem}} - Última atualização: {{date_updated}}"
+    sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
+
+    view_filters:
+      - { label: "Ativo", field: ativo, pattern: true }
+      - { label: "Inativo", field: ativo, pattern: false }
+      - { label: "Alta Prioridade", field: prioridade, pattern: "alta" }
+
+    view_groups:
+      - { label: "Tipo", field: tipo }
+      - { label: "Prioridade", field: prioridade }
+      - { label: "Status", field: ativo }
+
+    editor:
+      preview: true
+
+    fields:
+      - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - {
+          label: "Início",
+          name: "date_start",
+          widget: "datetime",
+          format: "DD [de] MMMM YYYY HH:mm",
+          default: "",
+          description: "Data e hora de início da exibição (deixe vazio para exibir imediatamente)",
+        }
+      - {
+          label: "Término",
+          name: "date_end",
+          widget: "datetime",
+          format: "DD [de] MMMM YYYY HH:mm",
+          default: "",
+          description: "Data e hora de término da exibição (deixe vazio para exibir indefinidamente)",
+        }
+      - { label: "Ativo", name: "ativo", widget: "boolean", default: true, description: "Marque para exibir a faixa" }
+      - {
+          label: "Mensagem",
+          name: "mensagem",
+          widget: "text",
+          default: "",
+          description: "Texto principal exibido na faixa",
+          required: true,
+        }
+      - {
+          label: "Páginas",
+          name: "paginas",
+          widget: "list",
+          default: [],
+          description: "Lista de páginas onde a faixa será exibida (deixe vazia para todas)",
+          collapsed: true,
+          field: { label: "Página", name: "pagina", widget: "string" },
+        }
+      - {
+          label: "Data de Criação",
+          name: "date_updated",
+          widget: "datetime",
+          format: "DD [de] MMMM YYYY",
+          default: "",
+          description: "",
+          required: true,
+        }
