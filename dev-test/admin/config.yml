@@ -13,8 +13,10 @@ backend:
     openAuthoring: "{{message}}"
 
 publish_mode: editorial_workflow
+
 media_folder: "article/uploads"
 public_folder: "uploads"
+
 # site_url: https://czargab18.github.io/estatistica/
 # display_url: https://czargab18.github.io/estatistica/
 locale: "pt-br"
@@ -33,7 +35,7 @@ collections:
     folder: "article"
     create: true
     delete: true
-    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}_{{category}}"
+    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
     preview_path: "article/{{slug}}"
     extension: "json"
     format: "json"
@@ -57,6 +59,9 @@ collections:
     fields:
       # --- CAMPOS OCULTOS ---
       - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "Data Formatada", name: "date_format", widget: "hidden", default: "" }
+
+      # --- DATA DE CRIAÇÃO ---
       - {
           label: "Data de Criação",
           name: "date_updated",
@@ -66,4 +71,135 @@ collections:
           time_format: "HH:mm",
           format: "YYYY-MM-DD HH:mm:ss",
           required: true,
+        }
+
+      # --- SEO E METADATA ---
+      - {
+          label: "Link Canônico",
+          name: "link_canonical",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "URL canônica do artigo",
+        }
+      - {
+          label: "Descrição (Meta)",
+          name: "description",
+          widget: "text",
+          default: "",
+          required: false,
+          hint: "Meta description para SEO (150-160 caracteres)",
+        }
+      - { label: "Resumo", name: "summary", widget: "text", default: "", required: false, hint: "Resumo do conteúdo" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Tags para organização e busca",
+        }
+      - {
+          label: "Palavras-chave (SEO)",
+          name: "keywords",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Keywords para SEO",
+        }
+      - {
+          label: "Idioma",
+          name: "lang",
+          widget: "select",
+          default: "pt-BR",
+          options: ["pt-BR", "en-US", "es-ES"],
+          required: true,
+        }
+
+      # --- IMAGEM MINIATURA ---
+      - label: "Miniatura"
+        name: "thumbnail"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "URL da Imagem", name: "url", widget: "image", default: "", required: false }
+          - { label: "Texto Alternativo", name: "alt", widget: "string", default: "", required: false }
+          - { label: "Legenda", name: "caption", widget: "string", default: "", required: false }
+
+      # --- CONTEÚDO PRINCIPAL ---
+      - {
+          label: "Título Principal",
+          name: "headline",
+          widget: "string",
+          default: "",
+          required: true,
+          hint: "Título do artigo/notícia",
+        }
+      - {
+          label: "Slug (URL amigável)",
+          name: "slug",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Será gerado automaticamente a partir do título. Ex: meu-artigo-sobre-estatistica",
+          pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "Apenas letras minúsculas, números e hífens"],
+        }
+      - {
+          label: "Subtítulo",
+          name: "subhead",
+          widget: "string",
+          default: "",
+          required: false,
+          hint: "Subtítulo ou linha fina",
+        }
+
+      # --- CATEGORIZAÇÃO ---
+      - {
+          label: "Categoria",
+          name: "category",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["QUICK READ", "EST STATEMENT", "PHOTOS", "PRESS RELEASE", "RELEASE", "UPDATE"],
+          required: true,
+          hint: "Selecione uma ou mais categorias",
+        }
+      - {
+          label: "Público-Alvo",
+          name: "public",
+          widget: "select",
+          multiple: true,
+          default: [],
+          options: ["GRADUAÇÃO", "PÓS-GRADUAÇÃO", "COMUNIDADE EXTERNA"],
+          required: true,
+          hint: "Selecione o(s) público(s)-alvo",
+        }
+
+      # --- CORPO DO ARTIGO ---
+      - {
+          label: "Corpo do Artigo",
+          name: "body",
+          widget: "markdown",
+          default: "",
+          required: true,
+          hint: "Conteúdo principal do artigo",
+        }
+
+      # --- RELACIONAMENTOS ---
+      - {
+          label: "Artigos Relacionados",
+          name: "related_articles",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "IDs ou slugs de artigos relacionados",
+        }
+      - {
+          label: "Referências",
+          name: "references",
+          widget: "list",
+          default: [],
+          required: false,
+          hint: "Links de referência ou fontes",
         }
