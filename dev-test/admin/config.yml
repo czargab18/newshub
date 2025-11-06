@@ -8,8 +8,8 @@ backend:
     create: create {{collection}} "{{slug}}"
     update: update {{collection}} "{{slug}}"
     delete: delete {{collection}} "{{slug}}"
-    uploadMedia: Upload "{{path}}"
-    deleteMedia: Delete "{{path}}"
+    uploadMedia: upload "{{path}}"
+    deleteMedia: delete "{{path}}"
     openAuthoring: "{{message}}"
 
 publish_mode: editorial_workflow
