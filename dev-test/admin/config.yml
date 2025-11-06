@@ -41,7 +41,7 @@ collections:
     extension: "json"
     format: "json"
     identifier_field: "mensagem"
-    summary: "{{mensagem}} - {{date_updated}}"
+    summary: "{{mensagem}} Ultima atualização em: {{date_updated}}"
     sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
 
     view_filters:
