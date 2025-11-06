@@ -5,9 +5,9 @@ backend:
   branch: news
   repo: czargab18/newshub
   commit_messages:
-    create: Create {{collection}} "{{slug}}"
-    update: Update {{collection}} "{{slug}}"
-    delete: Delete {{collection}} "{{slug}}"
+    create: create {{collection}} "{{slug}}"
+    update: update {{collection}} "{{slug}}"
+    delete: delete {{collection}} "{{slug}}"
     uploadMedia: Upload "{{path}}"
     deleteMedia: Delete "{{path}}"
     openAuthoring: "{{message}}"
