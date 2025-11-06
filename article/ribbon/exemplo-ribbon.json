@@ -1,11 +1,9 @@
 {
   "id": "",
-  "date_updated": "2025-11-06 00:00:00",
   "data_inicio": "2025-11-01 00:00:00",
   "data_fim": "2025-12-31 23:59:00",
   "ativo": true,
   "mensagem": "O Censo 2025 está chegando! Participe e ajude a construir um Brasil melhor com dados precisos sobre nossa população.",
-  "texto_botao": "Saiba mais",
   "link": "",
-  "paginas": ["as páginas onde deve aparecer o ribbon"]
+  "paginas": ["as páginas onde deve aparecer o ribbon: 'newshub', 'apps/ira', '(vazio para todas as paginas html)'."]
 }
