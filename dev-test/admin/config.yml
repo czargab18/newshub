@@ -36,12 +36,12 @@ collections:
     folder: "article/ribbon"
     create: true
     delete: true
-    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}"
+    slug: "{{date_updated}}"
     preview_path: "ribbon/{{slug}}"
     extension: "json"
     format: "json"
     identifier_field: "mensagem"
-    summary: "[{{tipo}}]: {{mensagem}} - {{date_updated}}"
+    summary: "{{mensagem}} {{date_updated}}"
     sortable_fields: ["date_updated", "titulo", "tipo", "prioridade", "commit_date"]
 
     view_filters:
