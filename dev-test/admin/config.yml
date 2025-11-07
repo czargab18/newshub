@@ -30,9 +30,11 @@ collections:
     label: "Notícias"
     folder: "content/noticias"
     create: true
+    format: "json"
+    extension: "json"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "ID", name: "id", widget: "hidden", required: false }
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
       - { label: "Categoria", name: "category", widget: "hidden", default: "PRESS RELEASE" }
       - { label: "Data", name: "data", widget: "datetime" }
       - { label: "Título", name: "headline", widget: "string" }
