@@ -20,7 +20,7 @@ $NPX_CMD = Join-Path $NODE_DIR "npx.cmd"
 $NODE_ZIP = Join-Path $BIN_DIR "node.zip"
 $NODE_URL = "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-win-$ARCHITECTURE.zip"
 $NEWSHUB_ROOT = Split-Path $BIN_DIR -Parent
-$PROJECT_ROOT = Split-Path $NEWSHUB_ROOT -Parent
+$PROJECT_ROOT = Join-Path $NEWSHUB_ROOT "dev-test"
 
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "  Decap CMS - Servidor Local (All-in-One)" -ForegroundColor Cyan
@@ -175,7 +175,7 @@ Write-Host "  Servidores iniciados com sucesso!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "CMS Admin:   " -NoNewline -ForegroundColor Cyan
-Write-Host "http://localhost:8080/newshub/dev-test/admin/" -ForegroundColor White
+Write-Host "http://localhost:8080/admin/" -ForegroundColor White
 Write-Host "Decap API:   " -NoNewline -ForegroundColor Cyan
 Write-Host "http://localhost:8081/api/v1" -ForegroundColor White
 Write-Host ""
