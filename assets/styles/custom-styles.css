@@ -1,16 +1,13 @@
 /* ============================================
-   CUSTOM LOGIN PAGE - DEPARTAMENTO DE ESTATÍSTICA
+   CUSTOM ADMIN & PREVIEW STYLES - DEPARTAMENTO DE ESTATÍSTICA
    ============================================ */
 
 /* ============================================
    CUSTOMIZAÇÃO DO TÍTULO "COLLECTIONS" NA SIDEBAR
    ============================================ */
-/* ============================================
-   CUSTOMIZAÇÃO DO TÍTULO "COLLECTIONS" NA SIDEBAR
-   ============================================ */
 [class*="SidebarHeading"] {
   font-size: 0 !important;
-    line-height: 0 !important;
+  line-height: 0 !important;
 }
 
 [class*="SidebarHeading"]::before {
@@ -20,176 +17,39 @@
   display: block !important;
   font-weight: 600 !important;
 }
-/* ============================================
-   CUSTOMIZAÇÃO DA LOGO (OPCIONAL)
-   ============================================
-   Para usar uma logo personalizada em vez do emoji:
-   1. Adicione sua logo em: /admin/logo.png
-   2. Descomente o CSS abaixo e comente o emoji
-*/
-/*
-[class*="AuthenticationPage-card"]::before,
-.nc-githubAuthenticationPage-card::before,
-.nc-gitGatewayAuthenticationPage-card::before {
-  content: '' !important;
-  background-image: url('/admin/logo.png') !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  width: 120px !important;
-  height: 120px !important;
-  margin: 0 auto 1.5rem !important;
-}
-*/
 
 /* ============================================
-   OCULTAR LOGO PADRÃO DO DECAP CMS
+   MELHORIAS DE ESTILO DO PAINEL PRINCIPAL
    ============================================ */
-[class*="AppHeader-logo"],
-[class*="AuthenticationPage"] [class*="Logo"],
-.nc-githubAuthenticationPage-logo,
-.nc-gitGatewayAuthenticationPage-logo {
-  display: none !important;
-}
 
-/* ============================================
-   PÁGINA DE LOGIN CUSTOMIZADA
-   ============================================ */
-[class*="AuthenticationPage"],
-.nc-githubAuthenticationPage-root,
-.nc-gitGatewayAuthenticationPage-root {
+/* Cabeçalho Principal */
+[class*="AppHeader"] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-[class*="AuthenticationPage-card"],
-.nc-githubAuthenticationPage-card,
-.nc-gitGatewayAuthenticationPage-card {
-  background: white !important;
-  border-radius: 16px !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
-  padding: 3rem 2.5rem !important;
-  max-width: 450px !important;
-  width: 100% !important;
-  position: relative !important;
-}
-
-/* Logo customizada (emoji) */
-[class*="AuthenticationPage-card"]::before,
-.nc-githubAuthenticationPage-card::before,
-.nc-gitGatewayAuthenticationPage-card::before {
-  content: '📊';
-  font-size: 4rem;
-  display: block;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-/* Título customizado */
-[class*="AuthenticationPage-card"]::after,
-.nc-githubAuthenticationPage-card::after,
-.nc-gitGatewayAuthenticationPage-card::after {
-  content: 'Departamento de Estatística';
-  display: block;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
-}
-
-/* Subtítulo */
-[class*="AuthenticationPage"] h1,
-.nc-githubAuthenticationPage-root h1,
-.nc-gitGatewayAuthenticationPage-root h1 {
-  font-size: 1rem !important;
-  color: #666 !important;
-  text-align: center !important;
-  margin-bottom: 2rem !important;
-  font-weight: 400 !important;
-}
-
-/* ============================================
-   BOTÕES
-   ============================================ */
-[class*="AuthenticationPage"] button,
-.nc-githubAuthenticationPage-root button,
-.nc-gitGatewayAuthenticationPage-root button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 0.875rem 2rem !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
   color: white !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
 }
 
-[class*="AuthenticationPage"] button:hover,
-.nc-githubAuthenticationPage-root button:hover,
-.nc-gitGatewayAuthenticationPage-root button:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
+[class*="AppHeader-link"] {
+  color: white !important;
 }
 
-/* ============================================
-   INPUTS
-   ============================================ */
-[class*="AuthenticationPage"] input,
-.nc-githubAuthenticationPage-root input,
-.nc-gitGatewayAuthenticationPage-root input {
-  border: 2px solid #e0e0e0 !important;
+/* Barra Lateral */
+[class*="SidebarContainer"] {
+  background-color: #f4f6f8 !important;
+}
+
+/* Botão de Nova Entrada */
+[class*="CollectionTop-button"] {
+  background-color: #667eea !important;
+  color: white !important;
   border-radius: 8px !important;
-  padding: 0.875rem 1rem !important;
-  font-size: 1rem !important;
   transition: all 0.3s ease !important;
 }
 
-[class*="AuthenticationPage"] input:focus,
-.nc-githubAuthenticationPage-root input:focus,
-.nc-gitGatewayAuthenticationPage-root input:focus {
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
-  outline: none !important;
+[class*="CollectionTop-button"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
 }
 
-/* ============================================
-   LINKS
-   ============================================ */
-[class*="AuthenticationPage"] a,
-.nc-githubAuthenticationPage-root a,
-.nc-gitGatewayAuthenticationPage-root a {
-  color: #667eea !important;
-  text-decoration: none !important;
-  font-weight: 500 !important;
-}
-
-[class*="AuthenticationPage"] a:hover,
-.nc-githubAuthenticationPage-root a:hover,
-.nc-gitGatewayAuthenticationPage-root a:hover {
-  text-decoration: underline !important;
-}
-
-/* ============================================
-   RODAPÉ PERSONALIZADO
-   ============================================ */
-body::after {
-  content: 'Universidade de Brasília © 2025';
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
 
 /* ============================================
    PREVIEW STYLES

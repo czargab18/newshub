@@ -68,12 +68,15 @@ body {
 [class*="AuthenticationPage-card"]::before,
 .nc-githubAuthenticationPage-card::before,
 .nc-gitGatewayAuthenticationPage-card::before {
-  content: '📊' !important;
-  font-size: 4.5rem !important;
+  content: '' !important;
   display: block !important;
-  text-align: center !important;
-  margin-bottom: 1.5rem !important;
-  animation: float 3s ease-in-out infinite !important;
+  background-image: url('/dev-test/admin/image.png') !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  width: 120px !important;
+  height: 120px !important;
+  margin: 0 auto 1.5rem !important;
 }
 
 @keyframes float {
