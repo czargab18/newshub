@@ -14,7 +14,7 @@
   ],
   "pagebody": [
     {
-      "type": "texto",
+      "type": "paragrafo",
       "conteudo": "## Inovação Brasileira\n\nA startup **SolarTech Brasil** anunciou hoje o lançamento de uma tecnologia revolucionária que promete transformar o mercado de energia solar no país. O novo sistema aumenta a eficiência de painéis solares em até 40%, tornando a energia renovável ainda mais competitiva.\n\nSegundo a CEO da empresa, Maria Santos, o desenvolvimento levou três anos de pesquisa e contou com parceria de universidades federais."
     },
     {
@@ -23,7 +23,7 @@
       "autor": "Maria Santos, CEO da SolarTech Brasil"
     },
     {
-      "type": "texto",
+      "type": "paragrafo",
       "conteudo": "## Como Funciona\n\nA tecnologia utiliza um revestimento nano-estruturado que:\n\n- Captura mais luz solar em diferentes ângulos\n- Reduz perdas por aquecimento\n- Aumenta a durabilidade dos painéis em 25%\n\nOs testes foram realizados em condições reais durante 18 meses, em diferentes regiões climáticas do Brasil."
     },
     {
@@ -34,7 +34,7 @@
       "caption": "Comparação entre painéis convencionais e a nova tecnologia ao longo de 12 meses"
     },
     {
-      "type": "texto",
+      "type": "paragrafo",
       "conteudo": "## Impacto no Mercado\n\nA expectativa é que a tecnologia:\n\n1. **Reduza custos** de instalação em até 30%\n2. **Acelere** o retorno sobre investimento\n3. **Torne viável** projetos em áreas com menor incidência solar\n\nA empresa já recebeu R$ 50 milhões em investimentos e planeja começar a produção em escala no primeiro semestre de 2026."
     },
     {
@@ -43,7 +43,7 @@
       "autor": "João Silva, Diretor de Tecnologia"
     },
     {
-      "type": "texto",
+      "type": "paragrafo",
       "conteudo": "## Próximos Passos\n\nA **SolarTech Brasil** está em negociações com fabricantes internacionais de painéis solares para licenciar a tecnologia. Paralelamente, a empresa está instalando uma unidade-piloto de produção em São Paulo.\n\nPara mais informações sobre a tecnologia, visite [www.solartechbrasil.com.br](https://www.solartechbrasil.com.br)."
     },
     {
