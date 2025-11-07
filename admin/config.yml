@@ -1,61 +1,54 @@
+local_backend: true
 
 backend:
   name: github
   branch: news
   repo: czargab18/newshub
-  base_url: https://newshub-h6z6.onrender.com
-
+  commit_messages:
+    create: create {{collection}} "{{slug}}"
+    update: update {{collection}} "{{slug}}"
+    delete: delete {{collection}} "{{slug}}"
+    uploadMedia: upload "{{path}}"
+    deleteMedia: delete "{{path}}"
+    openAuthoring: "{{message}}"
 
 publish_mode: editorial_workflow
-media_folder: "article/uploads"
-public_folder: "uploads"
-locale: "pt-br"
-search: true
 show_preview_links: true
-editor:
-  preview: true
 
-slug:
-  encoding: "ascii"
-  clean_accents: true
-  sanitize_replacement: "_"
+media_folder: "artigos/uploads"
+public_folder: "uploads"
+
+locale: "pt-br"
 
 collections:
-  - name: "conteudo"
-    label: "Publicações"
-    label_singular: "Artigo"
-    description: "Gerenciamento de artigos, notícias e conteúdos do site"
-    folder: "article"
+  - label: "noticias"
+    name: "Noticias"
+    folder: "article/news"
+    editor:
+      visualEditing: true
     create: true
-    delete: true
-    slug: "{{year}}-{{month}}-{{day}}_{{hour}}-{{minute}}-{{second}}_{{category}}"
-    preview_path: "article/{{slug}}"
-    extension: "json"
     format: "json"
-    identifier_field: "headline"
-    summary: "{{headline}} - {{category}} - {{date_updated}}"
-    sortable_fields: ["date_updated", "headline", "category", "commit_date", "commit_author"]
-
-    view_filters:
-      - { label: "Graduação", field: public, pattern: "GRADUAÇÃO" }
-      - { label: "Pós-Graduação", field: public, pattern: "PÓS-GRADUAÇÃO" }
-      - { label: "Comunidade Externa", field: public, pattern: "COMUNIDADE EXTERNA" }
-
-    view_groups:
-      - { label: "Ano", field: date_updated, pattern: '\d{4}' }
-      - { label: "Categoria", field: category }
-      - { label: "Idioma", field: lang }
-
+    extension: "json"
+    slug: "{{year}}-{{month}}-{{day}}"
     fields:
-      # --- CAMPOS OCULTOS ---
-      - { label: "ID", name: "id", widget: "hidden", default: "" }
-      - {
-          label: "Data de Criação",
-          name: "date_updated",
-          widget: "datetime",
-          default: "",
-          date_format: "DD/MM/YYYY",
-          time_format: "HH:mm",
-          format: "YYYY-MM-DD HH:mm:ss",
-          required: true,
-        }
+      - { label: "ID", name: "id", widget: "hidden", default: "0000-9999" }
+      - { label: "Categoria", name: "category", widget: "hidden", default: "PRESS RELEASE" }
+      - { label: "Data de Atualização", name: "date_updated", widget: "datetime", default: "{{now}}" }
+
+
+      - { label: "Título", name: "headline", widget: "string" }
+      - { label: "Subtítulo", name: "sub_headline", widget: "string", required: false }
+      
+      # Hero Image
+      - label: "Imagem Principal"
+        name: "hero_image"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image", required: false }
+          - { label: "Alt", name: "alt", widget: "string", required: false }
+          - { label: "Caption", name: "caption", widget: "string", required: false }
+
+      # Conteúdo da Página (Markdown)
+      - { label: "Body", name: "body", widget: "markdown", hint: "Main content goes here." }
