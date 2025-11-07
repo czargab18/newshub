@@ -6,9 +6,7 @@
 // CUSTOMIZAR TELA DE LOGIN
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
-  // Observar mudanças no DOM para aplicar customizações
   const observer = new MutationObserver(() => {
-    // Ocultar logo do Decap CMS
     const logos = document.querySelectorAll('[class*="Logo"], [class*="logo"]');
     logos.forEach(logo => {
       if (logo.tagName === 'IMG' || logo.tagName === 'SVG') {
@@ -16,7 +14,6 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Customizar textos
     const heading = document.querySelector('h1');
     if (heading && heading.textContent.includes('Decap')) {
       heading.textContent = 'Sistema de Gerenciamento de Conteúdo';
@@ -32,81 +29,71 @@ window.addEventListener('DOMContentLoaded', () => {
 // ============================================
 // FUNÇÕES AUXILIARES
 // ============================================
-const { h, createClass } = window;
+const {
+  h,
+  createClass
+} = window;
 
-/**
- * Formata uma string de data para o padrão pt-BR de forma segura.
- * Lida com formatos de data comuns e com o formato específico do Decap CMS ("dd de MMMM yyyy").
- * @param {string} dateString - A data em formato de string.
- * @param {object} options - Opções de formatação para toLocaleString.
- * @param {string} fallback - Valor de retorno se a data for inválida.
- * @returns {string} - A data formatada.
- */
+// Função para formatar datas para um formato simples
 const formatDate = (dateString, options, fallback = 'Data inválida') => {
   if (!dateString) return fallback;
-
-  // Garante que a dateString é uma string antes de usar o replace
-  const parsableDateString = typeof dateString === 'string' ?
-    dateString.replace(/ de /g, ' ') :
-    dateString;
-
-  const date = new Date(parsableDateString);
-
+  const date = new Date(dateString);
   if (isNaN(date.getTime())) {
     return fallback;
   }
+  return date.toLocaleString('pt-BR', options);
+};
 
-  // Se o formato desejado for "7 de Novembro de 2025, 10h30"
-  if (options && options.customFormat) {
-    const dia = date.getDate();
-    const mes = date.toLocaleString('pt-BR', { month: 'long' });
-    const ano = date.getFullYear();
-    const hora = date.getHours();
-    const minutos = date.getMinutes().toString().padStart(2, '0');
-    const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
-    return `${dia} de ${mesCapitalizado} de ${ano}, ${hora}h${minutos}`;
+/**
+ * Formata uma data para o formato "7 de Novembro de 2025, 10h30".
+ * @param {string} dateString - A data em formato de string.
+ * @returns {string} A data formatada.
+ */
+const formatarDataCustomizada = (dateString) => {
+  if (!dateString) return 'Data não definida';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return 'Data inválida';
   }
 
-  return date.toLocaleString('pt-BR', options);
+  const day = date.getDate();
+  const month = date.toLocaleString('pt-BR', {
+    month: 'long'
+  });
+  const year = date.getFullYear();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+
+  return `${day} de ${month} de ${year}, ${hours}h${minutes}`;
 };
 
 
 // ============================================
-// PREVIEW TEMPLATE PARA "CONTEUDO" (ARTIGOS, NOTÍCIAS, ETC.)
+// PREVIEW TEMPLATE PARA "CONTEUDO"
 // ============================================
-const ArticlePreview = ({ entry, widgetFor, getAsset }) => {
+const ArticlePreview = ({
+  entry,
+  widgetFor
+}) => {
   const title = entry.getIn(['data', 'title']);
   const subtitle = entry.getIn(['data', 'subtitle']);
-  const date = entry.getIn(['data', 'date']);
+  const excerpt = entry.getIn(['data', 'excerpt']);
+  const date = entry.getIn(['data', 'date_updated']); // Usando date_updated
   const author = entry.getIn(['data', 'author']) || 'Departamento de Estatística';
-  const coverImage = getAsset(entry.getIn(['data', 'cover_image']));
+  const coverImage = entry.getIn(['data', 'cover_image', 'url']);
+  const coverAlt = entry.getIn(['data', 'cover_image', 'alt']);
   const type = entry.getIn(['data', 'type']);
 
-  const formattedDate = formatDate(date, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }, 'Data não definida');
+  const formattedDate = formatarDataCustomizada(date);
 
-  return h('div', { className: 'article-preview', style: { fontFamily: 'sans-serif', padding: '20px' } },
-    h('div', { className: 'cover-image-container', style: {
-      backgroundImage: `url(${coverImage || 'dev-test/admin/image.png'})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      height: '250px',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      display: 'flex',
-      alignItems: 'flex-end',
-      color: 'white',
-      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
-    }},
-      h('div', { style: { padding: '20px', width: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }},
-        h('h1', { style: { margin: '0', fontSize: '2.5em' } }, title || 'Título do Artigo'),
-        subtitle ? h('h2', { style: { margin: '0', fontWeight: 'normal', fontSize: '1.5em' } }, subtitle) : null
-      )
-    ),
-    h('div', { className: 'metadata', style: { color: '#555', marginBottom: '20px' } },
+  return h('div', {
+      className: 'cms-preview-content'
+    },
+    h('h1', {}, title || 'Título do Artigo'),
+    subtitle ? h('h2', {}, subtitle) : null,
+    h('div', {
+        className: 'metadata'
+      },
       h('span', {}, `${formattedDate} • ${author}`),
       type ? h('span', {
         style: {
@@ -115,19 +102,30 @@ const ArticlePreview = ({ entry, widgetFor, getAsset }) => {
           padding: '0.2rem 0.5rem',
           borderRadius: '3px',
           fontSize: '0.85rem',
-          textTransform: 'uppercase',
-          fontWeight: 'bold',
-          color: '#0d47a1'
+          textTransform: 'uppercase'
         }
       }, type) : null
     ),
-    h('div', { className: 'body-content', style: { lineHeight: '1.6' } }, widgetFor('body'))
+    coverImage ? h('img', {
+      src: coverImage,
+      alt: coverAlt || 'Imagem de capa',
+      style: {
+        maxWidth: '100%',
+        height: 'auto'
+      }
+    }) : null,
+    excerpt ? h('div', {
+      className: 'excerpt'
+    }, excerpt) : null,
+    h('div', {
+      className: 'body-content'
+    }, widgetFor('body'))
   );
 };
 
 
 // ============================================
-// PREVIEW TEMPLATE PARA "SENTINDO_RIBBON" (AVISOS)
+// PREVIEW TEMPLATE PARA "SENTINDO_RIBBON"
 // ============================================
 const RibbonPreview = createClass({
   render: function () {
@@ -137,8 +135,8 @@ const RibbonPreview = createClass({
     const startDate = entry.getIn(['data', 'date_start']);
     const endDate = entry.getIn(['data', 'date_end']);
 
-    const formattedStartDate = formatDate(startDate, { dateStyle: 'short', timeStyle: 'short' }, 'Imediato');
-    const formattedEndDate = formatDate(endDate, { dateStyle: 'short', timeStyle: 'short' }, 'Indefinido');
+    const formattedStartDate = formatarDataCustomizada(startDate);
+    const formattedEndDate = formatarDataCustomizada(endDate);
 
     const ribbonStyle = {
       padding: '25px',
@@ -187,13 +185,25 @@ const RibbonPreview = createClass({
       paddingTop: '15px'
     };
 
-    return h('div', { style: ribbonStyle },
-      h('div', { style: statusContainerStyle },
-        h('span', { style: statusIndicatorStyle }),
-        h('span', { style: statusTextStyle }, isActive ? 'Ativo' : 'Inativo')
+    return h('div', {
+        style: ribbonStyle
+      },
+      h('div', {
+          style: statusContainerStyle
+        },
+        h('span', {
+          style: statusIndicatorStyle
+        }),
+        h('span', {
+          style: statusTextStyle
+        }, isActive ? 'Ativo' : 'Inativo')
       ),
-      h('div', { style: messageStyle }, message || 'Sua mensagem de aviso aparecerá aqui...'),
-      h('div', { style: dateStyle },
+      h('div', {
+        style: messageStyle
+      }, message || 'Sua mensagem de aviso aparecerá aqui...'),
+      h('div', {
+          style: dateStyle
+        },
         'Início: ' + formattedStartDate,
         h('br'),
         'Fim: ' + formattedEndDate
@@ -203,7 +213,7 @@ const RibbonPreview = createClass({
 });
 
 // ============================================
-// REGISTRO DOS PREVIEWS NO DECAP CMS
+// REGISTRO DOS PREVIEWS
 // ============================================
 CMS.registerPreviewTemplate('conteudo', ArticlePreview);
 CMS.registerPreviewTemplate('sentindo_ribbon', RibbonPreview);
