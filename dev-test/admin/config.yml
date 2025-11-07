@@ -104,3 +104,72 @@ collections:
           description: "",
           required: true,
         }
+  #>> COLEÇÃO: NOTÍCIAS - VERSÃO TEXTO LIVRE (body único)
+  - name: "noticias_livre"
+    label: "📝 Notícias (Texto Livre)"
+    label_singular: "Notícia Texto Livre"
+    description: "Editor simples - escreva todo o conteúdo em um único campo"
+    folder: "article/news/freeform"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}_{{slug}}"
+    preview_path: "news/{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "headline"
+    summary: "{{headline}} - {{data}}"
+    sortable_fields: ["data", "headline", "category"]
+
+    fields:
+      - { label: "ID", name: "id", widget: "string", hint: "Identificador único (ex: 0001-2023)" }
+      
+      - { 
+          label: "Categoria", 
+          name: "category", 
+          widget: "select",
+          options: ["PRESS RELEASE", "NOTÍCIA", "ARTIGO", "COMUNICADO"],
+          default: "PRESS RELEASE"
+        }
+      
+      - { 
+          label: "Data de Publicação", 
+          name: "data", 
+          widget: "datetime",
+          format: "DD [de] MMMM [de] YYYY",
+          date_format: "DD/MM/YYYY",
+          time_format: false
+        }
+      
+      - { 
+          label: "Título Principal", 
+          name: "headline", 
+          widget: "string",
+          hint: "Título principal da notícia"
+        }
+      
+      - { 
+          label: "Subtítulo", 
+          name: "sub_headline", 
+          widget: "text",
+          required: false,
+          hint: "Subtítulo ou linha fina (opcional)"
+        }
+      
+      - label: "Imagem Principal (Hero)"
+        name: "hero_image"
+        widget: "list"
+        max: 1
+        min: 0
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: "Nome do Arquivo", name: "name", widget: "string" }
+          - { label: "Arquivo", name: "arquivo", widget: "image", allow_multiple: false }
+          - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string" }
+          - { label: "Legenda", name: "caption", widget: "text", required: false }
+      
+      - { 
+          label: "Conteúdo Completo", 
+          name: "body", 
+          widget: "markdown",
+          hint: "Escreva todo o conteúdo da notícia aqui. Suporta Markdown para formatação."
+        }
