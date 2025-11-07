@@ -34,23 +34,24 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "ID", name: "id", widget: "string" }
-      - { label: "Categoria", name: "category", widget: "string" }
+      - { label: "ID", name: "id", widget: "hidden", default: "" }
+      - { label: "Categoria", name: "category", widget: "hidden", default: "PRESS RELEASE" }
       - { label: "Data", name: "data", widget: "datetime" }
       - { label: "Título", name: "headline", widget: "string" }
-      - { label: "Subtítulo", name: "sub_headline", widget: "string" }
+      - { label: "Subtítulo", name: "sub_headline", widget: "string", required: false }
       
-      # Hero Image
+      # Hero Image (opcional)
       - label: "Imagem Principal (Hero)"
         name: "hero_image"
         widget: "list"
+        required: false
         max: 1
-        min: 1
+        min: 0
         fields:
           - { label: "Nome", name: "name", widget: "string" }
           - { label: "Arquivo", name: "arquivo", widget: "image" }
           - { label: "Alt", name: "alt", widget: "string" }
-          - { label: "Caption", name: "caption", widget: "string" }
+          - { label: "Caption", name: "caption", widget: "string", required: false }
           
       # Conteúdo Modular
       - label: "Conteúdo da Página"
@@ -67,10 +68,10 @@ collections:
             name: "imagem"
             widget: "object"
             fields:
-              - { label: "Nome", name: "name", widget: "string" }
+              - { label: "Nome", name: "name", widget: "string", required: false }
               - { label: "Arquivo", name: "arquivo", widget: "image" }
               - { label: "Alt", name: "alt", widget: "string" }
-              - { label: "Caption", name: "caption", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
               
           - label: "Bloco de Citação"
             name: "citacao"
