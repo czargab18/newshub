@@ -215,7 +215,7 @@ body {
 
 /* Rodapé institucional */
 body::after {
-  content: 'Universidade de Brasília © 2025' !important;
+  /* content: 'Universidade de Brasília © 2025' !important; */
   position: fixed !important;
   bottom: 1.5rem !important;
   left: 50% !important;
