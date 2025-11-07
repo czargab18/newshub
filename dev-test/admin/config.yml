@@ -36,7 +36,7 @@ collections:
     folder: "article/ribbon"
     create: true
     delete: true
-    slug: "{{day}}-{{month}}-{{year}}_{{hour}}-{{minute}}-{{second}}"
+    slug: "{{tipo}}_{{day}}-{{month}}-{{year}}_{{hour}}-{{minute}}-{{second}}"
     preview_path: "ribbon/{{slug}}"
     extension: "json"
     format: "json"
