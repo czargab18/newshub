@@ -4,22 +4,17 @@ backend:
   branch: news
   repo: czargab18/newshub
   base_url: https://newshub-h6z6.onrender.com
-  commit_messages:
-    create: Create {{collection}} "{{slug}}"
-    update: Update {{collection}} "{{slug}}"
-    delete: Delete {{collection}} "{{slug}}"
-    uploadMedia: Upload "{{path}}"
-    deleteMedia: Delete "{{path}}"
-    openAuthoring: "{{message}}"
+
 
 publish_mode: editorial_workflow
 media_folder: "article/uploads"
 public_folder: "uploads"
-# site_url: https://czargab18.github.io/estatistica/
-# display_url: https://czargab18.github.io/estatistica/
 locale: "pt-br"
 search: true
 show_preview_links: true
+editor:
+  preview: true
+
 slug:
   encoding: "ascii"
   clean_accents: true
@@ -50,9 +45,6 @@ collections:
       - { label: "Ano", field: date_updated, pattern: '\d{4}' }
       - { label: "Categoria", field: category }
       - { label: "Idioma", field: lang }
-
-    editor:
-      preview: true
 
     fields:
       # --- CAMPOS OCULTOS ---
