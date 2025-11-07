@@ -34,7 +34,7 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     environment:
-      name: ENVIRONMENTS
+      name: ENVIRONMENT
     env:
       TOKEN: ${{ secrets.UPDATE_SUBMODULE }}
       USEREMAIL: ${{ secrets.USEREMAIL }}
