@@ -32,7 +32,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}"
     fields:
       - { label: "ID", name: "id", widget: "hidden", default: "0000-9999" }
-      - { label: "Categoria", name: "category", widget: "string", default: "PRESS RELEASE" }
+      - { label: "Categoria", name: "category", widget: "hidden", default: "PRESS RELEASE" }
       - { label: "Data de Atualização", name: "date_updated", widget: "datetime", default: "{{now}}" }
 
 
@@ -46,7 +46,7 @@ collections:
         collapsed: true
         required: false
         fields:
-          - { label: "Arquivo", name: "arquivo", widget: "string", required: false }
+          - { label: "Arquivo", name: "arquivo", widget: "image", required: false }
           - { label: "Alt", name: "alt", widget: "string", required: false }
           - { label: "Caption", name: "caption", widget: "string", required: false }
 
