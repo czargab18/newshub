@@ -1,6 +1,6 @@
 backend:
   name: github
-  branch: news
+  branch: main
   repo: czargab18/newshub
   commit_messages:
     create: create {{collection}} "{{slug}}"
