@@ -1,0 +1,16 @@
+{
+  "id": "0000-9999",
+  "category": "PRESS RELEASE",
+  "data": "09 de Novembro de 2023",
+  "headline": "",
+  "sub_headline": "",
+  "hero_image": [
+    {
+      "name": "arquivo.jpg",
+      "arquivo": "arquivo.jpg",
+      "alt": "Texto descritivo sobre a imagem",
+      "caption": "Legenda para a imagem"
+    }
+  ],
+  "content": ""
+}
