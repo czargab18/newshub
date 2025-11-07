@@ -21,8 +21,8 @@ public_folder: "uploads"
 locale: "pt-br"
 
 collections:
-  - name: "Noticias"
-    label: "noticias"
+  - label: "noticias"
+    name: "Noticias"
     folder: "article/news"
     editor:
       visualEditing: true
