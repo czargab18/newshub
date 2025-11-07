@@ -58,3 +58,7 @@ libs
 *index_*/
 !.github
 artefatos/
+
+
+**/mock/*
+!**/mock/**/*.gitkeep
