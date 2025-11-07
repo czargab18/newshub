@@ -38,8 +38,17 @@ collections:
 
       - { label: "Título", name: "headline", widget: "string" }
       - { label: "Subtítulo", name: "sub_headline", widget: "string", required: false }
+      
       # Hero Image
-      - { label: "Imagem Principal", name: "hero_image", widget: "object", }
+      - label: "Imagem Principal"
+        name: "hero_image"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "string", required: false }
+          - { label: "Alt", name: "alt", widget: "string", required: false }
+          - { label: "Caption", name: "caption", widget: "string", required: false }
 
       # Conteúdo da Página (Markdown)
       - { label: "Body", name: "body", widget: "markdown", hint: "Main content goes here." }
