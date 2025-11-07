@@ -1,44 +1,12 @@
 /* ============================================
    CUSTOM SCRIPTS - DEPARTAMENTO DE ESTATÍSTICA
    ============================================ */
-function formatarDataCustomizada(dateString) {
-  if (!dateString) {
-    return "Data inválida";
-  }
 
-  // O formato da data no JSON é "DD de Month YYYY HH:mm" com o mês em inglês.
-  // Ex: "07 de November 2025 10:21"
-  // O new Date() do Javascript não consegue interpretar isso diretamente.
-  // Vamos substituir o " de " por um espaço para facilitar o parse.
-  const parsableDateString = dateString.replace(' de ', ' ');
-  const date = new Date(parsableDateString);
-
-  if (isNaN(date.getTime())) {
-    return "Data inválida";
-  }
-
-  const dia = date.getDate();
-  // Usamos toLocaleString para obter o nome do mês em português.
-  const mes = date.toLocaleString('pt-BR', { month: 'long' });
-  const ano = date.getFullYear();
-  const hora = date.getHours();
-  const minutos = date.getMinutes().toString().padStart(2, '0');
-
-  // Colocando a primeira letra do mês em maiúscula
-  const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
-
-  return `${dia} de ${mesCapitalizado} de ${ano}, ${hora}h${minutos}`;
-}
-
-// Exemplo de uso com a data do seu arquivo JSON
-const dataDoJson = "07 de November 2025 10:21";
-const dataFormatada = formatarDataCustomizada(dataDoJson);
-
-console.log(dataFormatada); // Saída: 7 de Novembro de 2025, 10h21
 // ============================================
 // CUSTOMIZAR TELA DE LOGIN
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
+  // Observar mudanças no DOM para aplicar customizações
   const observer = new MutationObserver(() => {
     // Ocultar logo do Decap CMS
     const logos = document.querySelectorAll('[class*="Logo"], [class*="logo"]');
@@ -55,7 +23,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 });
 
 // ============================================
@@ -64,23 +35,38 @@ window.addEventListener('DOMContentLoaded', () => {
 const { h, createClass } = window;
 
 /**
- * Formata uma string de data para o padrão pt-BR.
- * Lida com o formato "dd de MMMM yyyy" vindo do Decap.
+ * Formata uma string de data para o padrão pt-BR de forma segura.
+ * Lida com formatos de data comuns e com o formato específico do Decap CMS ("dd de MMMM yyyy").
  * @param {string} dateString - A data em formato de string.
- * @param {object} options - Opções para toLocaleString.
+ * @param {object} options - Opções de formatação para toLocaleString.
  * @param {string} fallback - Valor de retorno se a data for inválida.
  * @returns {string} - A data formatada.
  */
 const formatDate = (dateString, options, fallback = 'Data inválida') => {
   if (!dateString) return fallback;
 
-  // Corrige o formato da data "de" para que o new Date() possa interpretar
-  const correctedDateString = dateString.replace(/ de /g, ' ');
-  const date = new Date(correctedDateString);
+  // Garante que a dateString é uma string antes de usar o replace
+  const parsableDateString = typeof dateString === 'string' ?
+    dateString.replace(/ de /g, ' ') :
+    dateString;
+
+  const date = new Date(parsableDateString);
 
   if (isNaN(date.getTime())) {
     return fallback;
   }
+
+  // Se o formato desejado for "7 de Novembro de 2025, 10h30"
+  if (options && options.customFormat) {
+    const dia = date.getDate();
+    const mes = date.toLocaleString('pt-BR', { month: 'long' });
+    const ano = date.getFullYear();
+    const hora = date.getHours();
+    const minutos = date.getMinutes().toString().padStart(2, '0');
+    const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
+    return `${dia} de ${mesCapitalizado} de ${ano}, ${hora}h${minutos}`;
+  }
+
   return date.toLocaleString('pt-BR', options);
 };
 
