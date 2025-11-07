@@ -1,21 +1,126 @@
+/* ============================================
+   CUSTOM SCRIPTS - DEPARTAMENTO DE ESTATÍSTICA
+   ============================================ */
 
-// Obtém as funções createClass e h do objeto global window para criar componentes React
-const { createClass, h } = window;
+// ============================================
+// CUSTOMIZAR TELA DE LOGIN
+// ============================================
+window.addEventListener('DOMContentLoaded', () => {
+  const observer = new MutationObserver(() => {
+    // Ocultar logo do Decap CMS
+    const logos = document.querySelectorAll('[class*="Logo"], [class*="logo"]');
+    logos.forEach(logo => {
+      if (logo.tagName === 'IMG' || logo.tagName === 'SVG') {
+        logo.style.display = 'none';
+      }
+    });
+
+    // Customizar textos
+    const heading = document.querySelector('h1');
+    if (heading && heading.textContent.includes('Decap')) {
+      heading.textContent = 'Sistema de Gerenciamento de Conteúdo';
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+// ============================================
+// FUNÇÕES AUXILIARES
+// ============================================
+const { h, createClass } = window;
 
 /**
- * Componente de Preview para a coleção 'sentindo_ribbon'.
- * Renderiza uma prévia visual de como a faixa de aviso aparecerá.
+ * Formata uma string de data para o padrão pt-BR.
+ * Lida com o formato "dd de MMMM yyyy" vindo do Decap.
+ * @param {string} dateString - A data em formato de string.
+ * @param {object} options - Opções para toLocaleString.
+ * @param {string} fallback - Valor de retorno se a data for inválida.
+ * @returns {string} - A data formatada.
  */
-var RibbonPreview = createClass({
-  render: function() {
-    // Acessa os dados da entrada atual
+const formatDate = (dateString, options, fallback = 'Data inválida') => {
+  if (!dateString) return fallback;
+
+  // Corrige o formato da data "de" para que o new Date() possa interpretar
+  const correctedDateString = dateString.replace(/ de /g, ' ');
+  const date = new Date(correctedDateString);
+
+  if (isNaN(date.getTime())) {
+    return fallback;
+  }
+  return date.toLocaleString('pt-BR', options);
+};
+
+
+// ============================================
+// PREVIEW TEMPLATE PARA "CONTEUDO" (ARTIGOS, NOTÍCIAS, ETC.)
+// ============================================
+const ArticlePreview = ({ entry, widgetFor, getAsset }) => {
+  const title = entry.getIn(['data', 'title']);
+  const subtitle = entry.getIn(['data', 'subtitle']);
+  const date = entry.getIn(['data', 'date']);
+  const author = entry.getIn(['data', 'author']) || 'Departamento de Estatística';
+  const coverImage = getAsset(entry.getIn(['data', 'cover_image']));
+  const type = entry.getIn(['data', 'type']);
+
+  const formattedDate = formatDate(date, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }, 'Data não definida');
+
+  return h('div', { className: 'article-preview', style: { fontFamily: 'sans-serif', padding: '20px' } },
+    h('div', { className: 'cover-image-container', style: {
+      backgroundImage: `url(${coverImage || 'dev-test/admin/image.png'})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '250px',
+      borderRadius: '8px',
+      marginBottom: '20px',
+      display: 'flex',
+      alignItems: 'flex-end',
+      color: 'white',
+      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+    }},
+      h('div', { style: { padding: '20px', width: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }},
+        h('h1', { style: { margin: '0', fontSize: '2.5em' } }, title || 'Título do Artigo'),
+        subtitle ? h('h2', { style: { margin: '0', fontWeight: 'normal', fontSize: '1.5em' } }, subtitle) : null
+      )
+    ),
+    h('div', { className: 'metadata', style: { color: '#555', marginBottom: '20px' } },
+      h('span', {}, `${formattedDate} • ${author}`),
+      type ? h('span', {
+        style: {
+          marginLeft: '1rem',
+          background: '#e3f2fd',
+          padding: '0.2rem 0.5rem',
+          borderRadius: '3px',
+          fontSize: '0.85rem',
+          textTransform: 'uppercase',
+          fontWeight: 'bold',
+          color: '#0d47a1'
+        }
+      }, type) : null
+    ),
+    h('div', { className: 'body-content', style: { lineHeight: '1.6' } }, widgetFor('body'))
+  );
+};
+
+
+// ============================================
+// PREVIEW TEMPLATE PARA "SENTINDO_RIBBON" (AVISOS)
+// ============================================
+const RibbonPreview = createClass({
+  render: function () {
     const entry = this.props.entry;
     const message = entry.getIn(['data', 'mensagem']);
     const isActive = entry.getIn(['data', 'ativo']);
     const startDate = entry.getIn(['data', 'date_start']);
     const endDate = entry.getIn(['data', 'date_end']);
 
-    // Estilos para o container principal da prévia (o banner)
+    const formattedStartDate = formatDate(startDate, { dateStyle: 'short', timeStyle: 'short' }, 'Imediato');
+    const formattedEndDate = formatDate(endDate, { dateStyle: 'short', timeStyle: 'short' }, 'Indefinido');
+
     const ribbonStyle = {
       padding: '25px',
       borderRadius: '10px',
@@ -26,14 +131,12 @@ var RibbonPreview = createClass({
       margin: '20px'
     };
 
-    // Estilos para o container do status (indicador + texto)
     const statusContainerStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '15px'
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '15px'
     };
 
-    // Estilos para o indicador de status (círculo verde/cinza)
     const statusIndicatorStyle = {
       width: '12px',
       height: '12px',
@@ -44,35 +147,27 @@ var RibbonPreview = createClass({
       flexShrink: 0
     };
 
-    // Estilos para o texto do status ("Ativo" / "Inativo")
     const statusTextStyle = {
-        fontWeight: '600',
-        fontSize: '1em',
-        textTransform: 'uppercase',
-        letterSpacing: '0.5px'
+      fontWeight: '600',
+      fontSize: '1em',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px'
     };
 
-    // Estilos para a mensagem principal do aviso
     const messageStyle = {
       fontSize: '1.4em',
       fontWeight: 'bold',
       lineHeight: '1.4'
     };
-    
-    // Estilos para a seção de datas
+
     const dateStyle = {
-        fontSize: '0.9em',
-        opacity: 0.85,
-        marginTop: '20px',
-        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-        paddingTop: '15px'
+      fontSize: '0.9em',
+      opacity: 0.85,
+      marginTop: '20px',
+      borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+      paddingTop: '15px'
     };
 
-    // Formata as datas para exibição
-    const formattedStartDate = startDate ? new Date(startDate).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Imediato';
-    const formattedEndDate = endDate ? new Date(endDate).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Indefinido';
-
-    // Renderiza a prévia usando a função 'h' (equivalente a React.createElement)
     return h('div', { style: ribbonStyle },
       h('div', { style: statusContainerStyle },
         h('span', { style: statusIndicatorStyle }),
@@ -88,5 +183,8 @@ var RibbonPreview = createClass({
   }
 });
 
-// Registra o componente de preview 'RibbonPreview' para a coleção 'sentindo_ribbon'
-CMS.registerPreviewTemplate("sentindo_ribbon", RibbonPreview);
+// ============================================
+// REGISTRO DOS PREVIEWS NO DECAP CMS
+// ============================================
+CMS.registerPreviewTemplate('conteudo', ArticlePreview);
+CMS.registerPreviewTemplate('sentindo_ribbon', RibbonPreview);
