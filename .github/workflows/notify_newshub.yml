@@ -4,14 +4,18 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      [
-        "**/assets/**/*.css",
-        "**/assets/**/*.js",
-        "**/admin/**/*.html",
-        "**/admin/**/*.yml",
+    paths: [
+        # Arquivos de configuração do Decap CMS
+        "**/admin/config.yml",
+        "**/admin/index.html",
+        # Arquivos de autenticação
         "**/auth/**/*.js",
         "**/auth/**/*.json",
+        # Arquivos de notícias
+        "**/article/*",
+        # Ignorar pastas
+        "!**/dev-test/*",
+        "!**/templates/*"
       ]
 
 permissions:
