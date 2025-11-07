@@ -13,42 +13,32 @@ backend:
     openAuthoring: "{{message}}"
 
 publish_mode: editorial_workflow
+show_preview_links: true
 
-media_folder: "article/uploads"
+media_folder: "artigos/uploads"
 public_folder: "uploads"
 
 locale: "pt-br"
-search: true
-show_preview_links: true
-slug:
-  encoding: "ascii"
-  clean_accents: true
-  sanitize_replacement: "_"
 
 collections:
-  - name: "noticias"
-    label: "Notícias"
-    folder: "content/noticias"
+  - name: "Noticias"
+    label: "noticias"
+    folder: "article/news"
+    editor:
+      visualEditing: true
     create: true
-    format: "json"
-    extension: "json"
+    format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "ID", name: "id", widget: "hidden", default: "" }
-      - { label: "Categoria", name: "category", widget: "hidden", default: "PRESS RELEASE" }
-      - { label: "Data", name: "data", widget: "datetime" }
+      - { label: "id", name: "id", widget: "hidden" }
+      - { label: "category", name: "category", widget: "hidden", default: "PRESS RELEASE" }
+      - { label: "Data de Atualização", name: "date_updated", widget: "datetime", default: '{{now}}' }
+
+
       - { label: "Título", name: "headline", widget: "string" }
       - { label: "Subtítulo", name: "sub_headline", widget: "string", required: false }
 
-      # Hero Image (objeto)
-      - label: "Imagem Principal (Hero)"
-        name: "hero_image"
-        widget: "object"
-        required: false
-        fields:
-          - { label: "Arquivo", name: "arquivo", widget: "image", required: false }
-          - { label: "Alt", name: "alt", widget: "string", required: false }
-          - { label: "Caption", name: "caption", widget: "string", required: false }
+      # Hero Image (objeto simplificado)
 
       # Conteúdo da Página (Markdown)
-      - { label: "Conteúdo da Página", name: "pagebody", widget: "markdown" }
+      - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.' }
