@@ -17,7 +17,7 @@ show_preview_links: true
 
 media_folder: "artigos/uploads"
 public_folder: "uploads"
-
+auto_save: true
 locale: "pt-br"
 
 collections:

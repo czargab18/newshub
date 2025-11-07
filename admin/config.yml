@@ -12,6 +12,7 @@ backend:
 
 publish_mode: editorial_workflow
 show_preview_links: true
+auto_save: true
 
 media_folder: "artigos/uploads"
 public_folder: "uploads"
