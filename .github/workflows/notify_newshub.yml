@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       artigos:
-        description: 'Publicar artigos novos (sim/não)?'
+        description: 'Atualizar artigos e páginas de newshub (sim/não)?'
         required: false
         default: 'sim'
         type: string
