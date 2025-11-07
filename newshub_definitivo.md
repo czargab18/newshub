@@ -70,3 +70,12 @@ Posteriormente, o archive terá a estrutura:
 │   │   │   └── newsroom/         # articles ( /newsroom/index.html )
 │   │   │   └── imagens/          # Imagens gerais: logos, marcas, backgrounds etc.
 ```
+
+## Tipos de Noticias
+As noticias poderão ser de varios tipos, como por exemplo:
+- PRESS RELEASE
+- QUICK READ
+- EST STATEMENT
+- PHOTOS
+- RELEASE
+- UPDATE
