@@ -34,53 +34,47 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "ID", name: "id", widget: "string", hint: "Identificador único (ex: 0001-2023)" }
-      - { label: "Categoria", name: "category", widget: "string", default: "PRESS RELEASE" }
-      - { label: "Data de Publicação", name: "data", widget: "datetime" }
-      - { label: "Título Principal", name: "headline", widget: "string" }
-      - { label: "Subtítulo (Opcional)", name: "sub_headline", widget: "string" }
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "string" }
+      - { label: "Data", name: "data", widget: "datetime" }
+      - { label: "Título", name: "headline", widget: "string" }
+      - { label: "Subtítulo", name: "sub_headline", widget: "string" }
       
-      # --- Bloco Hero (igual ao seu) ---
+      # Hero Image
       - label: "Imagem Principal (Hero)"
         name: "hero_image"
         widget: "list"
         max: 1
         min: 1
         fields:
-          - { label: "Nome do Arquivo", name: "name", widget: "string" }
+          - { label: "Nome", name: "name", widget: "string" }
           - { label: "Arquivo", name: "arquivo", widget: "image" }
-          - { label: "Texto Alternativo (ALT)", name: "alt", widget: "string" }
-          - { label: "Legenda (Opcional)", name: "caption", widget: "string" }
+          - { label: "Alt", name: "alt", widget: "string" }
+          - { label: "Caption", name: "caption", widget: "string" }
           
-      # --- O NOVO CORPO DA PÁGINA ---
+      # Conteúdo Modular
       - label: "Conteúdo da Página"
         name: "pagebody"
         widget: "list"
-        
-        # A mágica está aqui, usando 'types'
         types:
-          
-          # 1. Bloco de Texto (Markdown)
           - label: "Bloco de Texto"
             name: "texto"
             widget: "object"
             fields:
               - { label: "Texto", name: "conteudo", widget: "markdown" }
               
-          # 2. Bloco de Imagem (Sua configuração personalizada)
           - label: "Bloco de Imagem"
             name: "imagem"
             widget: "object"
             fields:
-              - { label: "Nome do Arquivo", name: "name", widget: "string" }
+              - { label: "Nome", name: "name", widget: "string" }
               - { label: "Arquivo", name: "arquivo", widget: "image" }
-              - { label: "Texto Alternativo (ALT)", name: "alt", widget: "string" }
-              - { label: "Legenda (Opcional)", name: "caption", widget: "string" }
+              - { label: "Alt", name: "alt", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "string" }
               
-          # 3. (Opcional) Bloco de Citação
           - label: "Bloco de Citação"
             name: "citacao"
             widget: "object"
             fields:
-              - { label: "Texto da Citação", name: "texto", widget: "text" }
-              - { label: "Autor da Citação", name: "autor", widget: "string" }
+              - { label: "Texto", name: "texto", widget: "text" }
+              - { label: "Autor", name: "autor", widget: "string" }
