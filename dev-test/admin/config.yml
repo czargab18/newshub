@@ -56,6 +56,7 @@ collections:
 
     editor:
       preview: true
+      visualEditing: true
 
     fields:
       - { label: "Tipo", name: "tipo", widget: "hidden", default: "section_ribbon" }
