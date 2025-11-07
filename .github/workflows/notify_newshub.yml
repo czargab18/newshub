@@ -2,6 +2,13 @@ name: Dispatch Update Submodule
 
 on:
   workflow_dispatch:
+    inputs:
+      artigos:
+        description: 'Publicar artigos novos (sim/não)?'
+        required: false
+        default: 'sim'
+        type: string
+
   push:
     branches: [main]
     paths: [
