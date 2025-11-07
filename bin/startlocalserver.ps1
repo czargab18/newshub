@@ -1,38 +1,36 @@
 # ============================================
-# Script: Decap CMS - Desenvolvimento Local
+# Script All-in-One: Decap CMS Server
 # ============================================
-# Este script inicia o ambiente de desenvolvimento local:
-# 1. Verifica Node.js
-# 2. Inicia decap-server (backend local - porta 8081)
-# 3. Inicia http-server (servindo dev-test/ - porta 8080)
-# 
-# IMPORTANTE: Este modo usa local_backend: true
-# Não requer OAuth ou auth-server
-# Edições são feitas localmente (não commitadas automaticamente)
+# Este script faz tudo automaticamente:
+# 1. Verifica se Node.js esta instalado
+# 2. Instala Node.js se necessario
+# 3. Instala dependencias (decap-server, http-server)
+# 4. Inicia os servidores
 
 $ErrorActionPreference = "Stop"
 
 # Configuracoes
+$NODE_VERSION = "20.11.0"
+$ARCHITECTURE = "x64"
 $BIN_DIR = $PSScriptRoot
 $NODE_DIR = Join-Path $BIN_DIR "node"
 $NODE_EXE = Join-Path $NODE_DIR "node.exe"
 $NPM_CMD = Join-Path $NODE_DIR "npm.cmd"
 $NPX_CMD = Join-Path $NODE_DIR "npx.cmd"
-$PROJECT_ROOT = Split-Path $BIN_DIR -Parent
+$NODE_ZIP = Join-Path $BIN_DIR "node.zip"
+$NODE_URL = "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-win-$ARCHITECTURE.zip"
+$NEWSHUB_ROOT = Split-Path $BIN_DIR -Parent
+$PROJECT_ROOT = Split-Path $NEWSHUB_ROOT -Parent
 
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  Decap CMS - Modo Desenvolvimento Local" -ForegroundColor Cyan
+Write-Host "  Decap CMS - Servidor Local (All-in-One)" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Este modo usa:" -ForegroundColor Yellow
-Write-Host "  - Pasta: dev-test/" -ForegroundColor Gray
-Write-Host "  - Backend: Local (sem OAuth)" -ForegroundColor Gray
-Write-Host "  - Decap Server: Porta 8081" -ForegroundColor Gray
-Write-Host "  - HTTP Server: Porta 8080" -ForegroundColor Gray
+Write-Host "[INFO] Servindo a partir de: $PROJECT_ROOT" -ForegroundColor Cyan
 Write-Host ""
 
 # ============================================
-# PASSO 1: Verificar Node.js
+# PASSO 1: Verificar/Instalar Node.js
 # ============================================
 
 if (Test-Path $NODE_EXE) {
@@ -43,10 +41,69 @@ if (Test-Path $NODE_EXE) {
     Write-Host "     npm: $npmVersion" -ForegroundColor Gray
     Write-Host ""
 } else {
-    Write-Host "[ERRO] Node.js nao encontrado em bin/node/" -ForegroundColor Red
-    Write-Host "Execute primeiro: .\bin\start.ps1" -ForegroundColor Yellow
-    Write-Host "Ou instale manualmente na pasta bin/node/" -ForegroundColor Yellow
-    exit 1
+    Write-Host "[!] Node.js nao encontrado. Instalando..." -ForegroundColor Yellow
+    Write-Host ""
+    
+    # Criar diretorio bin se nao existir
+    if (-not (Test-Path $BIN_DIR)) {
+        New-Item -ItemType Directory -Path $BIN_DIR -Force | Out-Null
+    }
+    
+    # Download do Node.js
+    Write-Host "Baixando Node.js v$NODE_VERSION..." -ForegroundColor Yellow
+    Write-Host "URL: $NODE_URL" -ForegroundColor Gray
+    
+    try {
+        $webClient = New-Object System.Net.WebClient
+        $webClient.DownloadFile($NODE_URL, $NODE_ZIP)
+        Write-Host "Download concluido!" -ForegroundColor Green
+        Write-Host ""
+    }
+    catch {
+        Write-Host "Erro ao baixar Node.js: $_" -ForegroundColor Red
+        exit 1
+    }
+    
+    # Descompactar
+    Write-Host "Descompactando Node.js..." -ForegroundColor Yellow
+    
+    try {
+        Expand-Archive -Path $NODE_ZIP -DestinationPath $BIN_DIR -Force
+        
+        # Renomear pasta extraida
+        $extractedFolder = Join-Path $BIN_DIR "node-v$NODE_VERSION-win-$ARCHITECTURE"
+        if (Test-Path $extractedFolder) {
+            Move-Item -Path $extractedFolder -Destination $NODE_DIR -Force
+        }
+        
+        Write-Host "Descompactacao concluida!" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "Erro ao descompactar: $_" -ForegroundColor Red
+        exit 1
+    }
+    finally {
+        # Limpar arquivo ZIP
+        if (Test-Path $NODE_ZIP) {
+            Remove-Item -Path $NODE_ZIP -Force
+        }
+    }
+    
+    # Verificar instalacao
+    if ((Test-Path $NODE_EXE) -and (Test-Path $NPM_CMD)) {
+        $nodeVersion = & $NODE_EXE --version
+        $npmVersion = & $NPM_CMD --version
+        
+        Write-Host ""
+        Write-Host "[OK] Node.js instalado com sucesso!" -ForegroundColor Green
+        Write-Host "     Node.js: $nodeVersion" -ForegroundColor Gray
+        Write-Host "     npm: $npmVersion" -ForegroundColor Gray
+        Write-Host ""
+    }
+    else {
+        Write-Host "Erro: Instalacao falhou!" -ForegroundColor Red
+        exit 1
+    }
 }
 
 # ============================================
@@ -85,7 +142,7 @@ Write-Host "  Iniciando Servidores" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Navegar para o diretorio do projeto
+# Navegar para o diretorio raiz (estatistica/)
 Set-Location $PROJECT_ROOT
 
 # Iniciar decap-server na porta 8081 em background
@@ -118,7 +175,7 @@ Write-Host "  Servidores iniciados com sucesso!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "CMS Admin:   " -NoNewline -ForegroundColor Cyan
-Write-Host "http://localhost:8080/dev-test/admin/" -ForegroundColor White
+Write-Host "http://localhost:8080/newshub/dev-test/admin/" -ForegroundColor White
 Write-Host "Decap API:   " -NoNewline -ForegroundColor Cyan
 Write-Host "http://localhost:8081/api/v1" -ForegroundColor White
 Write-Host ""
