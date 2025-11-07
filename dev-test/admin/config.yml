@@ -59,7 +59,7 @@ collections:
         widget: "list"
         types:
           - label: "Bloco de Texto"
-            name: "texto"
+            name: "paragrafo"
             widget: "object"
             fields:
               - { label: "Texto", name: "conteudo", widget: "markdown" }
