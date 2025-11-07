@@ -1,7 +1,40 @@
 /* ============================================
    CUSTOM SCRIPTS - DEPARTAMENTO DE ESTATÍSTICA
    ============================================ */
+function formatarDataCustomizada(dateString) {
+  if (!dateString) {
+    return "Data inválida";
+  }
 
+  // O formato da data no JSON é "DD de Month YYYY HH:mm" com o mês em inglês.
+  // Ex: "07 de November 2025 10:21"
+  // O new Date() do Javascript não consegue interpretar isso diretamente.
+  // Vamos substituir o " de " por um espaço para facilitar o parse.
+  const parsableDateString = dateString.replace(' de ', ' ');
+  const date = new Date(parsableDateString);
+
+  if (isNaN(date.getTime())) {
+    return "Data inválida";
+  }
+
+  const dia = date.getDate();
+  // Usamos toLocaleString para obter o nome do mês em português.
+  const mes = date.toLocaleString('pt-BR', { month: 'long' });
+  const ano = date.getFullYear();
+  const hora = date.getHours();
+  const minutos = date.getMinutes().toString().padStart(2, '0');
+
+  // Colocando a primeira letra do mês em maiúscula
+  const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
+
+  return `${dia} de ${mesCapitalizado} de ${ano}, ${hora}h${minutos}`;
+}
+
+// Exemplo de uso com a data do seu arquivo JSON
+const dataDoJson = "07 de November 2025 10:21";
+const dataFormatada = formatarDataCustomizada(dataDoJson);
+
+console.log(dataFormatada); // Saída: 7 de Novembro de 2025, 10h21
 // ============================================
 // CUSTOMIZAR TELA DE LOGIN
 // ============================================
