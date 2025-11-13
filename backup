@@ -1,0 +1,6 @@
+# backup: commit to backup
+Apenas um arquivo em branco para informar que este commit será usado para backup deste repositório.
+
+## Motivo
+O meu repositório principal será transformado em um monorepo e seus submodules em pacotes.
+Usarei o comentário da issue de estatistica https://github.com/czargab18/estatistica/issues/649
