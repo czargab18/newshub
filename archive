@@ -1,0 +1,5 @@
+# archive: archive repository
+
+Este respositóio foi arquivado. Ele era um submodule do repo:estatistica e para manter uma boa estrutura de diretórios, workflows e melhor gerenciamento foi necessário abandonar a estrutura de submodule e utilizar monorepositório.
+Os arquivos e histórico de commits de cada branch foi copiado para o hitórico da branch main de estatistica.
+
